@@ -1,7 +1,7 @@
 window.config = {
-    "ENVIRONMENT":"elwazi",
-    "REST_ENDPOINT_URL": 'https://raw.githubusercontent.com/ebi-ait/data-catalogue-frontend/main/data/cohort_data.json',
-    "SCHEMA_ENDPOINT_URL": 'https://raw.githubusercontent.com/ebi-ait/data-catalogue-frontend/main/data/cohort_schema.json',
+    "ENVIRONMENT":"demo",
+    "REST_ENDPOINT_URL": 'https://raw.githubusercontent.com/ebi-ait/data-catalogue-frontend-elwazi/main/data/catalogue-data.json',
+    "SCHEMA_ENDPOINT_URL": 'https://raw.githubusercontent.com/ebi-ait/data-catalogue-frontend-elwazi/main/data/catalogue-schema.json',
     "RESOURCE_JSON_PATH": '',
     "GRID_CONFIG":  [
         {
@@ -14,11 +14,11 @@ window.config = {
             "name": "countries"
         },
         {
-            "name": "available_data_types.demographic"
+            "name": "available_data_types.climate_data"
         },
         {
             "name": "demographic",
-            "valueGetter": params => params.data.available_data_types.demographic.text
+            "valueGetter": params => params.data.available_data_types.environmental
         }
     ]
 }
