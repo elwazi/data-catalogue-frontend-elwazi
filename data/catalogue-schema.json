@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product.schema.json",
+  "title": "eLwazi projects",
+  "type": "object",
+  "properties": {
+    "cohort_name": {
+      "type": "integer"
+    },
+    "website": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "available_data_types": {
+      "type": "object",
+      "properties": {
+        "demographic": {
+          "type": "boolean"
+        },"surveillance": {
+          "type": "boolean"
+        },"clinical": {
+          "type": "boolean"
+        },"environmental": {
+          "type": "boolean"
+        },"climate_data": {
+          "type": "boolean"
+        },"genomic_human": {
+          "type": "boolean"
+        },"genomic_pathogen": {
+          "type": "boolean"
+        },"image_data": {
+          "type": "boolean"
+        },"other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
