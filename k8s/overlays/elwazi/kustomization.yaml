@@ -8,10 +8,11 @@ labels:
   - includeSelectors: true
     pairs:
       app: data-catalogue-elwazi
-
 configMapGenerator:
   - files:
       - config.js
+      - redcap_data.json
+      - schema_endpoint.json
     name: app-config
     options:
       disableNameSuffixHash: true
@@ -53,12 +54,34 @@ patchesJson6902:
       value: ingress
     - op: replace
       path: /spec/rules/0/http/paths/0/path
-      value: /catalogue/demo(/|$)(.*)
+      value: /catalogue/elwazi(/|$)(.*)
+    - op: replace
+      path: /spec/rules/0/http/paths/0/backend/service/name
+      value: data-catalogue-elwazi
   target:
     kind: Ingress
     name: ingress
     version: v1
+- patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/volumeMounts/-
+      value:
+        name: app-config-volume
+        mountPath: /usr/share/nginx/html/redcap_data.json
+        readOnly: true
+        subPath: redcap_data.json
+    - op: add
+      path: /spec/template/spec/containers/0/volumeMounts/-
+      value:
+        name: app-config-volume
+        mountPath: /usr/share/nginx/html/schema_endpoint.json
+        readOnly: true
+        subPath: schema_endpoint.json
+  target:
+    kind: Deployment
+    name: data-catalogue
+    version: v1
 images:
 - name: data-catalogue-demo
   newName: dockerhub.ebi.ac.uk/fairification/data-catalogue-demo
-  newTag: 20240328-1219
+  newTag: 20240402-2055

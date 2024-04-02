@@ -18,5 +18,5 @@ print('HTTP Status: ' + str(r.status_code))
 print(r.json())
 
 records = r.json()
-with open('../JSON_endpoints/redcap_data.json', 'w') as f:
+with open('../k8s/overlays/elwazi/redcap_data.json', 'w') as f:
     json.dump(records, f, indent=4, separators=(',', ': '))

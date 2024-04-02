@@ -41,7 +41,7 @@ for record in redcap_data:
 
 
 # Print the HAL data
-with open('../JSON_endpoints/schema_endpoint.json', 'w', ) as f:
+with open('../k8s/overlays/elwazi/schema_endpoint.json', 'w', ) as f:
     json.dump(hal_data, f, ensure_ascii=False, indent=4, separators=(',', ': '))
 
 
