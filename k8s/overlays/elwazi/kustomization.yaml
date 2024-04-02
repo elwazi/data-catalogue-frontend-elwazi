@@ -3,23 +3,23 @@ kind: Kustomization
 namespace: dc-elwazi
 nameSuffix: -elwazi
 resources:
-  - ../../base
+  - https://github.com/ebi-ait/data-catalogue-frontend/k8s/base?ref=feature/dc-11-deploy-on-demo-env
 labels:
-  - pairs:
+  - includeSelectors: true
+    pairs:
       app: data-catalogue-elwazi
-    includeSelectors: true
-configMapGenerator:
-  - name: app-config
-    files:
-      - config.js
-    options:
-      disableNameSuffixHash: true
-  - name: nginx-config
-    files:
-      - nginx.conf
-    options:
-      disableNameSuffixHash: true
 
+configMapGenerator:
+  - files:
+      - config.js
+    name: app-config
+    options:
+      disableNameSuffixHash: true
+  - files:
+      - nginx.conf
+    name: nginx-config
+    options:
+      disableNameSuffixHash: true
 secretGenerator:
   - name: docker-registry-secret
     type: kubernetes.io/dockerconfigjson
@@ -31,19 +31,34 @@ secretGenerator:
 # a patch to make sure the service account
 # and docker repo secret do not get renamed
 patchesJson6902:
-  - target:
-      version: v1
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: default
+  target:
       kind: ServiceAccount
       name: default
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: default
-  - target:
       version: v1
-      kind: Secret
-      name: docker-registry-secret
-    patch: |-
+- patch: |-
       - op: replace
         path: /metadata/name
         value: docker-registry-secret
+  target:
+      kind: Secret
+      name: docker-registry-secret
+      version: v1
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: ingress
+    - op: replace
+      path: /spec/rules/0/http/paths/0/path
+      value: /catalogue/demo(/|$)(.*)
+  target:
+    kind: Ingress
+    name: ingress
+    version: v1
+images:
+- name: data-catalogue-demo
+  newName: dockerhub.ebi.ac.uk/fairification/data-catalogue-demo
+  newTag: 20240328-1219
