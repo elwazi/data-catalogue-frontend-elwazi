@@ -1,737 +1,416 @@
 {
-    "_links": {
-        "self": {
-            "href": "/redcap"
-        }
-    },
-    "_embedded": {
-        "properties": [
-            {
-                "record_id": {
-                    "form_name": "project_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "p_title": {
-                    "form_name": "project_metadata",
-                    "field_type": "sql",
-                    "select_choices_or_calculations": "select record, value from redcap_data where project_id = 535 and field_name = 'project_title'\r\nand record in (select distinct record from redcap_data where project_id = 535\r\nand field_name = 'status' and value='1') order by value",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "p_title_other": {
-                    "form_name": "project_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "p_accronym": {
-                    "form_name": "project_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "p_website": {
-                    "form_name": "project_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "p_description": {
-                    "form_name": "project_metadata",
-                    "field_type": "notes",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "p_keywords": {
-                    "form_name": "project_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "consent": {
-                    "form_name": "data_steward_details",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, I agree | 0, I don't agree",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "title": {
-                    "form_name": "data_steward_details",
-                    "field_type": "dropdown",
-                    "select_choices_or_calculations": "1, Dr | 2, Mr | 3, Mrs | 4, Ms | 5, Miss | 6, Mx",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "firstname": {
-                    "form_name": "data_steward_details",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "surname": {
-                    "form_name": "data_steward_details",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "email": {
-                    "form_name": "data_steward_details",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "email",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "institution": {
-                    "form_name": "data_steward_details",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_name": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "dataset_version": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_category": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, Air Quality | 2, Climate | 3, Clinical | 4, Demographic/Surveillance | 5, Genomic | 6, Image | 7, Mobility | 8, Other",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_category_other": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_description": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_type": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, Primary dataset | 2, Secondary dataset",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "sample_size": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "number",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_startdate": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "date_dmy",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_lastdate": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "date_dmy",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_status": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "dropdown",
-                    "select_choices_or_calculations": "0, Collecting data | 1, Raw dataset | 2, Cleaning dataset | 3, Final dataset",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_format": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "dropdown",
-                    "select_choices_or_calculations": "1, .csv | 2, .xlsx | 3, .json | 4, Other",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_format_other": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "d_countries": {
-                    "form_name": "dataset_metadata",
-                    "field_type": "notes",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "s_publication": {
-                    "form_name": "original_source_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "s_author": {
-                    "form_name": "original_source_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "s_startdate": {
-                    "form_name": "original_source_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "date_dmy",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "s_lastdate": {
-                    "form_name": "original_source_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "date_dmy",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "s_format": {
-                    "form_name": "original_source_dataset",
-                    "field_type": "dropdown",
-                    "select_choices_or_calculations": "1, .csv | 2, .xlsx | 3, .json | 4, Other",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "s_format_other": {
-                    "form_name": "original_source_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "s_countries": {
-                    "form_name": "original_source_dataset",
-                    "field_type": "notes",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "data_use_permission": {
-                    "form_name": "data_use_conditions",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, General Research Use (GRE) | 2, Health or Medical or Biomedical Research (HMB) | 3, Disease-specific Research (DS) | 4, No Restriction (NS) | 5, Population Origins or Ancestry Research Only (POA)",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "data_use_modifier": {
-                    "form_name": "data_use_conditions",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Clinical Care Use | 2, Collaboration Required | 3, Ethics Approval Required | 4, Genetic Studies Only | 5, Geographical Restriction | 6, Institution Specific Restriction | 7, No General Methods Research | 8, Not For Profit, Non Commercial Use Only | 9, Population Origins Or Ancestry Research Prohibited | 10, Project Specific Restriction | 11, Publication Moratorium | 12, Publication Required | 13, Research Specific Restrictions | 14, Return To Database Or Resource | 15, Time Limit On Use | 16, User Specific Restriction",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "data_origin": {
-                    "form_name": "air_quality_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "collection_year": {
-                    "form_name": "air_quality_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "number",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "type_of_stations": {
-                    "form_name": "air_quality_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Urban | 2, Suburban | 3, Rural | 4, Traffic | 5, Industrial | 6, Residential | 7, Residential And Commercial Area | 8, Background | 9, Residential - industrial | 10, Urban Traffic",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "city": {
-                    "form_name": "air_quality_dataset",
-                    "field_type": "notes",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "institution_where_data_was": {
-                    "form_name": "climate_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "source": {
-                    "form_name": "climate_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "reference": {
-                    "form_name": "climate_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "reference_2": {
-                    "form_name": "climate_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "area_type": {
-                    "form_name": "climate_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Air | 2, All Area Types | 3, Bare Ground | 4, Burnt Vegetation | 5, C3 Plant Functional Types | 6, C4 Plant Functional Types | 7, Clear Sky | 8, Cloud | 9, Convective Cloud | 10, Crops | 11, Crops Of C3 Plant Functional Types | 12, Crops Of C4 Plant Functional Types | 13, Dust Aerosol | 14, Fire | 15, Floating Ice | 16, Floating Ice Shelf | 17, Fresh Free Water | 18, Grounded Ice Sheet | 19, Herbaceous Vegetation | 20, Ice Free Land | 21, Ice Free Sea | 22, Ice On Land | 23, Ice And Snow On Land | 24, Ice Sheet | 25, Lake Ice Or Sea Ice | 26, Land | 27, Land Ice | 28, Melt Pond Free Sea Ice | 29, Natural Grasses | 30, Natural Grasses Of C3 Plant Functional Types | 31, Natural Grasses Of C4 Plant Functional Types | 32, Pastures | 33, Pastures Of C3 Plant Functional Types | 34, Pastures Of C4 Plant Functional Types | 35, Permafrost | 36, Primary And Secondary Land | 37, Primary Deciduous Trees | 38, Primary Evergreen Trees | 39, Rain | 40, Sea | 41, Sea Ice | 42, Sea Ice Ridges | 43, Sea Ice Melt Pond | 44, Secondary Deciduous Trees | 45, Secondary Evergreen Trees | 46, Shrubs | 47, Smoke | 48, Snow | 49, Snow Free Land | 50, Stratiform Cloud | 51, Trees | 52, Unfrozen Soil | 53, Urban | 54, Vegetation | 55, Volcanic Ash Cloud | 56, Wetland",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "clinical": {
-                    "form_name": "clinical_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Stroke | 2, Diabetes | 3, Arrhythmia | 4, Rheumatic Heart Disease | 5, Dyslipidemia | 6, Angina | 7, Heart Attack | 8, Congestive Heart Failure | 9, Cancer | 10, HIV | 11, TB | 12, Malaria | 13, Sleeping Sickness | 14, Hep A | 15, Hep B | 16, Hep C | 17, COVID-19 | 18, Anxiety Disorder | 19, Depression | 20, PTSD | 21, Bipolar Disorder | 22, Schizophrenia | 23, Parkinson's Disorder | 24, Alzheimer's Disorder | 25, Developmental Disorder | 26, Thyroid Disease | 27, Kidney Disease | 28, Disease of Visual System",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "labs": {
-                    "form_name": "clinical_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Urinary Albumin | 2, Urinary Creatinine | 3, Urinary Total Protein | 4, Urinary Microalbumin | 5, Serum Albumin | 6, Serum Creatinine | 7, Serum Urea | 8, Estimated Glomerular Filtration Rate (eGFR) | 9, Serum Sodium | 10, Serum Potassium | 11, Serum Chloride | 12, Serum Glucose | 13, Serum Bicarbonate | 14, CD4 Count | 15, Quantitative Viral Load | 16, HDL | 17, LDL | 18, Total Cholesterol | 19, Triglycerides | 20, Fasting plasma glucose | 21, HbA1c | 22, Insulin | 23, White blood cell count | 24, Lymphocyte number | 25, Monocyte number | 26, Segmented neutrophils number | 27, Eosinophils number | 28, Basophils number | 29, Red cell count | 30, Hemoglobin | 31, Hematocrit | 32, Mean cell volume | 33, Mean cell hemoglobin | 34, MCHC | 35, Red cell distribution width | 36, Platelet count | 37, Mean platelet volume",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "lifestyle": {
-                    "form_name": "clinical_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Medications / Medication Log | 2, Diet | 3, Physical Activity | 4, Alcohol Use | 5, Smoking Status/Tobacco Use | 6, Drug Use | 7, Sleep History",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "vitals": {
-                    "form_name": "clinical_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Allergies | 2, Blood Pressure | 3, Heart Rate | 4, Respiratory Rate | 5, Temperature",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "anthropometrics": {
-                    "form_name": "clinical_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Body Mass Index | 2, Height | 3, Weight | 4, Waist Circumference | 5, Hip Circumference | 6, Mid Upper Arm Circumference",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "demographics": {
-                    "form_name": "demographics_dataset",
-                    "field_type": "checkbox",
-                    "select_choices_or_calculations": "1, Age / Date of Birth | 2, Birth Location | 3, Education Level | 4, Employment Status | 5, Ethnicity/Race | 6, Gender | 7, Income Data Item | 8, Marital Status | 9, Native Language | 10, Occupation | 11, Religious Affiliation | 12, Residence Location | 13, Sexual Orientation",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "g_organism": {
-                    "form_name": "genomics_dataset",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, Human | 2, Other",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "g_organism_other": {
-                    "form_name": "genomics_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "experiment_type": {
-                    "form_name": "genomics_dataset",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, Whole Genome Sequencing | 2, Whole Exome Sequencing | 3, Genotyping Array / GWAS | 4, RNA-seq | 5, 16S rRNA sequencing | 6, Other",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "experiment_type_other": {
-                    "form_name": "genomics_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "experiment_design": {
-                    "form_name": "genomics_dataset",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, Case-Control | 2, Clinical Trial | 3, Cohort (Longitudinal) | 4, Cross-sectional | 5, Other",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "experiment_design_other": {
-                    "form_name": "genomics_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "technology": {
-                    "form_name": "genomics_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "i_method": {
-                    "form_name": "image_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "i_anatomy": {
-                    "form_name": "image_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "i_organism": {
-                    "form_name": "image_dataset",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, Human | 2, Other",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "i_organism_other": {
-                    "form_name": "image_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "i_type": {
-                    "form_name": "image_dataset",
-                    "field_type": "radio",
-                    "select_choices_or_calculations": "1, Primary Image | 2, Processed Image | 3, Segmentation",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "i_organ_part": {
-                    "form_name": "image_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "i_prep_method": {
-                    "form_name": "image_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "method_of_tracking": {
-                    "form_name": "mobility_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
-            },
-            {
-                "duration_coverage": {
-                    "form_name": "mobility_dataset",
-                    "field_type": "text",
-                    "select_choices_or_calculations": "",
-                    "required_field": "y",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": ""
-                }
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/product.schema.json",
+    "title": "eLwazi Catalogue",
+    "type": "object",
+    "properties": [
+        {
+            "record_id": {
+                "form_name": "project_metadata",
+                "type": "text"
             }
-        ]
-    }
+        },
+        {
+            "p_title": {
+                "form_name": "project_metadata",
+                "type": "sql"
+            }
+        },
+        {
+            "p_title_other": {
+                "form_name": "project_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "p_accronym": {
+                "form_name": "project_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "p_website": {
+                "form_name": "project_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "p_description": {
+                "form_name": "project_metadata",
+                "type": "notes"
+            }
+        },
+        {
+            "p_keywords": {
+                "form_name": "project_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "consent": {
+                "form_name": "data_steward_details",
+                "type": "radio"
+            }
+        },
+        {
+            "title": {
+                "form_name": "data_steward_details",
+                "type": "dropdown"
+            }
+        },
+        {
+            "firstname": {
+                "form_name": "data_steward_details",
+                "type": "text"
+            }
+        },
+        {
+            "surname": {
+                "form_name": "data_steward_details",
+                "type": "text"
+            }
+        },
+        {
+            "email": {
+                "form_name": "data_steward_details",
+                "type": "text"
+            }
+        },
+        {
+            "institution": {
+                "form_name": "data_steward_details",
+                "type": "text"
+            }
+        },
+        {
+            "catalogue_active": {
+                "form_name": "dataset_metadata",
+                "type": "yesno"
+            }
+        },
+        {
+            "d_name": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "dataset_version": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "dataset_location": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "last_updated": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "d_category": {
+                "form_name": "dataset_metadata",
+                "type": "radio"
+            }
+        },
+        {
+            "d_category_other": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "d_description": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "d_type": {
+                "form_name": "dataset_metadata",
+                "type": "radio"
+            }
+        },
+        {
+            "sample_size": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "d_startdate": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "d_lastdate": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "d_status": {
+                "form_name": "dataset_metadata",
+                "type": "dropdown"
+            }
+        },
+        {
+            "d_format": {
+                "form_name": "dataset_metadata",
+                "type": "dropdown"
+            }
+        },
+        {
+            "d_format_other": {
+                "form_name": "dataset_metadata",
+                "type": "text"
+            }
+        },
+        {
+            "d_countries": {
+                "form_name": "dataset_metadata",
+                "type": "checkbox"
+            }
+        },
+        {
+            "s_publication": {
+                "form_name": "original_source_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "s_author": {
+                "form_name": "original_source_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "s_startdate": {
+                "form_name": "original_source_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "s_lastdate": {
+                "form_name": "original_source_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "s_format": {
+                "form_name": "original_source_dataset",
+                "type": "dropdown"
+            }
+        },
+        {
+            "s_format_other": {
+                "form_name": "original_source_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "s_countries": {
+                "form_name": "original_source_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "data_use_permission": {
+                "form_name": "data_use_conditions",
+                "type": "radio"
+            }
+        },
+        {
+            "data_use_modifier": {
+                "form_name": "data_use_conditions",
+                "type": "checkbox"
+            }
+        },
+        {
+            "data_origin": {
+                "form_name": "air_quality_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "collection_year": {
+                "form_name": "air_quality_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "type_of_stations": {
+                "form_name": "air_quality_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "city": {
+                "form_name": "air_quality_dataset",
+                "type": "notes"
+            }
+        },
+        {
+            "institution_where_data_was": {
+                "form_name": "climate_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "source": {
+                "form_name": "climate_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "reference": {
+                "form_name": "climate_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "reference_2": {
+                "form_name": "climate_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "area_type": {
+                "form_name": "climate_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "clinical": {
+                "form_name": "clinical_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "labs": {
+                "form_name": "clinical_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "lifestyle": {
+                "form_name": "clinical_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "vitals": {
+                "form_name": "clinical_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "anthropometrics": {
+                "form_name": "clinical_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "demographics": {
+                "form_name": "demographics_dataset",
+                "type": "checkbox"
+            }
+        },
+        {
+            "g_organism": {
+                "form_name": "genomics_dataset",
+                "type": "radio"
+            }
+        },
+        {
+            "g_organism_other": {
+                "form_name": "genomics_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "experiment_type": {
+                "form_name": "genomics_dataset",
+                "type": "radio"
+            }
+        },
+        {
+            "experiment_type_other": {
+                "form_name": "genomics_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "experiment_design": {
+                "form_name": "genomics_dataset",
+                "type": "radio"
+            }
+        },
+        {
+            "experiment_design_other": {
+                "form_name": "genomics_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "technology": {
+                "form_name": "genomics_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "i_method": {
+                "form_name": "image_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "i_anatomy": {
+                "form_name": "image_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "i_organism": {
+                "form_name": "image_dataset",
+                "type": "radio"
+            }
+        },
+        {
+            "i_organism_other": {
+                "form_name": "image_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "i_type": {
+                "form_name": "image_dataset",
+                "type": "radio"
+            }
+        },
+        {
+            "i_organ_part": {
+                "form_name": "image_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "method_of_tracking": {
+                "form_name": "mobility_dataset",
+                "type": "text"
+            }
+        },
+        {
+            "duration_coverage": {
+                "form_name": "mobility_dataset",
+                "type": "text"
+            }
+        }
+    ]
 }
