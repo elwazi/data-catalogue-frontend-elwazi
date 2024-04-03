@@ -12,7 +12,7 @@ window.appConfig = {
             "name": "d_status",
         },
         {
-            "name": "d_category",
+            "name": "d_category"
         },
         {
             "name": "d_name"
@@ -32,22 +32,22 @@ window.appConfig = {
             field: "d_category",
             type: "checkbox",
             data_type: "string"
-        }
+        },
         {
             field: "d_status",
             type: "checkbox",
             data_type: "string"
-        }
+        },
         {
             field: "p_title",
             type: "checkbox",
             data_type: "string"
-        }
+        },
         {
             field: "d_type",
             type: "checkbox",
             data_type: "string"
-        }
+        },
         {
             field: "data_use_permission",
             type: "checkbox",
