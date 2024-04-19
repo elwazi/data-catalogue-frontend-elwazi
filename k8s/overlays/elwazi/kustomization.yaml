@@ -1,5 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
+# The image version to use
+images:
+- name: data-catalogue-demo
+  newName: dockerhub.ebi.ac.uk/fairification/data-catalogue-demo
+  newTag: 20240403-1229
+
 # the namespace for the project
 namespace: dc-elwazi
 nameSuffix: -elwazi
@@ -83,7 +90,3 @@ patchesJson6902:
     kind: Deployment
     name: data-catalogue
     version: v1
-images:
-- name: data-catalogue-demo
-  newName: dockerhub.ebi.ac.uk/fairification/data-catalogue-demo
-  newTag: 20240402-2055

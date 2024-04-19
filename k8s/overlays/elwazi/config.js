@@ -6,22 +6,28 @@ window.appConfig = {
     "RESOURCE_JSON_PATH": '',
     "GRID_CONFIG":  [
         {
-            "name": "p_title"
+            "name": "p_title",
+            "headerValueGetter": params=> params.colDef.field.replace(/[pd]_/,'')
         },
         {
             "name": "d_status",
+            "headerValueGetter": params=> params.colDef.field.replace(/[pd]_/,'')
         },
         {
-            "name": "d_category"
+            "name": "d_category",
+            "headerValueGetter": params=> params.colDef.field.replace(/[pd]_/,'')
         },
         {
-            "name": "d_name"
+            "name": "d_name",
+            "headerValueGetter": params=> params.colDef.field.replace(/[pd]_/,'')
         },
         {
-            "name": "d_type"
+            "name": "d_type",
+            "headerValueGetter": params=> params.colDef.field.replace(/[pd]_/,'')
         },
         {
-            "name": "sample_size"
+            "name": "sample_size",
+            "headerValueGetter": params=> params.colDef.field.replace(/[pd]_/,'')
         },
         {
             "name": "data_use_permission"
