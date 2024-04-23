@@ -3,7 +3,7 @@ import json
 import requests
 
 data = {
-    'token': '456202D2F8F6CE94F7EA4323C0C0079F',
+    'token': '-',
     'content': 'report',
     'format': 'json',
     'report_id': '1065',
