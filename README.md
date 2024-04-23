@@ -1,6 +1,8 @@
-# my-admin
+# eLwazi Catalogue
 
-## Installation
+The catalogue is a React webapp using react admin
+
+## Local Installation
 
 Install the application dependencies by running:
 
@@ -24,3 +26,23 @@ Build the application in production mode by running:
 npm run build
 ```
 
+## Deployment
+The app can be deployed as a docker image.
+
+## CI/CD
+
+We use gitlab for CI/CD.
+The github repo is mirrored in gitlab.
+The pipeline is defined in [.gitlab-ci.yml](.gitlab-ci.yml).
+It deploys on the ait k8s.
+It uses the following gitlab variables:
+- KUBECTL_NAMESPACE - namespace specific for this catalogue project
+- KUBECONFIG - secret file containing connection info to ait k8s cluster
+- KUBERNETES_MASTER - address of k8s cluster
+- DOCKER_CONFIG_JSON - secret file used for k8s to set up the image pull secret from the image repo on gitlab.
+
+### CI/CD TO-DOs
+1. use gitlab k8s integration
+2. setup an gitlab environment
+3. setup gitlab release tags
+4. speed docker image build
