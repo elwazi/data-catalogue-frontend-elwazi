@@ -46,3 +46,4 @@ It uses the following gitlab variables:
 2. setup an gitlab environment
 3. setup gitlab release tags
 4. speed docker image build
+5. use access tokens not tied to a personal account for gitlab access
