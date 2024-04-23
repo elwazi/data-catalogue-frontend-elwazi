@@ -11,7 +11,6 @@ const FilterSidebar = () => (
             <FieldValuesFilter column="d_type"/>
             <FieldValuesFilter column="d_status"/>
             <FieldValuesFilter column="data_use_permission"/>
-            <FieldValuesFilter column="d_category"/>
 
         </CardContent>
     </Card>
