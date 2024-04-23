@@ -38,6 +38,9 @@ deploy:
 
   script:
     - kubectl config view --minify | grep namespace
+    - cd k8s/overlays/${CATALOGUE_NAME}
+    - kustomize edit set image $DOCKER_IMAGE_NAME=$DOCKER_IMAGE_TAG
+    - cd -
     - kubectl apply -k k8s/overlays/${CATALOGUE_NAME}
     - kubectl rollout restart deployments data-catalogue-${CATALOGUE_NAME}
     - kubectl wait --for=condition=ready pod --selector=app=data-catalogue-${CATALOGUE_NAME} --timeout=60s
