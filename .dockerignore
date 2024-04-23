@@ -1,0 +1,11 @@
+node_modules/
+docs/
+build/
+dist/
+.idea/
+k8s/
+npm-debug.log
+.dockerignore
+.gitignore
+.git
+**/.DS_Store
