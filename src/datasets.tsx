@@ -17,7 +17,7 @@ const FilterSidebar = () => (
 );
 export const DatasetList = () => {
     return (
-        <List  aside={<FilterSidebar/>}>
+        <List aside={<FilterSidebar/>}>
             <Datagrid>
                 <TextField source="id"/>
                 <TextField source="d_name"/>

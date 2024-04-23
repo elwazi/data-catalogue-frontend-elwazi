@@ -1,8 +1,16 @@
-import {Datagrid, List, TextField} from "react-admin";
+import {
+    ArrayField,
+    ChipField,
+    Datagrid,
+    List,
+    SingleFieldList,
+    TextField, WithListContext
+} from "react-admin";
 
 // TODO this should come from a module becuase it would be shared by other catalogues
 import {FieldValuesFilter} from './FieldValuesFilter';
-import {Card, CardContent} from '@mui/material';
+import {TagsField} from './TagsField';
+import {Card, CardContent, Typography} from '@mui/material';
 
 const FilterSidebar = () => (
     <Card sx={{ order: -1}}>
@@ -21,7 +29,7 @@ export const ProjectsList = () => {
                 <TextField source="p_website"/>
                 <TextField source="p_accronym"/>
                 <TextField source="p_description"/>
-                <TextField source="p_keywords"/>
+                <TagsField source="p_keywords"/>
                 <TextField source="project_metadata_complete"/>
             </Datagrid>
         </List>
