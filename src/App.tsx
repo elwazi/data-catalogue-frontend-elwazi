@@ -2,6 +2,7 @@ import {Admin, Resource,} from "react-admin";
 import {createDataProvider} from "./createDataProvider";
 import {useEffect, useState} from "react";
 import {DatasetList} from "./datasets";
+import {ProjectsList} from "./projects";
 
 export const App = () => {
     const [dataProvider, setDataProvider] = useState(null);
@@ -16,10 +17,8 @@ export const App = () => {
     return dataProvider
         ? (
             <Admin dataProvider={dataProvider}>
-                <Resource
-                    name="datasets"
-                    list={DatasetList}
-                />
+                <Resource name="datasets" list={DatasetList}/>
+                <Resource name="projects" list={ProjectsList}/>
             </Admin>
         )
         : (<div>Loading...</div>);

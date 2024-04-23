@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-    GetListParams, useDataProvider, useResourceContext}
-    from 'ra-core';
-import {FilterList, FilterListItem} from 'ra-ui-materialui';
+import {GetListParams, useDataProvider, useResourceContext} from 'ra-core';
+import {FilterList, FilterListItem, Button} from 'ra-ui-materialui';
 import ContentFilter from '@mui/icons-material/FilterList';
+import {Collapse, Typography} from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 interface Props {
     column: string;
@@ -17,18 +17,22 @@ export const FieldValuesFilter = (
         valueGetter
     }: Props) => {
     const [columnValues, setColumnValues] = useState<string[]>([]);
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
     const dataProvider = useDataProvider();
     const resource = useResourceContext();
-
-    const isSelected = (value:any, filters:any) => {
+    const toggleCollapse = () => {
+        setIsCollapsed(!isCollapsed);
+    };
+    const isSelected = (value: any, filters: any) => {
         const [selectedKey, selectedValue] = Object.entries(value)[0];
         return filters?.[selectedKey] == selectedValue
     };
-    const toggleFilter = (value:any, filters:any) => {
+    const toggleFilter = (value: any, filters: any) => {
         const [selectedKey, selectedValue] = Object.entries(value)[0];
         if (selectedKey in filters) {
-            if (filters?.[selectedKey].find((v:any) => v === selectedValue)) {
-                filters[selectedKey] = filters[selectedKey].filter((v:any) => v !== selectedValue)
+            if (filters?.[selectedKey].find((v: any) => v === selectedValue)) {
+                filters[selectedKey] = filters[selectedKey].filter((v: any) => v !== selectedValue)
                 if (filters[selectedKey].length == 0) {
                     delete filters[selectedKey];
                 }
@@ -48,7 +52,7 @@ export const FieldValuesFilter = (
                     pagination: {page: 1, perPage: 200},
                     sort: {field: 'id', order: 'ASC'},
                 } as GetListParams);
-                const distinctValues = [...new Set(data.map((item:any) => (valueGetter?.(item) ?? item[column]) as string))].sort();
+                const distinctValues = [...new Set(data.map((item: any) => (valueGetter?.(item) ?? item[column]) as string))].sort();
                 setColumnValues(distinctValues);
             } catch (error) {
                 console.error('Error fetching column values:', error);
@@ -61,23 +65,31 @@ export const FieldValuesFilter = (
         column,
         resource
     ]);
-    console.log(columnValues);
-    console.log(isSelected);
-    console.log(toggleFilter);
     return (
         <div style={{maxHeight: '300px', overflowY: 'auto'}}>
-            <FilterList label={column} icon={<ContentFilter/>}>
-                {columnValues.map(value => (
-                    // TODO allow multiple selection
-                    <FilterListItem
-                        label={value}
-                        key={value}
-                        value={Object.fromEntries([[column, value]])}
-                        isSelected={isSelected}
-                        toggleFilter={toggleFilter}
-                    />
-                ))}
-            </FilterList>
+            <Button onClick={toggleCollapse}>
+                <Typography >
+                    {column}
+                </Typography>
+                {isCollapsed ? <ExpandMore /> : <ExpandLess />}
+            </Button>
+            <Collapse in={!isCollapsed}>
+                    {/* hide label and icon because they are shown with the collapse controls*/}
+                    <FilterList
+                        label=""
+                        icon={null}>
+                        {columnValues.map(value => (
+                            // TODO allow multiple selection
+                            <FilterListItem
+                                label={value}
+                                key={value}
+                                value={Object.fromEntries([[column, value]])}
+                                isSelected={isSelected}
+                                toggleFilter={toggleFilter}
+                            />
+                        ))}
+                    </FilterList>
+            </Collapse>
         </div>
     );
 };

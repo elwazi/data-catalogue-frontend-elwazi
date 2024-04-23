@@ -14,5 +14,8 @@ export const createDataProvider = async () => {
 
     let groupedData = groupBy(data, 'redcap_event_name');
 
-    return fakeDataProvider({datasets: groupedData['Dataset']}, true);
+    return fakeDataProvider({
+        datasets: groupedData['Dataset'],
+        projects: groupedData['Project Info'],
+    }, true);
 };
