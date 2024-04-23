@@ -18,13 +18,6 @@ labels:
       app: data-catalogue-elwazi
 configMapGenerator:
   - files:
-      - config.js
-      - redcap_data.json
-      - schema_endpoint.json
-    name: app-config
-    options:
-      disableNameSuffixHash: true
-  - files:
       - nginx.conf
     name: nginx-config
     options:
@@ -70,23 +63,4 @@ patchesJson6902:
   target:
     kind: Ingress
     name: ingress
-    version: v1
-- patch: |-
-    - op: add
-      path: /spec/template/spec/containers/0/volumeMounts/-
-      value:
-        name: app-config-volume
-        mountPath: /usr/share/nginx/html/redcap_data.json
-        readOnly: true
-        subPath: redcap_data.json
-    - op: add
-      path: /spec/template/spec/containers/0/volumeMounts/-
-      value:
-        name: app-config-volume
-        mountPath: /usr/share/nginx/html/schema_endpoint.json
-        readOnly: true
-        subPath: schema_endpoint.json
-  target:
-    kind: Deployment
-    name: data-catalogue
     version: v1

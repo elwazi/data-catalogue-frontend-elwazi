@@ -35,10 +35,8 @@ deploy:
   tags:
   - dind
   script:
-  - echo create namespace ${KUBECTL_NAMESPACE} if needed
-  - kubectl get namespace ${KUBECTL_NAMESPACE} > /dev/null 2&>1 || kubectl create namespace ${KUBECTL_NAMESPACE}
-#    - kubectl apply -k k8s/overlays/${CATALOGUE_NAME} --namespace=${KUBECTL_NAMESPACE}
-#    - kubectl rollout restart deployments data-catalogue-${CATALOGUE_NAME} --namespace "$(yq '.namespace' k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml)"
-#    - kubectl wait --namespace ${KUBECTL_NAMESPACE} --for=condition=ready pod --selector=app=data-catalogue-${CATALOGUE_NAME} --timeout=60s
+    - kubectl apply -k k8s/overlays/${CATALOGUE_NAME}
+    - kubectl rollout restart deployments data-catalogue-${CATALOGUE_NAME}
+    - kubectl wait --for=condition=ready pod --selector=app=data-catalogue-${CATALOGUE_NAME} --timeout=60s
 
 
