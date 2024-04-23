@@ -16,7 +16,7 @@ k8s-deploy-catalogue:
   - dind
   script:
   - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
-  - echo KUBERNETES_MASTER: &KUBERNETES_MASTER
+  - echo KUBERNETES_MASTER: $KUBERNETES_MASTER
   - echo KUBECONFIG: $KUBECONFIG
   - kubectl get all
 #    - kubectl get namespace ${K8S_NAMESPACE} > /dev/null 2&>1 || kubectl create namespace ${K8S_NAMESPACE}
