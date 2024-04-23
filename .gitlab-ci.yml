@@ -37,7 +37,7 @@ deploy:
     DOCKER_IMAGE_NAME: data-catalogue-demo
   before_script:
   - kubectl config set-context --current --namespace=${KUBECTL_NAMESPACE}
-
+  - kubectl version
   script:
     - kubectl config view --minify | grep namespace
     - cd k8s/overlays/${CATALOGUE_NAME}
