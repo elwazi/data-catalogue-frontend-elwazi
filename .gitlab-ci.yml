@@ -14,7 +14,8 @@ build:
   tags:
     - dind
   variables:
-    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    DOCKER_TAG: $CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$DOCKER_TAG
   before_script:
     - set | grep CI_REGISTRY
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -39,7 +40,7 @@ deploy:
   script:
     - kubectl config view --minify | grep namespace
     # kustomize is not available on the image, so using yq instead
-    - yq -i ".images[0].newTag = \"${CI_COMMIT_REF_SLUG}\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
+    - yq -i ".images[0].newTag = \"${DOCKER_TAG}\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
     - yq -i ".images[0].newName = \"${CI_REGISTRY_IMAGE}\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
     - cp ${DOCKER_CONFIG_JSON} k8s/overlays/${CATALOGUE_NAME}/.dockerconfig.json
     - kubectl apply -k k8s/overlays/${CATALOGUE_NAME}
