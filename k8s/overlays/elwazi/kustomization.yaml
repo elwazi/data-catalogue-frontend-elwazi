@@ -11,7 +11,7 @@ images:
 namespace: dc-elwazi
 nameSuffix: -elwazi
 resources:
-  - https://github.com/ebi-ait/data-catalogue-frontend/k8s/base?ref=feature/dc-11-deploy-on-demo-env
+  - ../../base
 labels:
   - includeSelectors: true
     pairs:
