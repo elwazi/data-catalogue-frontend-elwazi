@@ -43,6 +43,14 @@ It uses the following gitlab variables:
   - KUBERNETES_MASTER - address of k8s cluster
   - DOCKER_CONFIG_JSON - secret file used for k8s to set up the image pull secret from the image repo on gitlab.
 
+```mermaid
+flowchart
+    gitlab ===> |1. pull mirroring|github 
+    gitlab ===>|2. trigger|pipeline
+    pipeline ===> |3. build and push image|container_repo
+    pipeline ===> |4. deploy|k8s
+```
+
 ### CI/CD TO-DOs
 1. trigger pipeline after push
 2. use gitlab k8s integration
