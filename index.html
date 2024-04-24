@@ -31,7 +31,7 @@
             function changeScriptSource(scriptHrefMarker) {
                 var script = findElementByAttributeAndValue('script', 'src', scriptHrefMarker);
                 if (script) {
-                    var newSource = script.src.replace(window.location.origin+'/', '');
+                    var newSource = script.src.replace(window.location.origin, '');
                     // Reload the script
                     script.parentNode.removeChild(script);
                     var newScript = document.createElement('script');

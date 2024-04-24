@@ -57,9 +57,9 @@ flowchart
 ```
 
 ### CI/CD TO-DOs
-1. trigger pipeline after push
-2. use gitlab k8s integration
-2. setup an gitlab environment
-3. setup gitlab release tags
-4. speed docker image build
-5. use access tokens not tied to a personal account for gitlab access
+- [ ] trigger pipeline after push
+- [ ] use gitlab k8s integration
+- [ ] setup a gitlab environment
+- [ ] setup gitlab release tags
+- [ ] speed docker image build
+- [x] use access tokens not tied to a personal account for gitlab access
