@@ -44,7 +44,8 @@ It uses the following gitlab variables:
   - DOCKER_CONFIG_JSON - secret file used for k8s to set up the image pull secret from the image repo on gitlab.
 
 ### CI/CD TO-DOs
-1. use gitlab k8s integration
+1. trigger pipeline after push
+2. use gitlab k8s integration
 2. setup an gitlab environment
 3. setup gitlab release tags
 4. speed docker image build
