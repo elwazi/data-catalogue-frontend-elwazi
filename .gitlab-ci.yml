@@ -40,8 +40,8 @@ deploy:
   script:
     - kubectl config view --minify | grep namespace
     # kustomize is not available on the image, so using yq instead
-    - yq -i ".images[0].newTag = \"$CI_COMMIT_REF_SLUG\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
-    - yq -i ".images[0].newName = \"CI_REGISTRY_IMAGE\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
+    - yq -i ".images[0].newTag = \"${CI_COMMIT_REF_SLUG}\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
+    - yq -i ".images[0].newName = \"${CI_REGISTRY_IMAGE}\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
     - kubectl apply -k k8s/overlays/${CATALOGUE_NAME}
     - kubectl rollout restart deployments data-catalogue-${CATALOGUE_NAME}
     - kubectl wait --for=condition=ready pod --selector=app=data-catalogue-${CATALOGUE_NAME} --timeout=60s
