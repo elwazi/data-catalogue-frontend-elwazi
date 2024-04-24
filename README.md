@@ -49,6 +49,11 @@ flowchart
     gitlab ===>|2. trigger|pipeline
     pipeline ===> |3. build and push image|container_repo
     pipeline ===> |4. deploy|k8s
+    subgraph group variables
+      KUBECONFIG
+      KUBERNETES_MASTER
+      DOCKER_CONFIG_JSON
+    end
 ```
 
 ### CI/CD TO-DOs
