@@ -10,6 +10,7 @@ variables:
 stages:
   - build
   - deploy
+  - verify
 
 build:
   stage: build
@@ -47,4 +48,20 @@ deploy:
     name: dev
     url: https://wwwdev.ebi.ac.uk/catalogue/${CATALOGUE_NAME}
 
+verify_accessibility:
+  stage: verify
+  image: curlimages/curl:latest
+  script:
+    - endpoints=("https://wwwdev.ebi.ac.uk/catalogue/elwazi" "https://wwwdev.ebi.ac.uk/catalogue/elwazi/api/redcap_data.json")
 
+    - for endpoint in "${endpoints[@]}"
+        do
+        response=$(curl -s -o /dev/null -w "%{http_code}" $endpoint)
+        
+        if [ "$response" -ne 200 ]; then
+          echo "Failed to access $endpoint with response code $response"
+          exit 1 
+        else
+          echo "Successfully accessed $endpoint with response code $response"
+        fi
+      done
