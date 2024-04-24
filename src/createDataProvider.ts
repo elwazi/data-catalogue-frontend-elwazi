@@ -1,7 +1,8 @@
 import fakeDataProvider from "ra-data-fakerest";
 import {fetchUtils} from "react-admin";
+import {API_DATA_PATH} from "./constants";
 const httpClient = fetchUtils.fetchJson;
-const apiUrl = import.meta.env.VITE_SIMPLE_REST_URL;
+const apiUrl = API_DATA_PATH;
 
 const groupBy = (array, key) => array.reduce((acc, obj) => ((acc[obj[key]] = acc[obj[key]] || []).push(obj), acc), {});
 

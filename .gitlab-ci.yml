@@ -6,6 +6,7 @@ variables:
   CATALOGUE_NAME: elwazi
   DOCKER_TAG: $CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
   DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$DOCKER_TAG
+
 stages:
   - build
   - deploy
