@@ -38,7 +38,6 @@ deploy:
     # kustomize is not available on the image, so using yq instead
     - yq -i ".images[0].newTag = \"${DOCKER_TAG}\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
     - yq -i ".images[0].newName = \"${CI_REGISTRY_IMAGE}\"" k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
-    - cat k8s/overlays/${CATALOGUE_NAME}/kustomization.yaml
     - cp ${DOCKER_CONFIG_JSON} k8s/overlays/${CATALOGUE_NAME}/.dockerconfig.json
     - kubectl apply -k k8s/overlays/${CATALOGUE_NAME}
     - kubectl rollout restart deployments data-catalogue-${CATALOGUE_NAME}
