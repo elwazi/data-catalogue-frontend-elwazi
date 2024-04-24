@@ -43,5 +43,8 @@ deploy:
     - kubectl apply -k k8s/overlays/${CATALOGUE_NAME}
     - kubectl rollout restart deployments data-catalogue-${CATALOGUE_NAME}
     - kubectl wait --for=condition=ready pod --selector=app=data-catalogue-${CATALOGUE_NAME} --timeout=60s
+  environment:
+    name: dev
+    url: https://wwwdev.ebi.ac.uk/catalogue/${CATALOGUE_NAME}
 
 
