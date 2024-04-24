@@ -9,7 +9,6 @@ export default defineConfig({
     },
     build: {
         minify: false,  // Disable minification
-        sourcemap: true,  // Enable source maps
     },
     server: {
         host: true,
