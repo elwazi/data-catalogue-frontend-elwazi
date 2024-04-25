@@ -43,7 +43,7 @@ deploy:
     - cp ${DOCKER_CONFIG_JSON} k8s/overlays/${CATALOGUE_NAME}/.dockerconfig.json
     - kubectl apply -k k8s/overlays/${CATALOGUE_NAME}
     - kubectl rollout restart deployments data-catalogue-${CATALOGUE_NAME}
-    - kubectl wait --for=condition=ready pod --selector=app=data-catalogue-${CATALOGUE_NAME} --timeout=60s
+    - kubectl wait --for=condition=available deployment data-catalogue-${CATALOGUE_NAME} --timeout=60s
   environment:
     name: dev
     url: https://wwwdev.ebi.ac.uk/catalogue/${CATALOGUE_NAME}

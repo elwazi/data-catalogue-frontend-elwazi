@@ -83,7 +83,6 @@ export const FieldValuesFilter = (
                             .map(value=>value.trim())
                             .filter(value=>value!=='')
                             .map(value => {
-                            console.info(`filter list item: ${value}`)
                             return (
                                 // TODO allow multiple selection
                                 <FilterListItem
