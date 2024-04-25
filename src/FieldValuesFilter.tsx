@@ -78,16 +78,23 @@ export const FieldValuesFilter = (
                     <FilterList
                         label=""
                         icon={null}>
-                        {columnValues.map(value => (
-                            // TODO allow multiple selection
-                            <FilterListItem
-                                label={value}
-                                key={value}
-                                value={Object.fromEntries([[column, value]])}
-                                isSelected={isSelected}
-                                toggleFilter={toggleFilter}
-                            />
-                        ))}
+                        {columnValues
+                            .filter(value=>value!==null)
+                            .map(value=>value.trim())
+                            .filter(value=>value!=='')
+                            .map(value => {
+                            console.info(`filter list item: ${value}`)
+                            return (
+                                // TODO allow multiple selection
+                                <FilterListItem
+                                    label={value}
+                                    key={value}
+                                    value={Object.fromEntries([[column, value]])}
+                                    isSelected={isSelected}
+                                    toggleFilter={toggleFilter}
+                                />
+                            );
+                        })}
                     </FilterList>
             </Collapse>
         </div>
