@@ -47,6 +47,7 @@ deploy:
   environment:
     name: dev
     url: https://wwwdev.ebi.ac.uk/catalogue/${CATALOGUE_NAME}
+  when: manual
 
 verify_accessibility:
   stage: verify
