@@ -2,7 +2,7 @@
 
 The catalogue is a React webapp using react admin
 
-## Local Installation
+## Local Installation:
 
 Install the application dependencies by running:
 
