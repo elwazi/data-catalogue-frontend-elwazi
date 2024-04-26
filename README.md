@@ -2,7 +2,7 @@
 
 The catalogue is a React webapp using react admin
 
-## Local Installation
+## Local Installation:
 
 Install the application dependencies by running:
 
@@ -10,7 +10,7 @@ Install the application dependencies by running:
 npm install
 ```
 
-## Development
+## Development:
 
 Start the application in development mode by running:
 
