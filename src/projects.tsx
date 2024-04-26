@@ -1,10 +1,10 @@
 import {
     ArrayField,
     ChipField,
-    Datagrid,
-    List,
+    Datagrid, DatagridConfigurable,
+    List, SelectColumnsButton,
     SingleFieldList,
-    TextField, WithListContext
+    TextField, TopToolbar, WithListContext
 } from "react-admin";
 
 // TODO this should come from a module becuase it would be shared by other catalogues
@@ -20,18 +20,25 @@ const FilterSidebar = () => (
         </CardContent>
     </Card>
 );
+
+const ListActions = () => (
+    <TopToolbar>
+        <SelectColumnsButton />
+    </TopToolbar>
+);
 export const ProjectsList = () => {
     return (
-        <List  aside={<FilterSidebar/>}>
-            <Datagrid>
-                <TextField source="id"/>
+        <List
+            actions={<ListActions />}
+            aside={<FilterSidebar/>}>
+            <DatagridConfigurable>
                 <TextField source="p_title"/>
                 <TextField source="p_website"/>
                 <TextField source="p_accronym"/>
                 <TextField source="p_description"/>
                 <TagsField source="p_keywords"/>
                 <TextField source="project_metadata_complete"/>
-            </Datagrid>
+            </DatagridConfigurable>
         </List>
     )
 };

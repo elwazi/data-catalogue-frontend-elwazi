@@ -3,8 +3,12 @@ import {createDataProvider} from "./createDataProvider";
 import React, {useEffect, useState} from "react";
 import {DatasetList} from "./datasets";
 import {ProjectsList} from "./projects";
-import DatasetIcon from "@mui/icons-material/Dataset";
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import {DC_TITLE} from "./constants";
+import {theme} from "./theme";
+import CookieConsent from "react-cookie-consent";
+
+
 export const App = () => {
     const [dataProvider, setDataProvider] = useState(null);
     useEffect(() => {
@@ -17,10 +21,19 @@ export const App = () => {
 
     return dataProvider
         ? (
-            <Admin dataProvider={dataProvider} title="eLwazi">
-                <Resource name="datasets" list={DatasetList} />
-                <Resource name="projects" list={ProjectsList} icon={AccountTreeIcon}/>
-            </Admin>
+            <div>
+                <Admin dataProvider={dataProvider}
+                       title={DC_TITLE}
+                       theme={theme}
+                >
+                    <Resource name="datasets" list={DatasetList}/>
+                    <Resource name="projects" list={ProjectsList} icon={AccountTreeIcon}/>
+                </Admin>
+                <CookieConsent enableDeclineButton>
+                    This website uses cookies to enhance the user experience.
+                </CookieConsent>
+            </div>
+
         )
         : (<div>Loading...</div>);
 };

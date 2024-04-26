@@ -1,4 +1,4 @@
-import {Datagrid, List, TextField} from "react-admin";
+import {Datagrid, DatagridConfigurable, List, SelectColumnsButton, TextField, TopToolbar} from "react-admin";
 
 // TODO this should come from a module becuase it would be shared by other catalogues
 import {FieldValuesFilter} from './FieldValuesFilter';
@@ -15,18 +15,24 @@ const FilterSidebar = () => (
         </CardContent>
     </Card>
 );
+const ListActions = () => (
+    <TopToolbar>
+        <SelectColumnsButton />
+    </TopToolbar>
+);
 export const DatasetList = () => {
     return (
-        <List aside={<FilterSidebar/>}>
-            <Datagrid>
-                <TextField source="id"/>
+        <List
+            actions={<ListActions />}
+            aside={<FilterSidebar/>}>
+            <DatagridConfigurable>
                 <TextField source="d_name"/>
                 <TextField source="d_category"/>
                 <TextField source="d_type"/>
                 <TextField source="d_status"/>
                 <TextField source="sample_size"/>
                 <TextField source="data_use_permission"/>
-            </Datagrid>
+            </DatagridConfigurable>
         </List>
     )
 };
