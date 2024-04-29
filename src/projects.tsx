@@ -16,7 +16,6 @@ const FilterSidebar = () => (
     <Card sx={{ order: -1}}>
         <CardContent>
             <FieldValuesFilter column="project_metadata_complete"/>
-
         </CardContent>
     </Card>
 );

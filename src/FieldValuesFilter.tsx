@@ -4,12 +4,19 @@ import {FilterList, FilterListItem, Button} from 'ra-ui-materialui';
 import ContentFilter from '@mui/icons-material/FilterList';
 import {Collapse, Typography} from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import {useTranslate} from "ra-core";
 
 interface Props {
     column: string;
     valueGetter?: Function;
 }
 
+function toTitleCase(str) {
+    return str
+        .split(' ') // Split the string into an array of words
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter of each word and make the rest lowercase
+        .join(' '); // Join the array back into a string
+}
 
 export const FieldValuesFilter = (
     {
@@ -21,6 +28,18 @@ export const FieldValuesFilter = (
 
     const dataProvider = useDataProvider();
     const resource = useResourceContext();
+    const translate = useTranslate();
+    // let buttonLabel = translateLabel({
+    //     label: column,
+    //     resource,
+    //     source: column,
+    // });
+    const buttonLabel = toTitleCase(translate(`resources.${resource}.fields.${column}`))
+
+
+// Example usage
+    const sentence = "hello world! how are you doing?";
+    const titleCased = toTitleCase(sentence);;
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
     };
@@ -65,10 +84,11 @@ export const FieldValuesFilter = (
         column,
         resource
     ]);
+
     return (
         <div style={{maxHeight: '300px', overflowY: 'auto'}}>
             <Button onClick={toggleCollapse}
-                label={column}>
+                label={buttonLabel}>
                 {isCollapsed ? <ExpandMore /> : <ExpandLess />}
             </Button>
             <Collapse in={!isCollapsed}>
