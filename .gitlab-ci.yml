@@ -8,8 +8,7 @@ variables:
   DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$DOCKER_TAG
 
 rules:
-  - if: '$CI_PIPELINE_SOURCE == "push"'
-    when: always
+  - when: always
 
 stages:
   - build
