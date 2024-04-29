@@ -67,11 +67,9 @@ export const FieldValuesFilter = (
     ]);
     return (
         <div style={{maxHeight: '300px', overflowY: 'auto'}}>
-            <Button onClick={toggleCollapse}>
+            <Button onClick={toggleCollapse}
+                label={column}>
                 {isCollapsed ? <ExpandMore /> : <ExpandLess />}
-                <Typography >
-                    {column}
-                </Typography>
             </Button>
             <Collapse in={!isCollapsed}>
                     {/* hide label and icon because they are shown with the collapse controls*/}

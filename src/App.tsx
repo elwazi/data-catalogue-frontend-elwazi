@@ -7,6 +7,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import {DC_TITLE} from "./constants";
 import {theme} from "./theme";
 import CookieConsent from "react-cookie-consent";
+import {i18nProvider} from "./i18nProvider";
 
 
 export const App = () => {
@@ -25,6 +26,7 @@ export const App = () => {
                 <Admin dataProvider={dataProvider}
                        title={DC_TITLE}
                        theme={theme}
+                       i18nProvider={i18nProvider}
                 >
                     <Resource name="datasets" list={DatasetList}/>
                     <Resource name="projects" list={ProjectsList} icon={AccountTreeIcon}/>
