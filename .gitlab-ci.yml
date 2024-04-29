@@ -56,8 +56,8 @@ verify_accessibility:
   stage: verify
   image: curlimages/curl:latest
   script:
-    - endpoints=("https://wwwdev.ebi.ac.uk/catalogue/elwazi" "https://wwwdev.ebi.ac.uk/catalogue/elwazi/api/redcap_data.json")
-    - for endpoint in "${endpoints[@]}"
+    - endpoints="https://wwwdev.ebi.ac.uk/catalogue/elwazi https://wwwdev.ebi.ac.uk/catalogue/elwazi/api/redcap_data.json"
+    - for endpoint in "${endpoints}"
         do
         response=$(curl -s -o /dev/null -w "%{http_code}" $endpoint)
         
