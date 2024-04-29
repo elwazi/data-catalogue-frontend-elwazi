@@ -7,6 +7,10 @@ variables:
   DOCKER_TAG: $CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
   DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$DOCKER_TAG
 
+rules:
+  - if: '$CI_PIPELINE_SOURCE == "push"
+    when: always
+
 stages:
   - build
   - deploy
