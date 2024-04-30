@@ -12,7 +12,6 @@ import ReactGA from "react-ga4";
 
 
 function enableAnalytics() {
-    debugger;
     ReactGA.initialize(DC_GA_MEASUREMENT_ID);
 }
 
@@ -41,7 +40,7 @@ export const App = () => {
                 </Admin>
                 <CookieConsent enableDeclineButton
                     onAccept={enableAnalytics}
-                    cookieName="dcAnalticsConsent">
+                    cookieName="dcAnalyticsConsent">
                     This website uses cookies to enhance the user experience.
                 </CookieConsent>
             </div>
