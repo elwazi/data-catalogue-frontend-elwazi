@@ -8,17 +8,10 @@ import {DC_BASENAME, DC_TITLE} from "./constants";
 import {theme} from "./theme";
 import CookieConsent from "react-cookie-consent";
 import {i18nProvider} from "./i18nProvider";
-import {useLocation} from "react-router-dom";
-import ReactGA from "react-ga4";
+
 
 export const App = () => {
     const [dataProvider, setDataProvider] = useState(null);
-    const location = useLocation();
-    useEffect(() => {
-        ReactGA.send({ hitType: "pageview",
-            page: location.hash.replace(/\?.*/,''),
-        });
-    }, [location]);
 
     useEffect(() => {
         const fetchDataProvider = async () => {
@@ -44,7 +37,6 @@ export const App = () => {
                     This website uses cookies to enhance the user experience.
                 </CookieConsent>
             </div>
-
         )
         : (<div>Loading...</div>);
 };
