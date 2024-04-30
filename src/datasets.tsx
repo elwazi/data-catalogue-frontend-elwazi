@@ -3,11 +3,14 @@ import {Datagrid, DatagridConfigurable, List, SelectColumnsButton, TextField, To
 // TODO this should come from a module becuase it would be shared by other catalogues
 import {FieldValuesFilter} from './FieldValuesFilter';
 import {Card, CardContent} from '@mui/material';
-import {TextInput} from "../.vite/deps/react-admin";
+import {FilterLiveSearch, SavedQueriesList, TextInput} from "react-admin";
+import React from "react";
 
 const FilterSidebar = () => (
     <Card sx={{ order: -1}}>
         <CardContent>
+            <SavedQueriesList />
+            <FilterLiveSearch />
             <FieldValuesFilter column="d_category"/>
             <FieldValuesFilter column="d_type"/>
             <FieldValuesFilter column="d_status"/>
@@ -20,6 +23,12 @@ const ListActions = () => (
         <SelectColumnsButton />
     </TopToolbar>
 );
+
+const datasetFilters = [
+    <TextInput label="Search" source="q"  />,
+    <TextInput label="Name" source="d_name"  />,
+];
+
 export const DatasetList = () => {
     return (
         <List

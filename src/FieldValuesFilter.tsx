@@ -45,12 +45,15 @@ export const FieldValuesFilter = (
     };
     const isSelected = (value: any, filters: any) => {
         const [selectedKey, selectedValue] = Object.entries(value)[0];
-        return filters?.[selectedKey] == selectedValue
+        let existingFilters = filters?.[selectedKey] || [];
+        return existingFilters?.includes(selectedValue);
     };
     const toggleFilter = (value: any, filters: any) => {
         const [selectedKey, selectedValue] = Object.entries(value)[0];
+        let existingFilters = filters?.[selectedKey] || [];
+
         if (selectedKey in filters) {
-            if (filters?.[selectedKey].find((v: any) => v === selectedValue)) {
+            if (filters?.[selectedKey].includes(selectedValue)) {
                 filters[selectedKey] = filters[selectedKey].filter((v: any) => v !== selectedValue)
                 if (filters[selectedKey].length == 0) {
                     delete filters[selectedKey];
@@ -110,6 +113,7 @@ export const FieldValuesFilter = (
                                     isSelected={isSelected}
                                     toggleFilter={toggleFilter}
                                 />
+
                             );
                         })}
                     </FilterList>
