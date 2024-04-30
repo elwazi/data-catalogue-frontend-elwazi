@@ -4,14 +4,22 @@ import React, {useEffect, useState} from "react";
 import {DatasetList} from "./datasets";
 import {ProjectsList} from "./projects";
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import {DC_TITLE} from "./constants";
+import {DC_BASENAME, DC_TITLE} from "./constants";
 import {theme} from "./theme";
 import CookieConsent from "react-cookie-consent";
 import {i18nProvider} from "./i18nProvider";
-
+import {useLocation} from "react-router-dom";
+import ReactGA from "react-ga4";
 
 export const App = () => {
     const [dataProvider, setDataProvider] = useState(null);
+    const location = useLocation();
+    useEffect(() => {
+        ReactGA.send({ hitType: "pageview",
+            page: location.hash.replace(/\?.*/,''),
+        });
+    }, [location]);
+
     useEffect(() => {
         const fetchDataProvider = async () => {
             const _dataProvider = await createDataProvider();
@@ -27,6 +35,7 @@ export const App = () => {
                        title={DC_TITLE}
                        theme={theme}
                        i18nProvider={i18nProvider}
+                       basename={DC_BASENAME}
                 >
                     <Resource name="datasets" list={DatasetList}/>
                     <Resource name="projects" list={ProjectsList} icon={AccountTreeIcon}/>
