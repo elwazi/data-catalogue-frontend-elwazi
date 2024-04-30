@@ -4,11 +4,17 @@ import React, {useEffect, useState} from "react";
 import {DatasetList} from "./datasets";
 import {ProjectsList} from "./projects";
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import {DC_BASENAME, DC_TITLE} from "./constants";
+import {DC_BASENAME, DC_GA_MEASUREMENT_ID, DC_TITLE} from "./constants";
 import {theme} from "./theme";
 import CookieConsent from "react-cookie-consent";
 import {i18nProvider} from "./i18nProvider";
+import ReactGA from "react-ga4";
 
+
+function enableAnalytics() {
+    debugger;
+    ReactGA.initialize(DC_GA_MEASUREMENT_ID);
+}
 
 export const App = () => {
     const [dataProvider, setDataProvider] = useState(null);
@@ -33,7 +39,9 @@ export const App = () => {
                     <Resource name="datasets" list={DatasetList}/>
                     <Resource name="projects" list={ProjectsList} icon={AccountTreeIcon}/>
                 </Admin>
-                <CookieConsent enableDeclineButton>
+                <CookieConsent enableDeclineButton
+                    onAccept={enableAnalytics}
+                    cookieName="dcAnalticsConsent">
                     This website uses cookies to enhance the user experience.
                 </CookieConsent>
             </div>
