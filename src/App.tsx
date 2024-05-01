@@ -37,6 +37,7 @@ export const App = () => {
                            layout={MyLayout}
                            i18nProvider={i18nProvider}
                            basename={DC_BASENAME}
+                           disableTelemetry
                     >
                         <Resource name="datasets" list={DatasetList}/>
                         {/*<Resource name="projects" list={ProjectsList} icon={AccountTreeIcon}/>*/}
