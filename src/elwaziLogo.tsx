@@ -6,7 +6,7 @@ const ElwaziLogo = (props: SVGProps<SVGSVGElement>) => {
     const theme = useTheme();
     return (
         <svg
-            style={{width:'10vw', height:'10vh'  }}
+            style={{ height:'2.2rem'  }}
               viewBox="0 0 1000 400"
             {...props}
             // fill={theme.palette.secondary.light}

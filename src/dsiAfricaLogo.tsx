@@ -5,9 +5,10 @@ import { useTheme } from '@mui/material/styles';
 const DSIAfricaLogo = (props: SVGProps<SVGSVGElement>) => {
     const theme = useTheme();
     return (
-        <svg style={{width: '15vw'}}
-             height={160}
-             viewBox="0 0 700 200"
+        <svg style={{
+            height: '3rem',
+        }}
+             viewBox="0 -20 800 200"
             {...props}
         >
             <g aria-label="DS-I Africa Logo"
@@ -21,108 +22,10 @@ const DSIAfricaLogo = (props: SVGProps<SVGSVGElement>) => {
                 strokeWidth={0.265}
                 fill="white"
             >
-                <defs>
-                    <clipPath id="clip-path">
-                        <rect id="Rectangle_1606"  width="437.672" height="131.12" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-3">
-                        <rect id="Rectangle_1556"  width="58.125" height="39.192" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-4">
-                        <rect id="Rectangle_1558"  width="26.761" height="20.464" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-5">
-                        <rect id="Rectangle_1559"  width="60.027" height="28.728" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-6">
-                        <rect id="Rectangle_1560"  width="35.693" height="13.774" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-7">
-                        <rect id="Rectangle_1562"  width="13.774" height="10.035" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-8">
-                        <rect id="Rectangle_1563"  width="42.896" height="18.102" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-9">
-                        <rect id="Rectangle_1564"  width="22.826" height="17.547" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-10">
-                        <rect id="Rectangle_1566"  width="38.67" height="26.79" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-11">
-                        <rect id="Rectangle_1567"  width="51.547" height="25.186" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-12">
-                        <rect id="Rectangle_1569"  width="28.563" height="19.165" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-13">
-                        <rect id="Rectangle_1571"  width="20.955" height="7.284" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-14">
-                        <rect id="Rectangle_1573"  width="3.148" height="17.197" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-15">
-                        <rect id="Rectangle_1575"  width="3.148" height="5.316" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-16">
-                        <rect id="Rectangle_1576"  width="45.042" height="5.113" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-17">
-                        <rect id="Rectangle_1578"  width="20.267" height="20.267" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-18">
-                        <rect id="Rectangle_1580"  width="13.97" height="13.97" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-19">
-                        <rect id="Rectangle_1582"  width="10.65" height="10.65" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-20">
-                        <rect id="Rectangle_1584"  width="23.634" height="23.635" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-21">
-                        <rect id="Rectangle_1586"  width="11.609" height="11.609" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-22">
-                        <rect id="Rectangle_1588"  width="7.477" height="7.477" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-23">
-                        <rect id="Rectangle_1590"  width="5.843" height="5.844" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-24">
-                        <rect id="Rectangle_1591"  width="28.452" height="26.564" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-25">
-                        <rect id="Rectangle_1593"  width="17.413" height="15.153" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-26">
-                        <rect id="Rectangle_1594"  width="28.452" height="10.824" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-27">
-                        <rect id="Rectangle_1596"  width="32.282" height="30.8" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-28">
-                        <rect id="Rectangle_1598"  width="8.558" height="10.627" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-29">
-                        <rect id="Rectangle_1599"  width="32.556" height="29.121" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-30">
-                        <rect id="Rectangle_1601"  width="21.054" height="20.174" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-31">
-                        <rect id="Rectangle_1602"  width="27.94" height="17.114" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-32">
-                        <rect id="Rectangle_1603"  width="17.759" height="12.199" fill="none"/>
-                    </clipPath>
-                    <clipPath id="clip-path-33">
-                        <rect id="Rectangle_1604"  width="12.524" height="19.431" fill="none"/>
-                    </clipPath>
-                </defs>
 
-                <g id="Group_545"  clip-path="url(#clip-path)">
+                <g id="Group_545">
                     <g id="Group_544" >
-                        <g id="Group_543"  clip-path="url(#clip-path)" >
+                        <g id="Group_543"   >
                             <path id="Path_1654"  d="M258.3,156.076c0,3.564-2.326,5.726-6.1,5.726H248.61V150.3h3.581c3.779,0,6.1,2.212,6.1,5.776m-6.1,4.488c3,0,4.571-1.683,4.571-4.488s-1.568-4.554-4.571-4.554h-2.079v9.042Z" transform="translate(-88.596 -53.562)" />
                             <path id="Path_1655"  d="M270.155,153.89a3.753,3.753,0,0,1,3.366,1.8v-1.65h1.518v9.043h-1.518V161.4a3.777,3.777,0,0,1-3.383,1.832c-2.409,0-4.273-1.9-4.273-4.7,0-2.822,1.865-4.637,4.29-4.637m.3,1.3a3.053,3.053,0,0,0-3.053,3.333,3.073,3.073,0,1,0,3.053-3.333" transform="translate(-94.745 -54.841)" />
                             <path id="Path_1656"  d="M283.933,154.1H282.76V152.86h1.173v-2.277h1.5v2.277h2.36V154.1h-2.36v5.33c0,.891.33,1.2,1.254,1.2h1.106V161.9H286.44c-1.6,0-2.508-.66-2.508-2.475Z" transform="translate(-100.766 -53.662)" />
@@ -186,217 +89,217 @@ const DSIAfricaLogo = (props: SVGProps<SVGSVGElement>) => {
                             <path id="Path_1709"  d="M562.308,74.077c0-2.678,2.111-4.789,5.253-4.789,3.089,0,5.2,2.111,5.2,4.789,0,2.627-2.111,4.738-5.2,4.738-3.142,0-5.253-2.111-5.253-4.738" transform="translate(-200.387 -24.692)" fill="#f20505"/>
                             <g id="Group_452"  transform="translate(68.476 0.555)" opacity="0.45">
                                 <g id="Group_451" >
-                                    <g id="Group_450"  clip-path="url(#clip-path-3)">
+                                    <g id="Group_450"  >
                                         <path id="Path_1710"  d="M164.515,40.054H106.39V.862c5.809,2.015,6.122,8.88,10.984,9.595,5.655.832,16.133-3.658,19.293-2s10.479,5.655,15.635,5.322,4.324,3.326,4.823,8.981c.283,3.208,3.617,10.964,7.391,17.29" transform="translate(-106.39 -0.862)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_455"  transform="translate(77.922 44.666)" opacity="0.45">
                                 <g id="Group_454" >
-                                    <g id="Group_453"  clip-path="url(#clip-path-4)">
+                                    <g id="Group_453"  >
                                         <rect id="Rectangle_1557"  width="26.761" height="20.464" transform="translate(0 0.001)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_458"  transform="translate(90.908 25.973)" opacity="0.45">
                                 <g id="Group_457" >
-                                    <g id="Group_456"  clip-path="url(#clip-path-5)">
+                                    <g id="Group_456"  >
                                         <path id="Path_1711"  d="M141.242,40.354H170.4c2.611,7.814,10.416,22.111,14.775,23.095,5.156,1.164,13.305-4.657,15.468-2.162,1,1.151.79,4.11-.588,7.8H141.242Z" transform="translate(-141.242 -40.354)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_461"  transform="translate(90.908 25.973)" opacity="0.45">
                                 <g id="Group_460" >
-                                    <g id="Group_459"  clip-path="url(#clip-path-6)">
+                                    <g id="Group_459"  >
                                         <path id="Path_1712"  d="M141.242,40.354H170.4c.037.11.075.221.113.333l.013.037.006.016v0l.114.322.032.091.1.275.022.061.008.021.135.364.01.026c.1.25.193.505.3.765l.043.109.1.25.039.1.014.034.14.343.048.117.136.326.015.035.017.042.124.292.005.01.1.229.068.157.086.194.132.3.006.015.1.218.075.167.091.2.139.3.016.034.077.167.1.212.093.2.145.308.126.264.045.095.126.261.151.311c.2.413.409.829.62,1.244l0,.006q.227.447.461.894l.044.085.141.267.165.312q.332.621.673,1.236l0,.005c.4.717.805,1.426,1.218,2.117H141.242Z" transform="translate(-141.242 -40.354)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_464"  transform="translate(90.908 44.666)" opacity="0.45">
                                 <g id="Group_463" >
-                                    <g id="Group_462"  clip-path="url(#clip-path-7)">
+                                    <g id="Group_462"  >
                                         <rect id="Rectangle_1561"  width="13.774" height="10.036" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_467"  transform="translate(48.407)" opacity="0.45">
                                 <g id="Group_466" >
-                                    <g id="Group_465"  clip-path="url(#clip-path-8)">
+                                    <g id="Group_465"  >
                                         <path id="Path_1713"  d="M118.1,8.569V18.1h-42.9V3.416C80.9,1.245,87.324-.08,91.959,0c9.147.167,8.649,9.314,14.3,10.146,3.15.463,7.8-.725,11.842-1.581" transform="translate(-75.208 0)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_470"  transform="translate(68.476 0.555)" opacity="0.45">
                                 <g id="Group_469" >
-                                    <g id="Group_468"  clip-path="url(#clip-path-9)">
+                                    <g id="Group_468"  >
                                         <path id="Path_1714"  d="M106.39,18.409V.862h0l.089.032c.068.024.135.048.2.074l.126.051.153.063.129.057.15.068.122.059.138.07.124.064c.047.024.093.051.139.076l.112.063.165.1c.06.037.12.074.178.112l.123.079.114.079.121.085.1.074.119.089.107.083.109.088.1.082.113.1.1.084.107.1.084.077h0l.071.068.117.112.089.089.1.1.1.1.084.089.094.1.1.11.073.082.1.117.076.089.1.115.066.08,0,.005q.077.094.153.189l.005.006.089.115.071.091.091.12.062.082.1.129.058.078.095.13.05.068.1.145.131.185.006.01.136.2.015.022.119.172.037.053.1.141.059.084.074.109.08.116.052.077.1.146.031.045.122.176.01.014.132.188.012.017q.152.216.305.426l0,.006.126.171.053.071.093.122.048.062.131.167.019.024c.049.062.1.122.148.182l.009.011.035.041.118.139.038.042.118.134.048.052.107.115.061.063.1.1.059.057c.039.038.079.075.118.112l.05.046c.056.051.113.1.171.151l.012.01c.053.046.107.091.162.134l.055.043.118.09.072.052.117.082.068.044.121.078.073.045.127.073.07.039c.064.035.129.069.2.1l0,0,.017.008c.061.029.123.057.186.084l.075.031c.048.019.1.039.145.057l.075.026c.048.017.1.033.145.049l.085.026.142.04.093.024c.053.014.107.025.161.037l.071.015c.081.017.163.03.247.043s.169.023.255.033l.021,0c.082.01.165.018.248.025l.035,0c.085.007.171.014.257.019h.023l.259.012h.043l.265.006h.313l.28-.006h.021c.095,0,.189-.006.285-.011h.037c.095,0,.19-.01.286-.016l.028,0,.3-.022h.011q.316-.026.639-.061h.008c.434-.047.879-.106,1.331-.174l.019,0,.293-.046.042-.006.093-.015q.289-.047.581-.1l.021,0,.35-.063.019,0c.579-.107,1.163-.223,1.748-.345l.024-.005.685-.145.1-.022.2-.042.052-.012.145-.032.2-.042.012,0,.185-.04.168-.037.028-.006.2-.042.127-.028.068-.015.2-.042.086-.019.107-.023.194-.042.046-.01.147-.032L128.643,9l.007,0,.185-.039.191-.041.19-.041v9.534Zm12.127-7.856.265.006Zm6.992-.88.685-.145Z" transform="translate(-106.39 -0.862)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_473"  transform="translate(74.471 69.847)" opacity="0.45">
                                 <g id="Group_472" >
-                                    <g id="Group_471"  clip-path="url(#clip-path-10)">
+                                    <g id="Group_471"  >
                                         <rect id="Rectangle_1565"  width="38.67" height="26.789" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_476"  transform="translate(95.729 59.814)" opacity="0.45">
                                 <g id="Group_475" >
-                                    <g id="Group_474"  clip-path="url(#clip-path-11)">
+                                    <g id="Group_474"  >
                                         <path id="Path_1715"  d="M148.731,92.932h51.547a41.769,41.769,0,0,1-7.108,9.046c-8.815,8.482-13.472,10.312-12.474,15.8.02.111.039.225.057.339H148.731Z" transform="translate(-148.731 -92.932)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_479"  transform="translate(70.313 57.846)" opacity="0.45">
                                 <g id="Group_478" >
-                                    <g id="Group_477"  clip-path="url(#clip-path-12)">
+                                    <g id="Group_477"  >
                                         <rect id="Rectangle_1568"  width="28.563" height="19.165" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_482"  transform="translate(77.922 57.846)" opacity="0.45">
                                 <g id="Group_481" >
-                                    <g id="Group_480"  clip-path="url(#clip-path-13)">
+                                    <g id="Group_480"  >
                                         <rect id="Rectangle_1570"  width="20.955" height="7.283" transform="translate(0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_485"  transform="translate(95.729 59.814)" opacity="0.45">
                                 <g id="Group_484" >
-                                    <g id="Group_483"  clip-path="url(#clip-path-14)">
+                                    <g id="Group_483"  >
                                         <rect id="Rectangle_1572"  width="3.148" height="17.197" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_488"  transform="translate(95.729 59.814)" opacity="0.45">
                                 <g id="Group_487" >
-                                    <g id="Group_486"  clip-path="url(#clip-path-15)">
+                                    <g id="Group_486"  >
                                         <rect id="Rectangle_1574"  width="3.148" height="5.316" transform="translate(0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_491"  transform="translate(104.683 54.701)" opacity="0.45">
                                 <g id="Group_490" >
-                                    <g id="Group_489"  clip-path="url(#clip-path-16)">
+                                    <g id="Group_489"  >
                                         <path id="Path_1716"  d="M162.643,90.1h42.594a33.933,33.933,0,0,0,2.448-5.113H162.643Z" transform="translate(-162.643 -84.988)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_494"  transform="translate(40.731 29.314)" opacity="0.45">
                                 <g id="Group_493" >
-                                    <g id="Group_492"  clip-path="url(#clip-path-17)">
+                                    <g id="Group_492"  >
                                         <rect id="Rectangle_1577"  width="20.267" height="20.267" transform="translate(0 -0.001)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_497"  transform="translate(21.251 12.786)" opacity="0.45">
                                 <g id="Group_496" >
-                                    <g id="Group_495"  clip-path="url(#clip-path-18)">
+                                    <g id="Group_495"  >
                                         <rect id="Rectangle_1579"  width="13.97" height="13.971" transform="translate(0 -0.001)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_500"  transform="translate(38.611 24.426)" opacity="0.45">
                                 <g id="Group_499" >
-                                    <g id="Group_498"  clip-path="url(#clip-path-19)">
+                                    <g id="Group_498"  >
                                         <rect id="Rectangle_1581"  width="10.65" height="10.651" transform="translate(0 -0.001)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_503"  transform="translate(56.309 44.203)" opacity="0.45">
                                 <g id="Group_502" >
-                                    <g id="Group_501"  clip-path="url(#clip-path-20)">
+                                    <g id="Group_501"  >
                                         <rect id="Rectangle_1583"  width="23.634" height="23.634" transform="translate(0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_506"  transform="translate(13.479 43.974)" opacity="0.45">
                                 <g id="Group_505" >
-                                    <g id="Group_504"  clip-path="url(#clip-path-21)">
+                                    <g id="Group_504"  >
                                         <rect id="Rectangle_1585"  width="11.609" height="11.609" transform="translate(0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_509"  transform="translate(0 31.085)" opacity="0.45">
                                 <g id="Group_508" >
-                                    <g id="Group_507"  clip-path="url(#clip-path-22)">
+                                    <g id="Group_507"  >
                                         <rect id="Rectangle_1587"  width="7.477" height="7.477" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_512"  transform="translate(45.907 59.619)" opacity="0.45">
                                 <g id="Group_511" >
-                                    <g id="Group_510"  clip-path="url(#clip-path-23)">
+                                    <g id="Group_510"  >
                                         <rect id="Rectangle_1589"  width="5.843" height="5.844" transform="translate(0 0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_515"  transform="translate(105.861 74.176)" opacity="0.45">
                                 <g id="Group_514" >
-                                    <g id="Group_513"  clip-path="url(#clip-path-24)">
+                                    <g id="Group_513"  >
                                         <path id="Path_1717"  d="M192.926,115.246H164.474V141.81h20.06a33.075,33.075,0,0,0,1.772-16.08c-.747-4.1,1.67-6.162,6.62-10.484" transform="translate(-164.474 -115.246)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_518"  transform="translate(95.729 69.847)" opacity="0.45">
                                 <g id="Group_517" >
-                                    <g id="Group_516"  clip-path="url(#clip-path-25)">
+                                    <g id="Group_516"  >
                                         <rect id="Rectangle_1592"  width="17.413" height="15.153" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_521"  transform="translate(105.861 74.176)" opacity="0.45">
                                 <g id="Group_520" >
-                                    <g id="Group_519"  clip-path="url(#clip-path-26)">
+                                    <g id="Group_519"  >
                                         <path id="Path_1718"  d="M192.926,115.246H164.474V126.07h21.889c-.019-.115-.037-.229-.057-.34-.747-4.1,1.67-6.162,6.62-10.484" transform="translate(-164.474 -115.246)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_524"  transform="translate(82.138 90.114)" opacity="0.45">
                                 <g id="Group_523" >
-                                    <g id="Group_522"  clip-path="url(#clip-path-27)">
+                                    <g id="Group_522"  >
                                         <rect id="Rectangle_1595"  width="32.282" height="30.801" transform="translate(0 0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_527"  transform="translate(105.861 90.114)" opacity="0.45">
                                 <g id="Group_526" >
-                                    <g id="Group_525"  clip-path="url(#clip-path-28)">
+                                    <g id="Group_525"  >
                                         <rect id="Rectangle_1597"  width="8.558" height="10.626" transform="translate(0 0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_530"  transform="translate(93.366 100.74)" opacity="0.45">
                                 <g id="Group_529" >
-                                    <g id="Group_528"  clip-path="url(#clip-path-29)">
+                                    <g id="Group_528"  >
                                         <path id="Path_1719"  d="M177.616,156.518H145.06v29.121H160.1a22.357,22.357,0,0,0,4.154-5.614c2.661-5.323,7.152-7.319,6.653-9.148s-.332-5.156,3.992-9.813a14.684,14.684,0,0,0,2.718-4.545" transform="translate(-145.06 -156.518)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_533"  transform="translate(93.366 100.74)" opacity="0.45">
                                 <g id="Group_532" >
-                                    <g id="Group_531"  clip-path="url(#clip-path-30)">
+                                    <g id="Group_531"  >
                                         <rect id="Rectangle_1600"  width="21.054" height="20.173" transform="translate(0 0)" />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_536"  transform="translate(119.336 59.814)" opacity="0.45">
                                 <g id="Group_535" >
-                                    <g id="Group_534"  clip-path="url(#clip-path-31)">
+                                    <g id="Group_534"  >
                                         <path id="Path_1720"  d="M197.3,110.046h-11.89V92.932h27.94a41.787,41.787,0,0,1-7.108,9.046c-3.788,3.646-6.808,6.062-8.941,8.068" transform="translate(-185.41 -92.932)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_539"  transform="translate(112.645 33.147)" opacity="0.45">
                                 <g id="Group_538" >
-                                    <g id="Group_537"  clip-path="url(#clip-path-32)">
+                                    <g id="Group_537"  >
                                         <path id="Path_1721"  d="M175.014,51.5h10.417a68.449,68.449,0,0,0,7.341,12.2H175.014Z" transform="translate(-175.014 -51.499)"  />
                                     </g>
                                 </g>
                             </g>
                             <g id="Group_542"  transform="translate(127.789 103.091)" opacity="0.45">
                                 <g id="Group_541" >
-                                    <g id="Group_540"  clip-path="url(#clip-path-33)">
+                                    <g id="Group_540"  >
                                         <path id="Path_1722"  d="M208.405,160.17h2.661L203.7,179.6h-5.153v-6.317l3.7-3.7v-4.688l6.823-4.725" transform="translate(-198.542 -160.17)" />
                                     </g>
                                 </g>
