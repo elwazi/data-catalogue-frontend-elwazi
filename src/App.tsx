@@ -7,7 +7,7 @@ import {DC_BASENAME, DC_GA_MEASUREMENT_ID, DC_TITLE} from "./constants";
 import {theme} from "./theme";
 import {i18nProvider} from "./i18nProvider";
 import ReactGA from "react-ga4";
-import Logo from "./Logo";
+import ElwaziLogo from "./elwaziLogo";
 import Dashboard from "./Dashboard";
 import {MyLayout} from "./MyLayout";
 

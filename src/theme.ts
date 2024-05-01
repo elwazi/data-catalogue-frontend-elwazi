@@ -1,5 +1,6 @@
 import {defaultTheme} from "react-admin";
 import {RaThemeOptions} from "ra-ui-materialui/src/theme/types";
+import { Color } from "@mui/material";
 
 export const theme: RaThemeOptions = {
     ...defaultTheme,
@@ -40,3 +41,7 @@ export const theme: RaThemeOptions = {
         //     closedWidth: 70, // The default value is 55
     },
 };
+
+const yellow:Color = {
+
+}
