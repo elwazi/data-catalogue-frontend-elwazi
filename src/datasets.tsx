@@ -5,6 +5,8 @@ import {FieldValuesFilter} from './FieldValuesFilter';
 import {Card, CardContent} from '@mui/material';
 import {FilterLiveSearch, SavedQueriesList, TextInput} from "react-admin";
 import React from "react";
+import {ExportButton, FilterButton} from "ra-ui-materialui";
+import {SearchInput} from "ra-ui-materialui";
 
 const FilterSidebar = () => (
     <Card sx={{ order: -1}}>
@@ -21,13 +23,9 @@ const FilterSidebar = () => (
 const ListActions = () => (
     <TopToolbar>
         <SelectColumnsButton />
+        <ExportButton/>
     </TopToolbar>
 );
-
-const datasetFilters = [
-    <TextInput label="Search" source="q"  />,
-    <TextInput label="Name" source="d_name"  />,
-];
 
 export const DatasetList = () => {
     return (

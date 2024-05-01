@@ -17,6 +17,7 @@ export const createDataProvider = async () => {
 
     return fakeDataProvider({
         datasets: groupedData['Dataset'],
-        projects: groupedData['Project Info'],
+        // projects: groupedData['Project Info'],
+        projects: [],
     }, false);
 };
