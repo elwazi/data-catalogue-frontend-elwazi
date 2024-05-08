@@ -10,14 +10,23 @@ const groupBy = (array, key) => array.reduce((acc, obj) => ((acc[obj[key]] = acc
 export const createDataProvider = async () => {
     const url = `${apiUrl}`;
     const response = await httpClient(url, {method: 'GET'});
-    const data = response.json
-        .map((record, i) => ({id: i, ...record}));
 
-    let groupedData = groupBy(data, 'redcap_event_name');
-
-    return fakeDataProvider({
-        datasets: groupedData['Dataset'],
-        // projects: groupedData['Project Info'],
-        projects: [],
-    }, false);
+    let data = {
+        datasets: response.json.datasets.map((record, i) => ({
+            id: i,
+            ...record,
+            d_countries: record.d_countries
+                .split(',')
+                .map(i=>({name:i}))
+        })),
+        projects: response.json.projects.map((record, i) => ({
+            id: i,
+            ...record,
+            p_keywords: record.p_keywords
+                .split(/[,;]/)
+                .map(i=>i.trim())
+                .map(i=>({name:i}))
+        })),
+    };
+    return fakeDataProvider(data, true);
 };

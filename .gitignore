@@ -15,6 +15,7 @@ lerna-debug.log*
 
 .vite/
 dist/
+out/
 dist-ssr
 *.local
 
