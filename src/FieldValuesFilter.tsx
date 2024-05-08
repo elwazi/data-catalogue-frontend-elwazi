@@ -94,7 +94,6 @@ export const FieldValuesFilter = (
                     .filter(i => (typeof i ==='object') ? (i['name'] !== '') : true)
                     .filter(value => value !== '');
                 let distinctValues = [];
-                debugger;
                 if (typeof cleanValues[0] === 'object') {
                     distinctValues = getDistinctArray(cleanValues, 'name')
                 } else {
@@ -102,7 +101,6 @@ export const FieldValuesFilter = (
                 }
                 setColumnValues(distinctValues);
             } catch (error) {
-                debugger;
                 console.error(`Error fetching column values for column ${column} of resource ${resource}:`, error);
             }
         };
