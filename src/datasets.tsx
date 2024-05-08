@@ -33,13 +33,14 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-export const DatasetList = () => {
+export const DatasetList = (props) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
 
     return (
         <List
             actions={<ListActions/>}
             aside={<FilterSidebar/>}
+            filter={props.filter}
         >
             {
                 isSmall ? (
@@ -62,3 +63,5 @@ export const DatasetList = () => {
         </List>
     );
 };
+
+export const GenomicList = () => DatasetList({filter:{d_category:'Genomic'}})

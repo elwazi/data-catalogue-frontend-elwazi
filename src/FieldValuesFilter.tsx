@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {GetListParams, useDataProvider, useResourceContext} from 'ra-core';
-import {FilterList, FilterListItem, Button} from 'ra-ui-materialui';
-import ContentFilter from '@mui/icons-material/FilterList';
-import {Collapse, Typography} from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import {useTranslate} from "ra-core";
+import {GetListParams, useDataProvider, useResourceContext, useTranslate} from 'ra-core';
+import {Button, Count, FilterList, FilterListItem} from 'ra-ui-materialui';
+import {Collapse, Typography, Box} from '@mui/material';
+import {ExpandLess, ExpandMore} from '@mui/icons-material';
 
 interface Props {
     column: string;
@@ -29,17 +27,8 @@ export const FieldValuesFilter = (
     const dataProvider = useDataProvider();
     const resource = useResourceContext();
     const translate = useTranslate();
-    // let buttonLabel = translateLabel({
-    //     label: column,
-    //     resource,
-    //     source: column,
-    // });
     const buttonLabel = toTitleCase(translate(`resources.${resource}.fields.${column}`))
 
-
-// Example usage
-    const sentence = "hello world! how are you doing?";
-    const titleCased = toTitleCase(sentence);;
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
     };
@@ -50,7 +39,6 @@ export const FieldValuesFilter = (
     };
     const toggleFilter = (value: any, filters: any) => {
         const [selectedKey, selectedValue] = Object.entries(value)[0];
-        let existingFilters = filters?.[selectedKey] || [];
 
         if (selectedKey in filters) {
             if (filters?.[selectedKey].includes(selectedValue)) {
@@ -104,16 +92,20 @@ export const FieldValuesFilter = (
                             .map(value=>value.trim())
                             .filter(value=>value!=='')
                             .map(value => {
-                            return (
-                                // TODO allow multiple selection
+                                const filterForCategory = Object.fromEntries([[column, value]]);
+                                return (
                                 <FilterListItem
-                                    label={value}
+                                    label={
+                                        <Box display="flex" justifyContent="space-between">
+                                            <Typography>{value}</Typography>
+                                            <Count filter={filterForCategory}/>
+                                        </Box>
+                                    }
                                     key={value}
-                                    value={Object.fromEntries([[column, value]])}
+                                    value={filterForCategory}
                                     isSelected={isSelected}
                                     toggleFilter={toggleFilter}
                                 />
-
                             );
                         })}
                     </FilterList>
