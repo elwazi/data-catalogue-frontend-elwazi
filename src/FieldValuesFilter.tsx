@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {GetListParams, useDataProvider, useResourceContext} from 'ra-core';
-import {FilterList, FilterListItem, Button} from 'ra-ui-materialui';
-import ContentFilter from '@mui/icons-material/FilterList';
-import {Collapse, Typography} from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import {useTranslate} from "ra-core";
+import {GetListParams, useDataProvider, useResourceContext, useTranslate} from 'ra-core';
+import {Button, Count, FilterList, FilterListItem} from 'ra-ui-materialui';
+import {Box, Collapse, Typography} from '@mui/material';
+import {ExpandLess, ExpandMore} from '@mui/icons-material';
 
 interface Props {
     column: string;
@@ -18,6 +16,23 @@ function toTitleCase(str) {
         .join(' '); // Join the array back into a string
 }
 
+function getDistinctArray(array, key = null) {
+    return array.reduce((acc, currentItem) => {
+        // Determine the value to compare for distinctiveness
+        const valueToCompare = key ? currentItem[key] : currentItem;
+
+        // Check if the valueToCompare is already in the accumulator
+        if (!acc.some(item => {
+            // Compare item based on the key or valueToCompare directly
+            return key ? item[key] === valueToCompare : item === valueToCompare;
+        })) {
+            acc.push(currentItem);
+        }
+
+        return acc;
+    }, []);
+}
+
 export const FieldValuesFilter = (
     {
         column,
@@ -29,17 +44,8 @@ export const FieldValuesFilter = (
     const dataProvider = useDataProvider();
     const resource = useResourceContext();
     const translate = useTranslate();
-    // let buttonLabel = translateLabel({
-    //     label: column,
-    //     resource,
-    //     source: column,
-    // });
     const buttonLabel = toTitleCase(translate(`resources.${resource}.fields.${column}`))
 
-
-// Example usage
-    const sentence = "hello world! how are you doing?";
-    const titleCased = toTitleCase(sentence);;
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
     };
@@ -50,7 +56,6 @@ export const FieldValuesFilter = (
     };
     const toggleFilter = (value: any, filters: any) => {
         const [selectedKey, selectedValue] = Object.entries(value)[0];
-        let existingFilters = filters?.[selectedKey] || [];
 
         if (selectedKey in filters) {
             if (filters?.[selectedKey].includes(selectedValue)) {
@@ -74,10 +79,29 @@ export const FieldValuesFilter = (
                     pagination: {page: 1, perPage: 200},
                     sort: {field: 'id', order: 'ASC'},
                 } as GetListParams);
-                const distinctValues = [...new Set(data.map((item: any) => (valueGetter?.(item) ?? item[column]) as string))].sort();
+
+                const cleanValues = data.map((item: any) => (valueGetter?.(item) ?? item[column]))
+                    .filter(value => value !== undefined)
+                    .filter(value => value !== null)
+                    .flatMap(i => i)
+                    .map(i => (typeof i === 'string')?i.trim():i)
+                    .map(i => {
+                        if (typeof i === 'object') {
+                            i['name'] = i['name'].trim();
+                        }
+                        return i;
+                    })
+                    .filter(i => (typeof i ==='object') ? (i['name'] !== '') : true)
+                    .filter(value => value !== '');
+                let distinctValues = [];
+                if (typeof cleanValues[0] === 'object') {
+                    distinctValues = getDistinctArray(cleanValues, 'name')
+                } else {
+                    distinctValues = [...new Set(cleanValues)].sort();
+                }
                 setColumnValues(distinctValues);
             } catch (error) {
-                console.error('Error fetching column values:', error);
+                console.error(`Error fetching column values for column ${column} of resource ${resource}:`, error);
             }
         };
 
@@ -91,32 +115,35 @@ export const FieldValuesFilter = (
     return (
         <div style={{maxHeight: '300px', overflowY: 'auto'}}>
             <Button onClick={toggleCollapse}
-                label={buttonLabel}>
-                {isCollapsed ? <ExpandMore /> : <ExpandLess />}
+                    label={buttonLabel}>
+                {isCollapsed ? <ExpandMore/> : <ExpandLess/>}
             </Button>
             <Collapse in={!isCollapsed}>
-                    {/* hide label and icon because they are shown with the collapse controls*/}
-                    <FilterList
-                        label=""
-                        icon={null}>
-                        {columnValues
-                            .filter(value=>value!==null)
-                            .map(value=>value.trim())
-                            .filter(value=>value!=='')
-                            .map(value => {
+                {/* hide FilterList's label and icon because they are shown with the Collapse controls */}
+                <FilterList
+                    label=""
+                    icon={null}
+                >
+                    {columnValues
+                        .filter(value => value !== '')
+                        .map(value => {
+                            const filterForCategory = Object.fromEntries([[column, value]]);
                             return (
-                                // TODO allow multiple selection
                                 <FilterListItem
-                                    label={value}
-                                    key={value}
-                                    value={Object.fromEntries([[column, value]])}
+                                    label={
+                                        <Box display="flex" justifyContent="space-between">
+                                            <Typography>{value?.['name'] ?? value}</Typography>
+                                            <Count filter={filterForCategory}/>
+                                        </Box>
+                                    }
+                                    key={JSON.stringify(filterForCategory)}
+                                    value={filterForCategory}
                                     isSelected={isSelected}
                                     toggleFilter={toggleFilter}
                                 />
-
                             );
                         })}
-                    </FilterList>
+                </FilterList>
             </Collapse>
         </div>
     );

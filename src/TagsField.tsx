@@ -4,7 +4,7 @@ export const TagsField = ({ source }) => {
     // Split the comma-separated string into an array of strings
     const record = useRecordContext();
     const commaSeparatedString = record[source];
-    const delimiterRegex = /[,;]/;
+    const delimiterRegex = /[,; ]/;
     const elementsArray = commaSeparatedString
         ? commaSeparatedString.split(delimiterRegex).map(item => ({item: item.trim()}))
         : [];

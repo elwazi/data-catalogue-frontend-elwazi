@@ -10,10 +10,9 @@ en.resources = {
             p_accronym: 'Acronym',
             p_description: 'Description',
             p_keywords: 'Keywords',
-            p_name: 'Name',
-            p_title: 'Title',
-            p_website: 'Website',
-            project_metadata_complete: 'Metadata Complete'
+            p_name: 'Project Name',
+            p_title: 'Project Title',
+            p_website: 'Project Website',
         }
     },
     datasets: {
@@ -21,6 +20,7 @@ en.resources = {
             d_category: 'Category',
             d_name: "Name",
             d_status: 'Status',
+            d_countries: 'Countries',
             d_type: 'Type',
             data_use_permission: 'Data Use Permission',
             sample_size: 'Sample Size'

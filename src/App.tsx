@@ -2,7 +2,7 @@ import {Admin, Resource,Loading} from "react-admin";
 import {createDataProvider} from "./createDataProvider";
 import {BrowserRouter} from 'react-router-dom';
 import React, {useEffect, useState} from "react";
-import {DatasetList} from "./datasets";
+import {DatasetList, GenomicList} from "./datasets";
 import {DC_BASENAME, DC_GA_MEASUREMENT_ID, DC_TITLE} from "./constants";
 import {theme} from "./theme";
 import {i18nProvider} from "./i18nProvider";
@@ -10,6 +10,9 @@ import ReactGA from "react-ga4";
 import ElwaziLogo from "./elwaziLogo";
 import Dashboard from "./Dashboard";
 import {MyLayout} from "./MyLayout";
+import {ProjectsList} from "./projects";
+import {CustomRoutes} from "ra-core";
+import { Route } from 'react-router-dom';
 
 
 function enableAnalytics() {
@@ -39,8 +42,8 @@ export const App = () => {
                            basename={DC_BASENAME}
                            disableTelemetry
                     >
-                        <Resource name="datasets" list={DatasetList}/>
-                        {/*<Resource name="projects" list={ProjectsList} icon={AccountTreeIcon}/>*/}
+                        <Resource name="datasets" list={<DatasetList/>} />
+                        <Resource name="projects" list={ProjectsList}/>
                     </Admin>
                 {/*<CookieConsent enableDeclineButton*/}
                 {/*    onAccept={enableAnalytics}*/}

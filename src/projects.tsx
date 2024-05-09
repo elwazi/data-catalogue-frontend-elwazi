@@ -1,42 +1,55 @@
 import {
     ArrayField,
     ChipField,
-    Datagrid, DatagridConfigurable,
-    List, SelectColumnsButton,
+    DatagridConfigurable,
+    List,
+    SelectColumnsButton,
     SingleFieldList,
-    TextField, TopToolbar, WithListContext
+    TextField,
+    TopToolbar
 } from "react-admin";
+import {Card, CardContent} from '@mui/material';
+import {ReferenceManyCount} from "ra-ui-materialui";
 
 // TODO this should come from a module becuase it would be shared by other catalogues
-import {FieldValuesFilter} from './FieldValuesFilter';
-import {TagsField} from './TagsField';
-import {Card, CardContent, Typography} from '@mui/material';
+// import {FieldValuesFilter} from './FieldValuesFilter';
 
 const FilterSidebar = () => (
-    <Card sx={{ order: -1}}>
+    <Card sx={{order: -1}}>
         <CardContent>
-            <FieldValuesFilter column="project_metadata_complete"/>
+            {/*<FieldValuesFilter column="p_keywords"/>*/}
         </CardContent>
     </Card>
 );
 
 const ListActions = () => (
     <TopToolbar>
-        <SelectColumnsButton />
+        <SelectColumnsButton/>
     </TopToolbar>
 );
 export const ProjectsList = () => {
     return (
         <List
-            actions={<ListActions />}
-            aside={<FilterSidebar/>}>
+            actions={<ListActions/>}
+            // aside={<FilterSidebar/>}
+        >
             <DatagridConfigurable>
                 <TextField source="p_title"/>
-                <TextField source="p_website"/>
                 <TextField source="p_accronym"/>
+                <TextField source="p_website"/>
                 <TextField source="p_description"/>
-                <TagsField source="p_keywords"/>
-                <TextField source="project_metadata_complete"/>
+                <ArrayField source={"p_keywords"}>
+                    <SingleFieldList linkType={false}>
+                        <ChipField source="name" size="small"/>
+                    </SingleFieldList>
+                </ArrayField>
+                <ReferenceManyCount
+                    label="Datasets"
+                    reference="datasets"
+                    target="record_id"
+                    link
+                />
+
             </DatagridConfigurable>
         </List>
     )

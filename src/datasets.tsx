@@ -1,18 +1,27 @@
-import {Datagrid, DatagridConfigurable, List, SelectColumnsButton, TextField, TopToolbar} from "react-admin";
+import {
+    DatagridConfigurable,
+    FilterLiveSearch,
+    List,
+    SavedQueriesList,
+    SelectColumnsButton,
+    TextField,
+    TopToolbar
+} from "react-admin";
 
-// TODO this should come from a module becuase it would be shared by other catalogues
+// TODO this should come from a module because it would be shared by other catalogues
 import {FieldValuesFilter} from './FieldValuesFilter';
-import {Card, CardContent} from '@mui/material';
-import {FilterLiveSearch, SavedQueriesList, TextInput} from "react-admin";
+import {Card, CardContent, Theme, useMediaQuery} from '@mui/material';
 import React from "react";
-import {ExportButton, FilterButton} from "ra-ui-materialui";
-import {SearchInput} from "ra-ui-materialui";
+import {ExportButton, SimpleList} from "ra-ui-materialui";
+import {ArrayField} from "ra-ui-materialui";
+import {ChipField, SingleFieldList} from "ra-ui-materialui";
+import {ReferenceField} from "ra-ui-materialui";
 
 const FilterSidebar = () => (
-    <Card sx={{ order: -1}}>
+    <Card sx={{order: -1}}>
         <CardContent>
-            <SavedQueriesList />
-            <FilterLiveSearch />
+            <SavedQueriesList/>
+            <FilterLiveSearch/>
             <FieldValuesFilter column="d_category"/>
             <FieldValuesFilter column="d_type"/>
             <FieldValuesFilter column="d_status"/>
@@ -22,25 +31,49 @@ const FilterSidebar = () => (
 );
 const ListActions = () => (
     <TopToolbar>
-        <SelectColumnsButton />
+        <SelectColumnsButton/>
         <ExportButton/>
     </TopToolbar>
 );
 
-export const DatasetList = () => {
+export const DatasetList = (props) => {
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
+
     return (
         <List
-            actions={<ListActions />}
+            actions={<ListActions/>}
             aside={<FilterSidebar/>}
+            filter={props.filter}
         >
-            <DatagridConfigurable>
-                <TextField source="d_name"/>
-                <TextField source="d_category"/>
-                <TextField source="d_type"/>
-                <TextField source="d_status"/>
-                <TextField source="sample_size"/>
-                <TextField source="data_use_permission"/>
-            </DatagridConfigurable>
+            {
+                isSmall ? (
+                    <SimpleList
+                        primaryText={(record) => record.d_name}
+                        secondaryText={(record) => record.d_category}
+                        tertiaryText={(record) => record.d_status}
+                    />
+                ) : (
+                    <DatagridConfigurable>
+                        <TextField source="d_name"/>
+                        <TextField source="d_category"/>
+                        <TextField source="d_type"/>
+                        <TextField source="sample_size"/>
+                        <ArrayField source="d_countries">
+                            <SingleFieldList linkType={false}>
+                                <ChipField source="name" size="small" />
+                            </SingleFieldList>
+                        </ArrayField>
+                        <ReferenceField source="record_id"
+                                        reference="projects"
+                                        label="Projects" >
+                            <TextField source="p_accronym" />
+                        </ReferenceField>
+                        <TextField source="data_use_permission"/>
+                    </DatagridConfigurable>
+                )
+            }
         </List>
-    )
+    );
 };
+
+export const GenomicList = () => DatasetList({filter:{d_category:'Genomic'}})
