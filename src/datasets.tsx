@@ -16,10 +16,8 @@ import {
     ArrayField,
     ChipField,
     ExportButton,
-    FilterButton,
     NumberField,
     ReferenceField,
-    SearchInput,
     SimpleList,
     SingleFieldList
 } from "ra-ui-materialui";
