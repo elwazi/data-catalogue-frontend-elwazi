@@ -20,7 +20,7 @@ export const createDataProvider = async () => {
                 .map(i=>({name:i}))
         })),
         projects: response.json.projects.map((record, i) => ({
-            id: i,
+            id: record.record_id,
             ...record,
             p_keywords: record.p_keywords
                 .split(/[,;]/)
