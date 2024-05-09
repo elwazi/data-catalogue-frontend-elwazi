@@ -12,10 +12,17 @@ import {
 import {FieldValuesFilter} from './FieldValuesFilter';
 import {Card, CardContent, Theme, useMediaQuery} from '@mui/material';
 import React from "react";
-import {ExportButton, SimpleList} from "ra-ui-materialui";
-import {ArrayField} from "ra-ui-materialui";
-import {ChipField, SingleFieldList} from "ra-ui-materialui";
-import {ReferenceField} from "ra-ui-materialui";
+import {
+    ArrayField,
+    ChipField,
+    ExportButton,
+    FilterButton,
+    NumberField,
+    ReferenceField,
+    SearchInput,
+    SimpleList,
+    SingleFieldList
+} from "ra-ui-materialui";
 
 const FilterSidebar = () => (
     <Card sx={{order: -1}}>
@@ -57,7 +64,7 @@ export const DatasetList = (props) => {
                         <TextField source="d_name"/>
                         <TextField source="d_category"/>
                         <TextField source="d_type"/>
-                        <TextField source="sample_size"/>
+                        <NumberField source="sample_size"/>
                         <ArrayField source="d_countries">
                             <SingleFieldList linkType={false}>
                                 <ChipField source="name" size="small" />
@@ -65,7 +72,8 @@ export const DatasetList = (props) => {
                         </ArrayField>
                         <ReferenceField source="record_id"
                                         reference="projects"
-                                        label="Projects" >
+                                        link={"list"}
+                        >
                             <TextField source="p_accronym" />
                         </ReferenceField>
                         <TextField source="data_use_permission"/>

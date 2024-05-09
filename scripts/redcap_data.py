@@ -31,7 +31,7 @@ for record in records:
     if (record["redcap_event_name"] == "Project Info"):
         # print(record["redcap_event_name"])
         records.remove(record)
-
+““
 
 with open('/Users/wteh/PycharmProjects/data-catalogue-frontend-elwazi/JSON_endpoints/redcap_data.json', 'w') as f:
     json.dump(records, f, indent=4, separators=(',', ': '))

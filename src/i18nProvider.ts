@@ -23,7 +23,8 @@ en.resources = {
             d_countries: 'Countries',
             d_type: 'Type',
             data_use_permission: 'Data Use Permission',
-            sample_size: 'Sample Size'
+            sample_size: 'Sample Size',
+            record_id: 'Project'
         }
     }
 };
@@ -49,7 +50,8 @@ fr.resources ={
             "d_status": "Statut",
             "d_type": "Type",
             "data_use_permission": "Permission d'utilisation des données",
-            "sample_size": "Taille de l'échantillon"
+            "sample_size": "Taille de l'échantillon",
+            "record_id": "Projet"
         }
     }
 }
