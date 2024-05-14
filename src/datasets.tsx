@@ -25,7 +25,6 @@ import {
 const FilterSidebar = () => (
     <Card sx={{order: -1}}>
         <CardContent>
-            <SavedQueriesList/>
             <FilterLiveSearch/>
             <FieldValuesFilter column="d_category"/>
             <FieldValuesFilter column="d_type"/>
@@ -70,7 +69,6 @@ export const DatasetList = (props) => {
                         </ArrayField>
                         <ReferenceField source="record_id"
                                         reference="projects"
-                                        link={"list"}
                         >
                             <TextField source="p_accronym" />
                         </ReferenceField>

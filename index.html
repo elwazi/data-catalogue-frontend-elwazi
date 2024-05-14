@@ -7,61 +7,6 @@
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
         />
         <meta name="theme-color" content="#000000" />
-        <script>
-            function changeBaseHref() {
-                var baseElement = document.querySelector('base');
-                var newBaseHref = window.location.pathname;
-                if (!newBaseHref.endsWith('/')) {
-                    newBaseHref += '/';
-                }
-                if (baseElement) {
-                    baseElement.href = newBaseHref;
-                } else {
-                    var newBaseElement = document.createElement('base');
-                    newBaseElement.href = newBaseHref;
-                    document.head.appendChild(newBaseElement);
-                }
-            }
-
-            function findElementByAttributeAndValue(tagName, sourceAttributeName, scriptHrefMarker) {
-                var script = [...document.getElementsByTagName(tagName)].find(ele => ele[sourceAttributeName].includes(scriptHrefMarker));
-                return script;
-            }
-
-            function changeScriptSource(scriptHrefMarker) {
-                var script = findElementByAttributeAndValue('script', 'src', scriptHrefMarker);
-                if (script) {
-                    var newSource = script.src.replace(window.location.origin, '');
-                    // Reload the script
-                    script.parentNode.removeChild(script);
-                    var newScript = document.createElement('script');
-                    newScript.src = newSource;
-                    newScript.id = 'main-script';
-                    document.body.appendChild(newScript);
-                }
-            }
-
-            function changeCSSSource(hrefMarker) {
-                var oldLink = findElementByAttributeAndValue('link', 'href', hrefMarker);
-                if (oldLink) {
-                    var newLink = document.createElement('link');
-                    newLink.rel = 'stylesheet';
-                    newLink.type = 'text/css';
-                    newLink.href = oldLink.href.replace(window.location.origin+'/', '');
-                    newLink.id = 'main-css';
-                    oldLink.parentNode.replaceChild(newLink, oldLink);
-                }
-            }
-
-            // document.addEventListener('DOMContentLoaded', function() {
-            //     if (window.location.hostname !== 'localhost') {
-                    // changeBaseHref();
-                    // changeScriptSource('/assets/index-');
-                    // NOTE: no custom css file so this is not needed
-                    // changeCSSSource('/static/css/main.');
-                // }
-            // });
-        </script>
         <link rel="manifest" href="./manifest.json" />
         <link rel="shortcut icon" href="./favicon.ico" />
         <title>eLwazi Data Catalogue</title>

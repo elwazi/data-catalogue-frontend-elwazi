@@ -10,7 +10,7 @@ import {
     UrlField
 } from "react-admin";
 import {Card, CardContent} from '@mui/material';
-import {ExportButton, ReferenceManyCount} from "ra-ui-materialui";
+import {ExportButton, FilterLiveSearch, ReferenceManyCount} from "ra-ui-materialui";
 
 // TODO this should come from a module becuase it would be shared by other catalogues
 // import {FieldValuesFilter} from './FieldValuesFilter';
@@ -18,6 +18,7 @@ import {ExportButton, ReferenceManyCount} from "ra-ui-materialui";
 const FilterSidebar = () => (
     <Card sx={{order: -1}}>
         <CardContent>
+            <FilterLiveSearch/>
             {/*<FieldValuesFilter column="p_keywords"/>*/}
         </CardContent>
     </Card>
@@ -49,7 +50,6 @@ export const ProjectsList = () => {
                     label="Datasets"
                     reference="datasets"
                     target="record_id"
-                    link
                 />
 
             </DatagridConfigurable>
