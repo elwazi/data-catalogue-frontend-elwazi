@@ -1,9 +1,16 @@
+import os
+from dotenv import load_dotenv
+import config
+
+load_dotenv()
+
+token_id = os.getenv('TOKEN_ID')
+
 import json
 import requests
 
-
 schema = {
-    'token': '-',
+    'token': token_id,
     'content': 'metadata',
     'format': 'json',
     'returnFormat': 'json',
@@ -12,7 +19,7 @@ schema = {
 # The data is obtained from the results of a REDCap report, which needs to be updated when
 # REDCap field names change 
 data = {
-    'token': '-',
+    'token': token_id,
     'content': 'report',
     'format': 'json',
     'report_id': '1065',
@@ -23,11 +30,11 @@ data = {
     'returnFormat': 'json'
 }
 
-r_schema = requests.post('https://redcap.h3abionet.org/redcap/api/',data=schema)
+r_schema = requests.post(config.config['redcap_url'],data=schema)
 print('HTTP Status: ' + str(r_schema.status_code))
 redcap_schema = r_schema.json()
 
-r = requests.post('https://redcap.h3abionet.org/redcap/api/',data=data)
+r = requests.post(config.config['redcap_url'],data=data)
 print('HTTP Status: ' + str(r.status_code))
 records = r.json()
 
@@ -73,5 +80,31 @@ report = {
     "datasets": datasets
 }
 
-with open('/Users/wteh/PycharmProjects/data-catalogue-frontend-elwazi/JSON_endpoints/redcap_data.json', 'w') as f:
-    json.dump(report, f, indent=4, separators=(',', ': '))
+def update_field_name(data, old_field, new_field):
+    for item in data:
+        if old_field in item:
+            item[new_field] = item.pop(old_field)
+
+# Separate the projects and datasets
+projects = []
+datasets = []
+
+for item in records:
+    if item['redcap_event_name'] == 'Project':
+        projects.append(item)
+    elif item['redcap_event_name'] == 'Dataset':
+        datasets.append(item)
+
+# Update field names
+update_field_name(projects, 'p_acronym', 'p_accronym')
+update_field_name(datasets, 'p_acronym', 'p_accronym')
+
+# Create the output structure
+output_data = {
+    "projects": projects,
+    "datasets": datasets
+}
+
+with open(config.config['redcap_file'], 'w') as f:
+    json.dump(output_data, f, indent=4, separators=(',', ': '))
+

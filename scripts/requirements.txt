@@ -1,1 +1,2 @@
-requests
+Requests==2.31.0
+python-dotenv

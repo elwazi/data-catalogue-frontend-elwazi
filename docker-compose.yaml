@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  python:
+    build: ./scripts
+    volumes: 
+      - .:/app
+    env_file:
+      - scripts/.env
+
+  react-app:
+    build: .
+    ports:
+      - "81:80"
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - python
+    networks:
+      - catalog_network
+
+networks:
+  catalog_network:
+    driver: bridge
+

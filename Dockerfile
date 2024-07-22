@@ -16,6 +16,6 @@ FROM nginx:1.25.4-alpine-slim
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 81
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
