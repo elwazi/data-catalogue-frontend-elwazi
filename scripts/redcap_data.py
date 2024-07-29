@@ -98,6 +98,8 @@ for item in records:
 # Update field names
 update_field_name(projects, 'p_acronym', 'p_accronym')
 update_field_name(datasets, 'p_acronym', 'p_accronym')
+update_field_name(projects, 'd_category_1', 'd_category')
+update_field_name(datasets, 'd_category_1', 'd_category')
 
 # Create the output structure
 output_data = {
@@ -105,6 +107,6 @@ output_data = {
     "datasets": datasets
 }
 
-with open(config.config['redcap_file'], 'w') as f:
+with open('test.json', 'w') as f:
     json.dump(output_data, f, indent=4, separators=(',', ': '))
 
