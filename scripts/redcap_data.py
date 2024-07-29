@@ -107,6 +107,6 @@ output_data = {
     "datasets": datasets
 }
 
-with open('test.json', 'w') as f:
+with open(config.config['redcap_file'], 'w') as f:
     json.dump(output_data, f, indent=4, separators=(',', ': '))
 
