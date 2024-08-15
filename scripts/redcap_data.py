@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import config
+import sys
 
 load_dotenv()
 
@@ -8,6 +9,12 @@ token_id = os.getenv('TOKEN_ID')
 
 import json
 import requests
+
+try:
+    file_path = sys.argv[1]
+except ValueError:
+    print("Please provide file path")
+    sys.exit(1)
 
 schema = {
     'token': token_id,
@@ -107,6 +114,6 @@ output_data = {
     "datasets": datasets
 }
 
-with open(config.config['redcap_file'], 'w') as f:
+with open(file_path, 'w') as f:
     json.dump(output_data, f, indent=4, separators=(',', ': '))
 

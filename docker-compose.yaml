@@ -14,6 +14,8 @@ services:
       - "81:80"
     volumes:
       - .:/app
+    env_file:
+      - .env  # This will use .env file located at the root of the project
     environment:
       - NODE_ENV=production
     depends_on:
