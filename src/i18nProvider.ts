@@ -9,10 +9,10 @@ en.resources = {
         fields: {
             p_accronym: 'Acronym',
             p_description: 'Description',
-            p_keywords: 'Keywords',
-            p_name: 'Project Name',
-            p_title: 'Project Title',
-            p_website: 'Project Website',
+            p_keywords: 'Keyword(s)',
+            p_name: 'Name',
+            p_title: 'Title',
+            p_website: 'Website',
         }
     },
     datasets: {
@@ -22,9 +22,10 @@ en.resources = {
             d_status: 'Status',
             d_countries: 'Countries',
             d_type: 'Type',
-            data_use_permission: 'Data Use Permission',
+            data_use_permission: 'Data Use Permissions',
             sample_size: 'Sample Size',
-            record_id: 'Project'
+            record_id: 'Project',
+            redcap_data_access_group: 'Project'
         }
     }
 };

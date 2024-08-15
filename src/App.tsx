@@ -23,6 +23,7 @@ export const App = () => {
     const [dataProvider, setDataProvider] = useState(null);
 
     useEffect(() => {
+        enableAnalytics(); // Initialize Google Analytics when the component mounts
         const fetchDataProvider = async () => {
             const _dataProvider = await createDataProvider();
             setDataProvider(_dataProvider);
@@ -45,11 +46,6 @@ export const App = () => {
                         <Resource name="datasets" list={<DatasetList/>} />
                         <Resource name="projects" list={ProjectsList}/>
                     </Admin>
-                {/*<CookieConsent enableDeclineButton*/}
-                {/*    onAccept={enableAnalytics}*/}
-                {/*    cookieName="dcAnalyticsConsent">*/}
-                {/*    This website uses cookies to enhance the user experience.*/}
-                {/*</CookieConsent>*/}
             </div>
         )
         : (<div>Loading...</div>);

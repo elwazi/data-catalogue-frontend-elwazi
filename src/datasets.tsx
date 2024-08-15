@@ -7,11 +7,13 @@ import {
     TextField,
     TopToolbar
 } from "react-admin";
+import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the path as necessary
 
 // TODO this should come from a module because it would be shared by other catalogues
 import {FieldValuesFilter} from './FieldValuesFilter';
 import {Card, CardContent, Theme, useMediaQuery} from '@mui/material';
 import React from "react";
+
 import {
     ArrayField,
     ChipField,
@@ -27,6 +29,7 @@ const FilterSidebar = () => (
         <CardContent>
             <FilterLiveSearch/>
             <FieldValuesFilter column="d_category"/>
+            <FieldValuesFilter column="redcap_data_access_group"/>
             <FieldValuesFilter column="d_type"/>
             <FieldValuesFilter column="d_status"/>
             <FieldValuesFilter column="data_use_permission"/>
@@ -44,7 +47,8 @@ export const DatasetList = (props) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
 
     return (
-        <List
+        <List {...props}
+            bulkActionButtons={<CustomBulkActionButtons />}
             actions={<ListActions/>}
             aside={<FilterSidebar/>}
             filter={props.filter}

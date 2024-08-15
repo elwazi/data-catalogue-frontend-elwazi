@@ -11,6 +11,8 @@ import {
 } from "react-admin";
 import {Card, CardContent} from '@mui/material';
 import {ExportButton, FilterLiveSearch, ReferenceManyCount} from "ra-ui-materialui";
+import ReadMoreTextField from './ReadMoreTextField';
+import ConditionalUrlField from './ConditionalUrlField';
 
 // TODO this should come from a module becuase it would be shared by other catalogues
 // import {FieldValuesFilter} from './FieldValuesFilter';
@@ -39,8 +41,8 @@ export const ProjectsList = () => {
             <DatagridConfigurable>
                 <TextField source="p_title"/>
                 <TextField source="p_accronym"/>
-                <UrlField source="p_website"/>
-                <TextField source="p_description"/>
+                <ConditionalUrlField source="p_website"/>
+                <ReadMoreTextField source="p_description" />
                 <ArrayField source={"p_keywords"}>
                     <SingleFieldList linkType={false}>
                         <ChipField source="name" size="small"/>
