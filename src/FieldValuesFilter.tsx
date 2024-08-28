@@ -72,27 +72,30 @@ export const FieldValuesFilter = (
         return filters;
     };
 
+    const splitValues = (value: string) => {
+        return value.split(',').map(v => v.trim()).filter(v => v !== '');
+    };
+
     useEffect(() => {
         const fetchColumnValues = async () => {
             try {
-                const {data} = await dataProvider.getList(resource, {
-                    pagination: {page: 1, perPage: 200},
-                    sort: {field: 'id', order: 'ASC'},
+                const { data } = await dataProvider.getList(resource, {
+                    pagination: { page: 1, perPage: 200 },
+                    sort: { field: 'id', order: 'ASC' },
                 } as GetListParams);
 
                 const cleanValues = data.map((item: any) => (valueGetter?.(item) ?? item[column]))
-                    .filter(value => value !== undefined)
-                    .filter(value => value !== null)
-                    .flatMap(i => i)
-                    .map(i => (typeof i === 'string')?i.trim():i)
+                    .filter(value => value !== undefined && value !== null)
+                    .flatMap(i => typeof i === 'string' ? splitValues(i) : i)
                     .map(i => {
                         if (typeof i === 'object') {
                             i['name'] = i['name'].trim();
                         }
                         return i;
                     })
-                    .filter(i => (typeof i ==='object') ? (i['name'] !== '') : true)
+                    .filter(i => (typeof i === 'object') ? (i['name'] !== '') : true)
                     .filter(value => value !== '');
+
                 let distinctValues = [];
                 if (typeof cleanValues[0] === 'object') {
                     distinctValues = getDistinctArray(cleanValues, 'name')
@@ -109,7 +112,8 @@ export const FieldValuesFilter = (
     }, [
         dataProvider,
         column,
-        resource
+        resource,
+        valueGetter
     ]);
 
     return (
