@@ -1,6 +1,6 @@
 # eLwazi Catalogue
 
-The catalogue is a React webapp using react admin.
+The eLwazi Catalogue is a React webapp using react admin.
 
 ## Local Installation:
 
