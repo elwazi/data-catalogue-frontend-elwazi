@@ -13,6 +13,7 @@ import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the p
 import {FieldValuesFilter} from './FieldValuesFilter';
 import {Card, CardContent, Theme, useMediaQuery} from '@mui/material';
 import React from "react";
+import CommaField from './CommaField'; // Adjust the path accordingly
 
 import {
     ArrayField,
@@ -29,6 +30,7 @@ const FilterSidebar = () => (
         <CardContent>
             <FilterLiveSearch/>
             <FieldValuesFilter column="d_category"/>
+            <FieldValuesFilter column="d_countries"/>
             <FieldValuesFilter column="redcap_data_access_group"/>
             <FieldValuesFilter column="d_type"/>
             <FieldValuesFilter column="d_status"/>
@@ -63,20 +65,16 @@ export const DatasetList = (props) => {
                 ) : (
                     <DatagridConfigurable>
                         <TextField source="d_name"/>
-                        <TextField source="d_category"/>
+                        <CommaField source="d_category"/>
                         <TextField source="d_type"/>
+                        <CommaField source="d_countries" />
                         <NumberField source="sample_size"/>
-                        <ArrayField source="d_countries">
-                            <SingleFieldList linkType={false}>
-                                <ChipField source="name" size="small" />
-                            </SingleFieldList>
-                        </ArrayField>
                         <ReferenceField source="record_id"
                                         reference="projects"
                         >
                             <TextField source="p_accronym" />
                         </ReferenceField>
-                        <TextField source="data_use_permission"/>
+                        <CommaField source="data_use_permission"/>
                     </DatagridConfigurable>
                 )
             }

@@ -14,10 +14,7 @@ export const createDataProvider = async () => {
     let data = {
         datasets: response.json.datasets.map((record, i) => ({
             id: i,
-            ...record,
-            d_countries: record.d_countries
-                .split(',')
-                .map(i=>({name:i}))
+            ...record
         })),
         projects: response.json.projects.map((record, i) => ({
             id: record.record_id,

@@ -28,7 +28,11 @@ export const App = () => {
             const _dataProvider = await createDataProvider();
             setDataProvider(_dataProvider);
         }
+        document.body.style.zoom = "85%";
         fetchDataProvider();
+        localStorage.clear();
+        localStorage.removeItem("RaStore.preferences.datasets.datagrid.availableColumns");
+        localStorage.removeItem("RaStore.datasets.listParams");
     }, []);
 
     return dataProvider
