@@ -22,7 +22,7 @@ en.resources = {
             d_status: 'Status',
             d_countries: 'Countries',
             d_type: 'Type',
-            data_use_permission: 'Data Use Ontology',
+            data_use_permission: 'Data Use Conditions',
             sample_size: 'Sample Size',
             record_id: 'Project',
             redcap_data_access_group: 'Project'

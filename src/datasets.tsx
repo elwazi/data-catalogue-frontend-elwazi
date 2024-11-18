@@ -64,16 +64,16 @@ export const DatasetList = (props) => {
                     />
                 ) : (
                     <DatagridConfigurable>
+                        <ReferenceField source="record_id"
+                            reference="projects"
+                        >
+                            <TextField source="p_accronym" />
+                        </ReferenceField>
                         <TextField source="d_name"/>
                         <CommaField source="d_category"/>
                         <TextField source="d_type"/>
                         <CommaField source="d_countries" />
                         <NumberField source="sample_size"/>
-                        <ReferenceField source="record_id"
-                                        reference="projects"
-                        >
-                            <TextField source="p_accronym" />
-                        </ReferenceField>
                         <CommaField source="data_use_permission"/>
                     </DatagridConfigurable>
                 )
