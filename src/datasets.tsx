@@ -6,15 +6,18 @@ import {
     SelectColumnsButton,
     TextField,
     TopToolbar,
-    downloadCSV
+    downloadCSV,
+    ListContextProvider,
+    useListContext
 } from "react-admin";
 import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the path as necessary
 
 // TODO this should come from a module because it would be shared by other catalogues
 import {FieldValuesFilter} from './FieldValuesFilter';
-import {Card, CardContent, Theme, useMediaQuery} from '@mui/material';
+import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery} from '@mui/material';
 import React from "react";
 import CommaField from './CommaField'; // Adjust the path accordingly
+import DatasetCharts from './DatasetCharts';
 
 import {
     ArrayField,
@@ -104,6 +107,31 @@ const ListActions = () => (
     </TopToolbar>
 );
 
+// Component to render charts below the datagrid
+const DatasetListCharts = () => {
+    return (
+        <Box mt={4} sx={{ marginLeft: '16px', marginRight: '16px' }}>
+            <Divider sx={{ my: 2, backgroundColor: '#c13f27', opacity: 0.3 }} />
+            <Typography variant="h6" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
+                Dataset Analytics for all datasets
+            </Typography>
+            <DatasetCharts />
+        </Box>
+    );
+};
+
+// Custom layout component that wraps the List and Charts
+const CustomListLayout = ({ children, ...props }: any) => {
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div>
+                {children}
+            </div>
+            <DatasetListCharts />
+        </div>
+    );
+};
+
 export const DatasetList = (props: any) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
 
@@ -114,6 +142,7 @@ export const DatasetList = (props: any) => {
             aside={<FilterSidebar/>}
             filter={props.filter}
             exporter={exporter}
+            component={CustomListLayout}
         >
             {
                 isSmall ? (
