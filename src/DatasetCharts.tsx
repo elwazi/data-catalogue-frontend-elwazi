@@ -41,7 +41,12 @@ interface ChartData {
   value: number;
 }
 
-export const DatasetCharts = () => {
+// Interface for component props
+interface DatasetChartsProps {
+  filter?: Record<string, any>;
+}
+
+export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => {
   const dataProvider = useDataProvider();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,11 +58,11 @@ export const DatasetCharts = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Fetch datasets with pagination
+        // Fetch datasets with pagination and apply the current filter
         const { data } = await dataProvider.getList('datasets', {
           pagination: { page: 1, perPage: 1000 }, // Adjust as needed
           sort: { field: 'id', order: 'ASC' },
-          filter: {},
+          filter: filter, // Use the filter prop
         });
         
         setDatasets(data);
@@ -105,7 +110,7 @@ export const DatasetCharts = () => {
     };
     
     fetchData();
-  }, [dataProvider]);
+  }, [dataProvider, filter]); // Add filter to dependency array to re-fetch when filters change
   
   if (loading) {
     return (
