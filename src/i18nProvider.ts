@@ -21,6 +21,7 @@ en.resources = {
             d_name: "Name",
             d_status: 'Status',
             d_countries: 'Countries',
+            dh_clinical: 'Clinical',
             d_type: 'Type',
             data_use_permission: 'Data Use Conditions',
             sample_size: 'Sample Size',
