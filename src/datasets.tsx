@@ -5,7 +5,8 @@ import {
     SavedQueriesList,
     SelectColumnsButton,
     TextField,
-    TopToolbar
+    TopToolbar,
+    downloadCSV
 } from "react-admin";
 import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the path as necessary
 
@@ -25,6 +26,63 @@ import {
     SingleFieldList
 } from "ra-ui-materialui";
 
+// Define the type for our dataset record
+interface DatasetRecord {
+    redcap_data_access_group?: string;
+    d_name?: string;
+    d_category?: string;
+    d_type?: string;
+    d_countries?: string;
+    sample_size?: number | string;
+    data_use_permission?: string;
+    [key: string]: any; // For other properties that might exist
+}
+
+// Custom exporter function to only export specific fields
+const exporter = (data: any[]) => {
+    // Extract only the fields we want to export
+    const exportableData = data.map((record: any) => {
+        const exportRecord: DatasetRecord = {
+            redcap_data_access_group: record.redcap_data_access_group || '',
+            d_name: record.d_name || '',
+            d_category: record.d_category || '',
+            d_type: record.d_type || '',
+            d_countries: record.d_countries || '',
+            sample_size: record.sample_size || '',
+            data_use_permission: record.data_use_permission || ''
+        };
+        return exportRecord;
+    });
+    
+    // Convert to CSV
+    const headers = [
+        'redcap_data_access_group', 
+        'd_name', 
+        'd_category', 
+        'd_type', 
+        'd_countries', 
+        'sample_size', 
+        'data_use_permission'
+    ];
+    
+    // Create CSV content
+    const csvContent = [
+        headers.join(','), // CSV header row
+        ...exportableData.map(record => 
+            headers.map(header => {
+                const value = record[header as keyof DatasetRecord];
+                // Escape values that contain commas by wrapping in quotes
+                return typeof value === 'string' && value.includes(',') 
+                    ? `"${value}"` 
+                    : value;
+            }).join(',')
+        )
+    ].join('\n');
+    
+    // Download the CSV
+    downloadCSV(csvContent, 'datasets');
+};
+
 const FilterSidebar = () => (
     <Card sx={{order: -1}}>
         <CardContent>
@@ -38,14 +96,15 @@ const FilterSidebar = () => (
         </CardContent>
     </Card>
 );
+
 const ListActions = () => (
     <TopToolbar>
         <SelectColumnsButton/>
-        <ExportButton/>
+        <ExportButton label="Export" exporter={exporter} />
     </TopToolbar>
 );
 
-export const DatasetList = (props) => {
+export const DatasetList = (props: any) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
 
     return (
@@ -54,6 +113,7 @@ export const DatasetList = (props) => {
             actions={<ListActions/>}
             aside={<FilterSidebar/>}
             filter={props.filter}
+            exporter={exporter}
         >
             {
                 isSmall ? (
