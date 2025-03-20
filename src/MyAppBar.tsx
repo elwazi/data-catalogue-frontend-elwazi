@@ -12,8 +12,9 @@ const WhiteElwaziLogo = styled(ElwaziLogo)({
 });
 
 const WhiteAfrigenLogo = styled(AfrigenLogo)({
-    '& path, & svg': {
-        fill: '#ffffff !important'
+    '& path, & svg, & g': {
+        fill: '#ffffff !important',
+        color: '#ffffff !important'
     }
 });
 

@@ -152,23 +152,33 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
           <Typography variant="h6" gutterBottom sx={{ color: '#c13f27', fontWeight: 'bold' }}>
             Datasets by Country
           </Typography>
-          <ResponsiveContainer width="100%" height={400}>
+          <ResponsiveContainer width="100%" height={600}>
             <BarChart
               data={countriesData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
+              margin={{ top: 20, right: 30, left: 20, bottom: 160 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis 
                 dataKey="name" 
                 angle={-45} 
                 textAnchor="end"
-                height={70}
+                height={100}
                 interval={0}
                 tick={{ fill: '#333' }}
               />
               <YAxis tick={{ fill: '#333' }} />
               <Tooltip content={<CustomTooltip />} />
-              <Legend wrapperStyle={{ color: '#333' }} />
+              <Legend 
+                wrapperStyle={{ 
+                  color: '#333',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                }}
+                verticalAlign="bottom"
+                height={36}
+              />
               <Bar 
                 dataKey="value" 
                 name="Number of Datasets" 

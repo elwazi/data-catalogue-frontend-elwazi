@@ -108,34 +108,34 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-// Component to render charts below the datagrid
-const DatasetListCharts = () => {
-    const { filterValues } = useListContext();
-    
-    return (
-        <Box mt={4} sx={{ marginLeft: '16px', marginRight: '16px' }}>
-            <Divider sx={{ my: 2, backgroundColor: '#c13f27', opacity: 0.3 }} />
-            <Typography variant="h6" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
-                Dataset Analytics {Object.keys(filterValues).length > 0 ? 'for filtered datasets' : 'for all datasets'}
-            </Typography>
-            <DatasetCharts filter={filterValues} />
-        </Box>
-    );
-};
-
 // Custom layout component that wraps the List and Charts
 const CustomListLayout = ({ children, ...props }: any) => {
     const listContext = useListContext();
     
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div>
-                {children}
-            </div>
             <ListContextProvider value={listContext}>
                 <DatasetListCharts />
             </ListContextProvider>
+            <div>
+                {children}
+            </div>
         </div>
+    );
+};
+
+// Component to render charts below the datagrid
+const DatasetListCharts = () => {
+    const { filterValues } = useListContext();
+    
+    return (
+        <Box mb={4} sx={{ marginLeft: '16px', marginRight: '16px' }}>
+            <Typography variant="h6" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
+                Dataset Analytics {Object.keys(filterValues).length > 0 ? 'for filtered datasets' : 'for all datasets'}
+            </Typography>
+            <DatasetCharts filter={filterValues} />
+            <Divider sx={{ my: 2, backgroundColor: '#c13f27', opacity: 0.3 }} />
+        </Box>
     );
 };
 
