@@ -9,20 +9,26 @@ interface Props {
     valueGetter?: Function;
 }
 
-function toTitleCase(str) {
+// Interface for values that might be objects with a name property
+interface NamedValue {
+    name: string;
+    [key: string]: any;
+}
+
+function toTitleCase(str: string): string {
     return str
         .split(' ') // Split the string into an array of words
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter of each word and make the rest lowercase
+        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter of each word and make the rest lowercase
         .join(' '); // Join the array back into a string
 }
 
-function getDistinctArray(array, key = null) {
-    return array.reduce((acc, currentItem) => {
+function getDistinctArray(array: any[], key: string | null = null): any[] {
+    return array.reduce((acc: any[], currentItem: any) => {
         // Determine the value to compare for distinctiveness
         const valueToCompare = key ? currentItem[key] : currentItem;
 
         // Check if the valueToCompare is already in the accumulator
-        if (!acc.some(item => {
+        if (!acc.some((item: any) => {
             // Compare item based on the key or valueToCompare directly
             return key ? item[key] === valueToCompare : item === valueToCompare;
         })) {
@@ -33,13 +39,24 @@ function getDistinctArray(array, key = null) {
     }, []);
 }
 
+// Helper function to check if a value is a NamedValue
+function isNamedValue(value: any): value is NamedValue {
+    return typeof value === 'object' && value !== null && 'name' in value;
+}
+
+// Check if a field should be treated as comma-separated
+const isCommaSeparatedField = (column: string): boolean => {
+    return ['d_category', 'd_countries', 'data_use_permission'].includes(column);
+};
+
 export const FieldValuesFilter = (
     {
         column,
         valueGetter
     }: Props) => {
-    const [columnValues, setColumnValues] = useState<string[]>([]);
+    const [columnValues, setColumnValues] = useState<(string | NamedValue)[]>([]);
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [counts, setCounts] = useState<Record<string, number>>({});
 
     const dataProvider = useDataProvider();
     const resource = useResourceContext();
@@ -73,14 +90,14 @@ export const FieldValuesFilter = (
     };
 
     const splitValues = (value: string) => {
-        return value.split(',').map(v => v.trim()).filter(v => v !== '');
+        return value.split(',').map((v: string) => v.trim()).filter(v => v !== '');
     };
 
     useEffect(() => {
         const fetchColumnValues = async () => {
             try {
                 const { data } = await dataProvider.getList(resource, {
-                    pagination: { page: 1, perPage: 200 },
+                    pagination: { page: 1, perPage: 1000 },
                     sort: { field: 'id', order: 'ASC' },
                 } as GetListParams);
 
@@ -88,21 +105,38 @@ export const FieldValuesFilter = (
                     .filter(value => value !== undefined && value !== null)
                     .flatMap(i => typeof i === 'string' ? splitValues(i) : i)
                     .map(i => {
-                        if (typeof i === 'object') {
-                            i['name'] = i['name'].trim();
+                        if (isNamedValue(i)) {
+                            i.name = i.name.trim();
                         }
                         return i;
                     })
-                    .filter(i => (typeof i === 'object') ? (i['name'] !== '') : true)
+                    .filter(i => isNamedValue(i) ? (i.name !== '') : true)
                     .filter(value => value !== '');
 
-                let distinctValues = [];
-                if (typeof cleanValues[0] === 'object') {
-                    distinctValues = getDistinctArray(cleanValues, 'name')
+                let distinctValues: (string | NamedValue)[] = [];
+                if (cleanValues.length > 0 && isNamedValue(cleanValues[0])) {
+                    distinctValues = getDistinctArray(cleanValues, 'name');
                 } else {
-                    distinctValues = [...new Set(cleanValues)].sort();
+                    // Use Array.from() to convert Set to array for better TypeScript compatibility
+                    distinctValues = Array.from(new Set(cleanValues)).sort();
                 }
                 setColumnValues(distinctValues);
+
+                // Calculate accurate counts for comma-separated fields
+                if (isCommaSeparatedField(column)) {
+                    const countMap: Record<string, number> = {};
+                    distinctValues.forEach((value: string | NamedValue) => {
+                        const valueStr = isNamedValue(value) ? value.name : String(value);
+                        // Count records containing this category
+                        const count = data.filter(record => {
+                            if (!record[column]) return false;
+                            const values = record[column].split(',').map((v: string) => v.trim());
+                            return values.includes(valueStr);
+                        }).length;
+                        countMap[valueStr] = count;
+                    });
+                    setCounts(countMap);
+                }
             } catch (error) {
                 console.error(`Error fetching column values for column ${column} of resource ${resource}:`, error);
             }
@@ -115,6 +149,18 @@ export const FieldValuesFilter = (
         resource,
         valueGetter
     ]);
+
+    // Custom Count component that uses our pre-calculated counts for comma-separated fields
+    const CustomCount = ({ value }: { value: string }) => {
+        if (!isCommaSeparatedField(column)) {
+            // For non-comma-separated fields, use the standard filtering approach
+            const filterObj = Object.fromEntries([[column, value]]);
+            return <Count filter={filterObj} />;
+        }
+        
+        // For comma-separated fields, use our pre-calculated counts
+        return <span>{counts[value] || 0}</span>;
+    };
 
     return (
         <div style={{maxHeight: '300px', overflowY: 'auto'}}>
@@ -131,13 +177,19 @@ export const FieldValuesFilter = (
                     {columnValues
                         .filter(value => value !== '')
                         .map(value => {
-                            const filterForCategory = Object.fromEntries([[column, value]]);
+                            const valueStr = isNamedValue(value) ? value.name : String(value);
+                            // For filtering, we need to create a special filter for comma-separated fields
+                            let filterValue = valueStr;
+                            
+                            // Create an object with the correct filter syntax
+                            const filterForCategory = Object.fromEntries([[column, filterValue]]);
+                            
                             return (
                                 <FilterListItem
                                     label={
                                         <Box display="flex" justifyContent="space-between">
-                                            <Typography>{value?.['name'] ?? value}</Typography>
-                                            <Count filter={filterForCategory}/>
+                                            <Typography>{valueStr}</Typography>
+                                            <CustomCount value={valueStr} />
                                         </Box>
                                     }
                                     key={JSON.stringify(filterForCategory)}

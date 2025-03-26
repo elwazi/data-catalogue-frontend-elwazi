@@ -53,6 +53,7 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
   const [datasets, setDatasets] = useState<DatasetRecord[]>([]);
   const [countriesData, setCountriesData] = useState<ChartData[]>([]);
   const [typesData, setTypesData] = useState<ChartData[]>([]);
+  const [categoriesData, setCategoriesData] = useState<ChartData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,6 +72,8 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
         const countriesMap = new Map<string, number>();
         // Process data for types chart
         const typesMap = new Map<string, number>();
+        // Process data for categories chart
+        const categoriesMap = new Map<string, number>();
         
         data.forEach((dataset: DatasetRecord) => {
           // Process countries (comma-separated values)
@@ -87,6 +90,16 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
           if (dataset.d_type) {
             typesMap.set(dataset.d_type, (typesMap.get(dataset.d_type) || 0) + 1);
           }
+          
+          // Process categories (comma-separated values)
+          if (dataset.d_category) {
+            const categories = dataset.d_category.split(',').map(c => c.trim());
+            categories.forEach(category => {
+              if (category) {
+                categoriesMap.set(category, (categoriesMap.get(category) || 0) + 1);
+              }
+            });
+          }
         });
         
         // Convert maps to arrays for charts
@@ -98,9 +111,14 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
         const typesArray: ChartData[] = Array.from(typesMap.entries())
           .map(([name, value]) => ({ name, value }))
           .sort((a, b) => b.value - a.value);
+          
+        const categoriesArray: ChartData[] = Array.from(categoriesMap.entries())
+          .map(([name, value]) => ({ name, value }))
+          .sort((a, b) => b.value - a.value);
         
         setCountriesData(countriesArray);
         setTypesData(typesArray);
+        setCategoriesData(categoriesArray);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -193,40 +211,42 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
       <Grid item xs={12} md={6}>
         <Paper elevation={3} sx={{ p: 2, height: '100%', backgroundColor: '#FFF3E0', borderRadius: '8px' }}>
           <Typography variant="h6" gutterBottom sx={{ color: '#c13f27', fontWeight: 'bold' }}>
-            Datasets by Type
+            Datasets by Category
           </Typography>
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={typesData}
-                cx="50%"
-                cy="50%"
-                labelLine={true}
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                outerRadius={150}
-                fill="#c13f27"
-                dataKey="value"
-              >
-                {typesData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={THEME_COLORS[index % THEME_COLORS.length]} 
-                    stroke="#fff"
-                    strokeWidth={2}
-                  />
-                ))}
-              </Pie>
-              <Tooltip 
-                formatter={(value, name, props) => [value, 'Datasets']}
-                contentStyle={{ backgroundColor: '#FFF3E0', border: '1px solid #c13f27' }}
-                itemStyle={{ color: '#c13f27' }}
+          <ResponsiveContainer width="100%" height={600}>
+            <BarChart
+              data={categoriesData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 160 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+              <XAxis 
+                dataKey="name" 
+                angle={-45} 
+                textAnchor="end"
+                height={100}
+                interval={0}
+                tick={{ fill: '#333' }}
               />
+              <YAxis tick={{ fill: '#333' }} />
+              <Tooltip content={<CustomTooltip />} />
               <Legend 
-                formatter={(value, entry, index) => (
-                  <span style={{ color: '#333' }}>{value}</span>
-                )}
+                wrapperStyle={{ 
+                  color: '#333',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                }}
+                verticalAlign="bottom"
+                height={36}
               />
-            </PieChart>
+              <Bar 
+                dataKey="value" 
+                name="Number of Datasets" 
+                fill="#c13f27" 
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
           </ResponsiveContainer>
         </Paper>
       </Grid>
