@@ -67,13 +67,52 @@ export const FieldValuesFilter = (
         setIsCollapsed(!isCollapsed);
     };
     const isSelected = (value: any, filters: any) => {
-        const [selectedKey, selectedValue] = Object.entries(value)[0];
+        const entries = Object.entries(value);
+        if (!entries.length) return false;
+        
+        const [selectedKey, selectedValue] = entries[0];
+        
+        // Handle comma-separated fields
+        if (isCommaSeparatedField(selectedKey)) {
+            // Check if we have any filters for this field
+            return selectedKey in filters && 
+                   Array.isArray(filters[selectedKey]) && 
+                   filters[selectedKey].includes(selectedValue);
+        }
+        
+        // Regular field handling
         let existingFilters = filters?.[selectedKey] || [];
         return existingFilters?.includes(selectedValue);
     };
+    
     const toggleFilter = (value: any, filters: any) => {
-        const [selectedKey, selectedValue] = Object.entries(value)[0];
-
+        const entries = Object.entries(value);
+        if (!entries.length) return filters;
+        
+        const [selectedKey, selectedValue] = entries[0];
+        
+        // Handle comma-separated fields
+        if (isCommaSeparatedField(selectedKey)) {
+            if (selectedKey in filters) {
+                if (filters[selectedKey].includes(selectedValue)) {
+                    // Remove the value from filter
+                    filters[selectedKey] = filters[selectedKey].filter((v: any) => v !== selectedValue);
+                    if (filters[selectedKey].length === 0) {
+                        delete filters[selectedKey];
+                    }
+                } else {
+                    // Add the value to filter
+                    filters[selectedKey].push(selectedValue);
+                }
+            } else {
+                // Create new filter
+                filters[selectedKey] = [selectedValue];
+            }
+            
+            return filters;
+        }
+        
+        // Regular field handling
         if (selectedKey in filters) {
             if (filters?.[selectedKey].includes(selectedValue)) {
                 filters[selectedKey] = filters[selectedKey].filter((v: any) => v !== selectedValue)
@@ -178,11 +217,9 @@ export const FieldValuesFilter = (
                         .filter(value => value !== '')
                         .map(value => {
                             const valueStr = isNamedValue(value) ? value.name : String(value);
-                            // For filtering, we need to create a special filter for comma-separated fields
-                            let filterValue = valueStr;
                             
-                            // Create an object with the correct filter syntax
-                            const filterForCategory = Object.fromEntries([[column, filterValue]]);
+                            // Create a simple filter object with the value
+                            const filterValue = { [column]: valueStr };
                             
                             return (
                                 <FilterListItem
@@ -192,8 +229,8 @@ export const FieldValuesFilter = (
                                             <CustomCount value={valueStr} />
                                         </Box>
                                     }
-                                    key={JSON.stringify(filterForCategory)}
-                                    value={filterForCategory}
+                                    key={JSON.stringify(filterValue)}
+                                    value={filterValue}
                                     isSelected={isSelected}
                                     toggleFilter={toggleFilter}
                                 />
