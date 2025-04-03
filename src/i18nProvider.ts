@@ -18,7 +18,7 @@ en.resources = {
     datasets: {
         fields: {
             d_category: 'Category',
-            d_name: "Name",
+            d_name: "Dataset",
             d_status: 'Status',
             d_countries: 'Countries',
             dh_clinical: 'Clinical',

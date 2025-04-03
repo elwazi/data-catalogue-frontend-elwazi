@@ -161,21 +161,30 @@ export const FieldValuesFilter = (
                 }
                 setColumnValues(distinctValues);
 
-                // Calculate accurate counts for comma-separated fields
-                if (isCommaSeparatedField(column)) {
-                    const countMap: Record<string, number> = {};
-                    distinctValues.forEach((value: string | NamedValue) => {
-                        const valueStr = isNamedValue(value) ? value.name : String(value);
-                        // Count records containing this category
-                        const count = data.filter(record => {
+                // Calculate counts for all fields
+                const countMap: Record<string, number> = {};
+                distinctValues.forEach((value: string | NamedValue) => {
+                    const valueStr = isNamedValue(value) ? value.name : String(value);
+                    // Count records containing this value
+                    let count;
+                    
+                    if (isCommaSeparatedField(column)) {
+                        // For comma-separated fields, check if the value is in the comma-separated list
+                        count = data.filter(record => {
                             if (!record[column]) return false;
                             const values = record[column].split(',').map((v: string) => v.trim());
                             return values.includes(valueStr);
                         }).length;
-                        countMap[valueStr] = count;
-                    });
-                    setCounts(countMap);
-                }
+                    } else {
+                        // For regular fields, check exact match
+                        count = data.filter(record => {
+                            return record[column] === valueStr;
+                        }).length;
+                    }
+                    
+                    countMap[valueStr] = count;
+                });
+                setCounts(countMap);
             } catch (error) {
                 console.error(`Error fetching column values for column ${column} of resource ${resource}:`, error);
             }
@@ -189,15 +198,9 @@ export const FieldValuesFilter = (
         valueGetter
     ]);
 
-    // Custom Count component that uses our pre-calculated counts for comma-separated fields
+    // Custom Count component that uses our pre-calculated counts for all fields
     const CustomCount = ({ value }: { value: string }) => {
-        if (!isCommaSeparatedField(column)) {
-            // For non-comma-separated fields, use the standard filtering approach
-            const filterObj = Object.fromEntries([[column, value]]);
-            return <Count filter={filterObj} />;
-        }
-        
-        // For comma-separated fields, use our pre-calculated counts
+        // Use pre-calculated counts for all fields
         return <span>{counts[value] || 0}</span>;
     };
 
@@ -215,6 +218,27 @@ export const FieldValuesFilter = (
                 >
                     {columnValues
                         .filter(value => value !== '')
+                        .filter(value => {
+                            // Filter out items with count 0
+                            const valueStr = isNamedValue(value) ? value.name : String(value);
+                            
+                            if (isCommaSeparatedField(column)) {
+                                // Use pre-calculated counts for comma-separated fields
+                                return counts[valueStr] > 0;
+                            } else {
+                                // For regular fields, create filter and check count
+                                const filterObj = Object.fromEntries([[column, valueStr]]);
+                                try {
+                                    // Try to get the raw count from the dataProvider
+                                    // This is a synchronous check, we can't await here
+                                    // So we'll use the counts state which was populated during initial load
+                                    return counts[valueStr] > 0;
+                                } catch (e) {
+                                    // If there's an error, default to showing the item
+                                    return true;
+                                }
+                            }
+                        })
                         .map(value => {
                             const valueStr = isNamedValue(value) ? value.name : String(value);
                             
