@@ -8,14 +8,15 @@ import {
     TopToolbar,
     downloadCSV,
     ListContextProvider,
-    useListContext
+    useListContext,
+    useRecordContext
 } from "react-admin";
 import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the path as necessary
 
 // TODO this should come from a module because it would be shared by other catalogues
 import {FieldValuesFilter} from './FieldValuesFilter';
-import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery} from '@mui/material';
-import React from "react";
+import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery, Button, Tooltip} from '@mui/material';
+import React, { useState } from "react";
 import CommaField from './CommaField'; // Adjust the path accordingly
 import DatasetCharts from './DatasetCharts';
 
@@ -139,6 +140,65 @@ const DatasetListCharts = () => {
     );
 };
 
+// Custom component for DAC Email with button
+const DacEmailButton = () => {
+    const record = useRecordContext();
+    const [showEmail, setShowEmail] = useState(false);
+
+    if (!record) return null;
+
+    return (
+        <div>
+            {!showEmail ? (
+                <Button 
+                    variant="contained" 
+                    size="small" 
+                    onClick={() => setShowEmail(true)}
+                    style={{ backgroundColor: '#c13f27', color: 'white' }}
+                >
+                    Go
+                </Button>
+            ) : (
+                <span>{record.dac_email || 'No email available'}</span>
+            )}
+        </div>
+    );
+};
+
+// Custom component for project acronym with tooltip showing full title
+const ProjectAcronymWithTooltip = () => {
+    const record = useRecordContext();
+    
+    if (!record) return null;
+    
+    return (
+        <Tooltip 
+            title={
+                <Typography style={{ fontSize: '14px', padding: '8px 4px' }}>
+                    {record.p_title || "No title available"}
+                </Typography>
+            } 
+            arrow 
+            placement="top"
+            componentsProps={{
+                tooltip: {
+                    sx: {
+                        maxWidth: 350,
+                        backgroundColor: '#f5f5f5',
+                        color: '#333',
+                        border: '1px solid #ddd',
+                        boxShadow: '0px 2px 8px rgba(0,0,0,0.15)'
+                    }
+                }
+            }}
+        >
+            <span style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+                {record.p_accronym}
+            </span>
+        </Tooltip>
+    );
+};
+
 export const DatasetList = (props: any) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
 
@@ -150,6 +210,7 @@ export const DatasetList = (props: any) => {
             filter={props.filter}
             exporter={exporter}
             component={CustomListLayout}
+            perPage={50}
         >
             {
                 isSmall ? (
@@ -162,14 +223,21 @@ export const DatasetList = (props: any) => {
                     <DatagridConfigurable>
                         <ReferenceField source="record_id"
                             reference="projects"
+                            link="show"
                         >
-                            <TextField source="p_accronym" />
+                            <ProjectAcronymWithTooltip />
                         </ReferenceField>
                         <TextField source="d_name"/>
                         <CommaField source="d_category"/>
                         <TextField source="d_type"/>
                         <CommaField source="d_countries" />
                         <NumberField source="sample_size"/>
+                        <ReferenceField source="record_id"
+                            reference="projects"
+                            label="Access Request"
+                        >
+                            <DacEmailButton />
+                        </ReferenceField>
                         <CommaField source="data_use_permission"/>
                     </DatagridConfigurable>
                 )
