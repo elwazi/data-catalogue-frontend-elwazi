@@ -61,8 +61,7 @@ export const i18nProvider = polyglotI18nProvider(
     locale => translations[locale],
     resolveBrowserLocale('en'),
     [
-        {locale: 'en', name: 'English'},
-        {locale: 'fr', name: 'Français'}
+        {locale: 'en', name: 'English'}
     ],
     {
         allowMissing: false,

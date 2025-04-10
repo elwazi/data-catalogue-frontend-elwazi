@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Menu } from 'react-admin';
 import DatasetIcon from '@mui/icons-material/Storage';
 import ProjectIcon from '@mui/icons-material/Folder';
+import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate } from 'react-router-dom';
 import { MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 
@@ -22,6 +23,13 @@ export const MyMenu = () => {
                     <ProjectIcon />
                 </ListItemIcon>
                 <ListItemText primary="Projects" />
+            </MenuItem>
+
+            <MenuItem onClick={() => navigate('/about')} sx={{ color: 'text.primary' }}>
+                <ListItemIcon>
+                    <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="About" />
             </MenuItem>
         </Menu>
     );

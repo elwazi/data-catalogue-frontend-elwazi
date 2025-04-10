@@ -12,6 +12,7 @@ import {MyLayout} from "./MyLayout";
 import {ProjectsList} from "./projects";
 import {CustomRoutes} from "ra-core";
 import { Route } from 'react-router-dom';
+import About from './About';
 
 function enableAnalytics() {
     ReactGA.initialize(DC_GA_MEASUREMENT_ID);
@@ -46,6 +47,9 @@ export const App = () => {
                     >
                         <Resource name="datasets" list={<DatasetList/>} />
                         <Resource name="projects" list={ProjectsList}/>
+                        <CustomRoutes>
+                            <Route path="/about" element={<About />} />
+                        </CustomRoutes>
                     </Admin>
             </div>
         )
