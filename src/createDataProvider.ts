@@ -67,10 +67,13 @@ const addCommaSeparatedFieldsHandling = (dataProvider: DataProvider): DataProvid
                     }
                 });
                 
+                // Store the total count of filtered data before applying pagination
+                const totalFilteredCount = filteredData.length;
+                
                 return {
                     ...result,
                     data: filteredData,
-                    total: filteredData.length
+                    total: totalFilteredCount
                 };
             });
         }

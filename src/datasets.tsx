@@ -9,7 +9,8 @@ import {
     downloadCSV,
     ListContextProvider,
     useListContext,
-    useRecordContext
+    useRecordContext,
+    Pagination
 } from "react-admin";
 import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the path as necessary
 
@@ -227,7 +228,13 @@ const ProjectAcronymWithTooltip = () => {
     );
 };
 
-export const DatasetList = (props: any) => {
+// Define props interface for DatasetList
+interface DatasetListProps {
+    filter?: Record<string, any>;
+    [key: string]: any;
+}
+
+export const DatasetList = (props: DatasetListProps) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
 
     return (
@@ -239,6 +246,7 @@ export const DatasetList = (props: any) => {
             exporter={exporter}
             component={CustomListLayout}
             perPage={50}
+            pagination={<Pagination rowsPerPageOptions={[10, 25, 50, 100]} />}
         >
             {
                 isSmall ? (
