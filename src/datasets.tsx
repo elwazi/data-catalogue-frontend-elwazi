@@ -143,23 +143,51 @@ const DatasetListCharts = () => {
 // Custom component for DAC Email with button
 const DacEmailButton = () => {
     const record = useRecordContext();
-    const [showEmail, setShowEmail] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
 
     if (!record) return null;
 
+    const getAccessRequestContent = () => {
+        if (record.dac_url && record.dac_url.trim() !== '') {
+            return (
+                <a 
+                    href={record.dac_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ color: '#3f51b5', textDecoration: 'underline' }}
+                >
+                    Access Request Portal
+                </a>
+            );
+        } else if (record.dac_email && record.dac_email.trim() !== '') {
+            return <span>{record.dac_email}</span>;
+        } else {
+            return (
+                <a 
+                    href="https://helpdesk.elwazi.org/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ color: '#3f51b5', textDecoration: 'underline' }}
+                >
+                    Contact the Helpdesk
+                </a>
+            );
+        }
+    };
+
     return (
         <div>
-            {!showEmail ? (
+            {!showDetails ? (
                 <Button 
                     variant="contained" 
                     size="small" 
-                    onClick={() => setShowEmail(true)}
+                    onClick={() => setShowDetails(true)}
                     style={{ backgroundColor: '#c13f27', color: 'white' }}
                 >
                     Go
                 </Button>
             ) : (
-                <span>{record.dac_email || 'No email available'}</span>
+                getAccessRequestContent()
             )}
         </div>
     );
