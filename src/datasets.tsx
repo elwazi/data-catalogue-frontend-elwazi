@@ -245,7 +245,7 @@ export const DatasetList = (props: DatasetListProps) => {
             filter={props.filter}
             exporter={exporter}
             component={CustomListLayout}
-            perPage={50}
+            perPage={100}
             pagination={<Pagination rowsPerPageOptions={[10, 25, 50, 100]} />}
         >
             {
