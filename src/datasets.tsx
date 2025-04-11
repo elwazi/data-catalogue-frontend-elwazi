@@ -185,7 +185,7 @@ const DacEmailButton = () => {
                     onClick={() => setShowDetails(true)}
                     style={{ backgroundColor: '#c13f27', color: 'white' }}
                 >
-                    Go
+                    Get
                 </Button>
             ) : (
                 getAccessRequestContent()
