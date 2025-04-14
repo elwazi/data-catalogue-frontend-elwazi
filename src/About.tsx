@@ -76,7 +76,7 @@ const About: React.FC = () => {
               <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}>
                 If you are new to the eLwazi Catalogue, you will need to identify a person who will be your Project Metadata Steward 
                 responsible for managing your eLwazi metadata on the catalogue database, and you must complete an Expression of Interest form 
-                <a href="#" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>.
+                <a href="https://redcap.h3abionet.org/redcap/surveys/?s=MXRD9XXXPFNKMKYT" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>.
               </Typography>
               
               <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}>
@@ -123,8 +123,8 @@ const About: React.FC = () => {
               
               <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}>
                 Training videos for navigating the REDCap database are available 
-                <a href="#" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>, and guiding documentation for data entry
-                <a href="#" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>. These should be reviewed in advance by the elected Metadata Steward/s.
+                <a href="https://docs.google.com/document/d/1lWl-LE7gqtvy3xJc9iVazcpucSj0Ho_XC0YuIbAepUg/edit?tab=t.0#heading=h.iezi1hu3grgl" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>, and guiding documentation for data entry
+                <a href="https://docs.google.com/document/d/1aeN7MIblFMlRpmKQwGYEAq2SApVNIc4CMzYXGp-KN28/edit?tab=t.0#heading=h.bediety1f5te" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>. These should be reviewed in advance by the elected Metadata Steward/s.
               </Typography>
               
               <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}>

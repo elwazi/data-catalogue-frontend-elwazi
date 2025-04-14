@@ -106,7 +106,6 @@ const FilterSidebar = () => (
 const ListActions = () => (
     <TopToolbar>
         <SelectColumnsButton/>
-        <ExportButton label="Export" exporter={exporter} />
     </TopToolbar>
 );
 
