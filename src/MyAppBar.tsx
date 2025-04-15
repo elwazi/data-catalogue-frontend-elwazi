@@ -25,6 +25,7 @@ export const MyAppBar = () => (
             <Box ml={4} display="flex" alignItems="center">
                 <WhiteElwaziLogo/>
                 <DSIAfricaLogo/>
+                <WhiteAfrigenLogo/>
             </Box>
         </Box>
         <Box component="span" flex={1}/>
