@@ -89,16 +89,73 @@ const exporter = (data: any[]) => {
 };
 
 const FilterSidebar = () => (
-    <Card sx={{order: -1}}>
-        <CardContent>
+    <Card sx={{
+        order: -1,
+        position: 'sticky',
+        top: '64px', // Adjust based on your app bar height
+        minHeight: 'calc(100vh - 80px)', // Extend to full viewport minus app bar
+        height: 'auto',
+        overflowY: 'auto',
+        minWidth: '280px',
+        maxWidth: '320px',
+        zIndex: 1000,
+        marginRight: '16px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+    }}>
+        <CardContent sx={{ 
+            padding: '16px !important',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            <Typography variant="h6" sx={{ marginBottom: '16px', color: '#c13f27', fontWeight: 'bold' }}>
+                Filters
+            </Typography>
             <FilterLiveSearch/>
-            <FieldValuesFilter column="d_domain"/>
-            <FieldValuesFilter column="d_countries"/>
-            <FieldValuesFilter column="redcap_data_access_group"/>
-            <FieldValuesFilter column="d_provenance"/>
-            <FieldValuesFilter column="d_status"/>
-            <FieldValuesFilter column="du_permission"/>
-            <FieldValuesFilter column="dh_clinical"/>
+            <Box sx={{ marginTop: '12px' }}>
+                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
+                    Domain
+                </Typography>
+                <FieldValuesFilter column="d_domain"/>
+            </Box>
+            <Box sx={{ marginTop: '12px' }}>
+                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
+                    Countries
+                </Typography>
+                <FieldValuesFilter column="d_countries"/>
+            </Box>
+            <Box sx={{ marginTop: '12px' }}>
+                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
+                    Project
+                </Typography>
+                <FieldValuesFilter column="redcap_data_access_group"/>
+            </Box>
+            <Box sx={{ marginTop: '12px' }}>
+                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
+                    Provenance
+                </Typography>
+                <FieldValuesFilter column="d_provenance"/>
+            </Box>
+            <Box sx={{ marginTop: '12px' }}>
+                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
+                    Status
+                </Typography>
+                <FieldValuesFilter column="d_status"/>
+            </Box>
+            <Box sx={{ marginTop: '12px' }}>
+                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
+                    Permission
+                </Typography>
+                <FieldValuesFilter column="du_permission"/>
+            </Box>
+            <Box sx={{ marginTop: '12px' }}>
+                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
+                    Clinical
+                </Typography>
+                <FieldValuesFilter column="dh_clinical"/>
+            </Box>
+            {/* Spacer to push content to top and fill remaining space */}
+            <Box sx={{ flex: 1, minHeight: '20px' }} />
         </CardContent>
     </Card>
 );
