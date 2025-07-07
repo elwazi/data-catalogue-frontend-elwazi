@@ -35,11 +35,11 @@ import {
 interface DatasetRecord {
     redcap_data_access_group?: string;
     d_name?: string;
-    d_category?: string;
-    d_type?: string;
+    d_domain?: string;
+    d_provenance?: string;
     d_countries?: string;
-    sample_size?: number | string;
-    data_use_permission?: string;
+    d_subjects?: number | string;
+    du_permission?: string;
     [key: string]: any; // For other properties that might exist
 }
 
@@ -50,11 +50,11 @@ const exporter = (data: any[]) => {
         const exportRecord: DatasetRecord = {
             redcap_data_access_group: record.redcap_data_access_group || '',
             d_name: record.d_name || '',
-            d_category: record.d_category || '',
-            d_type: record.d_type || '',
+            d_domain: record.d_domain || '',
+            d_provenance: record.d_provenance || '',
             d_countries: record.d_countries || '',
-            sample_size: record.sample_size || '',
-            data_use_permission: record.data_use_permission || ''
+            d_subjects: record.d_subjects || '',
+            du_permission: record.du_permission || ''
         };
         return exportRecord;
     });
@@ -63,11 +63,11 @@ const exporter = (data: any[]) => {
     const headers = [
         'redcap_data_access_group', 
         'd_name', 
-        'd_category', 
-        'd_type', 
+        'd_domain', 
+        'd_provenance', 
         'd_countries', 
         'sample_size', 
-        'data_use_permission'
+        'du_permission'
     ];
     
     // Create CSV content
@@ -92,12 +92,12 @@ const FilterSidebar = () => (
     <Card sx={{order: -1}}>
         <CardContent>
             <FilterLiveSearch/>
-            <FieldValuesFilter column="d_category"/>
+            <FieldValuesFilter column="d_domain"/>
             <FieldValuesFilter column="d_countries"/>
             <FieldValuesFilter column="redcap_data_access_group"/>
-            <FieldValuesFilter column="d_type"/>
+            <FieldValuesFilter column="d_provenance"/>
             <FieldValuesFilter column="d_status"/>
-            <FieldValuesFilter column="data_use_permission"/>
+            <FieldValuesFilter column="du_permission"/>
             <FieldValuesFilter column="dh_clinical"/>
         </CardContent>
     </Card>
@@ -114,28 +114,67 @@ const CustomListLayout = ({ children, ...props }: any) => {
     const listContext = useListContext();
     
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
             <ListContextProvider value={listContext}>
-                <DatasetListCharts />
+                <DatasetAnalyticsTitle />
             </ListContextProvider>
-            <div>
+            <div style={{ 
+                flex: '1', 
+                overflow: 'auto',
+                maxHeight: 'calc(100vh - 220px)', // Adjusted to account for pagination space
+                minHeight: '600px' // Increased minimum height for better table visibility
+            }}>
                 {children}
             </div>
+            <ListContextProvider value={listContext}>
+                <PaginationInWhitespace />
+            </ListContextProvider>
+            <ListContextProvider value={listContext}>
+                <DatasetChartsOnly />
+            </ListContextProvider>
         </div>
     );
 };
 
-// Component to render charts below the datagrid
-const DatasetListCharts = () => {
+// Component to render only the analytics title at the top
+const DatasetAnalyticsTitle = () => {
     const { filterValues } = useListContext();
     
     return (
-        <Box mb={4} sx={{ marginLeft: '16px', marginRight: '16px' }}>
-            <Typography variant="h6" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
-                Dataset Analytics {Object.keys(filterValues).length > 0 ? 'for filtered datasets' : 'for all datasets'}
-            </Typography>
+        <Box sx={{ marginLeft: '16px', marginRight: '16px', marginTop: '16px', marginBottom: '8px' }}>
+
+        </Box>
+    );
+};
+
+// Component to render only the charts at the bottom
+const DatasetChartsOnly = () => {
+    const { filterValues } = useListContext();
+    
+    return (
+        <Box mb={4} mt={4} sx={{ marginLeft: '16px', marginRight: '16px' }}>
             <DatasetCharts filter={filterValues} />
             <Divider sx={{ my: 2, backgroundColor: '#c13f27', opacity: 0.3 }} />
+        </Box>
+    );
+};
+
+// Component to render pagination in the whitespace between table and charts
+const PaginationInWhitespace = () => {
+    return (
+        <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center',
+            padding: '16px',
+            marginLeft: '16px', 
+            marginRight: '16px',
+            backgroundColor: '#fcc300',
+            borderRadius: '4px',
+            marginTop: '8px',
+            marginBottom: '8px'
+        }}>
+            <Pagination rowsPerPageOptions={[10, 25, 50, 100]} />
         </Box>
     );
 };
@@ -148,10 +187,10 @@ const DacEmailButton = () => {
     if (!record) return null;
 
     const getAccessRequestContent = () => {
-        if (record.dac_url && record.dac_url.trim() !== '') {
+        if (record.dap_repo_url && record.dap_repo_url.trim() !== '') {
             return (
                 <a 
-                    href={record.dac_url} 
+                    href={record.dap_repo_url} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={{ color: '#3f51b5', textDecoration: 'underline' }}
@@ -159,8 +198,8 @@ const DacEmailButton = () => {
                     Access Request Portal
                 </a>
             );
-        } else if (record.dac_email && record.dac_email.trim() !== '') {
-            return <span>{record.dac_email}</span>;
+        } else if (record.dap_url_email && record.dap_url_email.trim() !== '') {
+            return <span>{record.dap_url_email}</span>;
         } else {
             return (
                 <a 
@@ -192,6 +231,10 @@ const DacEmailButton = () => {
         </div>
     );
 };
+
+// Custom field component that wraps DacEmailButton with proper label
+const AccessRequestField = () => <DacEmailButton />;
+AccessRequestField.defaultProps = { label: 'Access Request' };
 
 // Custom component for project acronym with tooltip showing full title
 const ProjectAcronymWithTooltip = () => {
@@ -227,6 +270,10 @@ const ProjectAcronymWithTooltip = () => {
     );
 };
 
+// Add proper label for the ProjectAcronymWithTooltip component
+const ProjectField = () => <ProjectAcronymWithTooltip />;
+ProjectField.defaultProps = { label: 'Project' };
+
 // Define props interface for DatasetList
 interface DatasetListProps {
     filter?: Record<string, any>;
@@ -245,35 +292,25 @@ export const DatasetList = (props: DatasetListProps) => {
             exporter={exporter}
             component={CustomListLayout}
             perPage={100}
-            pagination={<Pagination rowsPerPageOptions={[10, 25, 50, 100]} />}
+            pagination={false}
         >
             {
                 isSmall ? (
                     <SimpleList
                         primaryText={(record) => record.d_name}
-                        secondaryText={(record) => record.d_category}
+                        secondaryText={(record) => record.d_domain}
                         tertiaryText={(record) => record.d_status}
                     />
                 ) : (
-                    <DatagridConfigurable>
-                        <ReferenceField source="record_id"
-                            reference="projects"
-                            link="show"
-                        >
-                            <ProjectAcronymWithTooltip />
-                        </ReferenceField>
+                    <DatagridConfigurable omit={['d_provenance']}>
+                        <ProjectField />
                         <TextField source="d_name"/>
-                        <CommaField source="d_category"/>
-                        <TextField source="d_type"/>
+                        <CommaField source="d_domain"/>
+                        <TextField source="d_provenance"/>
                         <CommaField source="d_countries" />
-                        <NumberField source="sample_size"/>
-                        <ReferenceField source="record_id"
-                            reference="projects"
-                            label="Access Request"
-                        >
-                            <DacEmailButton />
-                        </ReferenceField>
-                        <CommaField source="data_use_permission"/>
+                        <NumberField source="d_subjects"/>
+                        <AccessRequestField />
+                        <CommaField source="du_permission"/>
                     </DatagridConfigurable>
                 )
             }
@@ -281,4 +318,4 @@ export const DatasetList = (props: DatasetListProps) => {
     );
 };
 
-export const GenomicList = () => DatasetList({filter:{d_category:'Genomic'}})
+export const GenomicList = () => DatasetList({filter:{d_domain:'Genomic'}})

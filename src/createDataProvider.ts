@@ -13,7 +13,7 @@ const groupBy = <T extends Record<string, any>>(array: T[], key: string): { [key
   }, {});
 
 // Fields that contain comma-separated values
-const commaSeparatedFields = ['d_category', 'd_countries', 'data_use_permission'];
+const commaSeparatedFields = ['d_domain', 'd_countries', 'du_permission'];
 
 // Interface for record types
 interface DataRecord {
@@ -25,7 +25,7 @@ const addCommaSeparatedFieldsHandling = (dataProvider: DataProvider): DataProvid
     const enhancedDataProvider: DataProvider = {
         ...dataProvider,
         getList: (resource: string, params: GetListParams): Promise<GetListResult> => {
-            const { filter } = params;
+            const { filter, pagination } = params;
             
             // Extract comma-separated field filters
             const commaSeparatedFilters: DataRecord = {};
@@ -39,10 +39,11 @@ const addCommaSeparatedFieldsHandling = (dataProvider: DataProvider): DataProvid
                 }
             });
             
-            // Get regular filtered results first
+            // Get ALL data first (no pagination at this level)
             return dataProvider.getList(resource, {
                 ...params,
-                filter: regularFilters
+                filter: regularFilters,
+                pagination: { page: 1, perPage: 1000 } // Get all data
             }).then((result: GetListResult) => {
                 // Apply comma-separated filtering on the client side
                 let filteredData = result.data;
@@ -67,13 +68,18 @@ const addCommaSeparatedFieldsHandling = (dataProvider: DataProvider): DataProvid
                     }
                 });
                 
-                // Store the total count of filtered data before applying pagination
-                const totalFilteredCount = filteredData.length;
+                // Calculate total count after filtering
+                const totalCount = filteredData.length;
+                
+                // Apply pagination to the filtered data
+                const { page = 1, perPage = 25 } = pagination || {};
+                const startIndex = (page - 1) * perPage;
+                const endIndex = startIndex + perPage;
+                const paginatedData = filteredData.slice(startIndex, endIndex);
                 
                 return {
-                    ...result,
-                    data: filteredData,
-                    total: totalFilteredCount
+                    data: paginatedData,
+                    total: totalCount
                 };
             });
         }

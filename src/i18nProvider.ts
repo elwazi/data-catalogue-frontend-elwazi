@@ -17,46 +17,20 @@ en.resources = {
     },
     datasets: {
         fields: {
-            d_category: 'Category',
+            d_domain: 'Domain',
             d_name: "Dataset Name",
             d_status: 'Status',
             d_countries: 'Countries',
             dh_clinical: 'Clinical',
-            d_type: 'Type',
-            data_use_permission: 'Data Use Conditions',
-            sample_size: 'Sample Size',
+            d_provenance: 'Provenance',
+            du_permission: 'Data Use Conditions',
+            d_subjects: 'Sample Size',
             record_id: 'Project',
             redcap_data_access_group: 'Project'
         }
     }
 };
 
-fr.resources ={
-    "projects": {
-        "name": "Projets",
-        "fields": {
-            "p_accronym": "Acronyme",
-            "p_description": "Description",
-            "p_keywords": "Mots-clés",
-            "p_name": "Nom",
-            "p_title": "Titre",
-            "p_website": "Site web",
-            "project_metadata_complete": "Métadonnées complètes"
-        }
-    },
-    "datasets": {
-        "name": "Ensembles de Données",
-        "fields": {
-            "d_category": "Catégorie",
-            "d_name": "Nom",
-            "d_status": "Statut",
-            "d_type": "Type",
-            "data_use_permission": "Permission d'utilisation des données",
-            "sample_size": "Taille de l'échantillon",
-            "record_id": "Projet"
-        }
-    }
-}
 export const i18nProvider = polyglotI18nProvider(
     locale => translations[locale],
     resolveBrowserLocale('en'),

@@ -27,11 +27,11 @@ const THEME_COLORS = [
 interface DatasetRecord {
   id: string | number;
   d_name?: string;
-  d_category?: string;
-  d_type?: string;
+  d_domain?: string;
+  d_provenance?: string;
   d_countries?: string;
   sample_size?: number | string;
-  data_use_permission?: string;
+  du_permission?: string;
   [key: string]: any;
 }
 
@@ -54,6 +54,12 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
   const [countriesData, setCountriesData] = useState<ChartData[]>([]);
   const [typesData, setTypesData] = useState<ChartData[]>([]);
   const [categoriesData, setCategoriesData] = useState<ChartData[]>([]);
+
+  // Function to truncate long text with ellipses
+  const truncateText = (text: string, maxLength: number = 15): string => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,9 +98,9 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
           }
           
           // Process categories (comma-separated values)
-          if (dataset.d_category) {
-            const categories = dataset.d_category.split(',').map(c => c.trim());
-            categories.forEach(category => {
+          if (dataset.d_domain) {
+            const categories = dataset.d_domain.split(',').map((c: string) => c.trim());
+            categories.forEach((category: string) => {
               if (category) {
                 categoriesMap.set(category, (categoriesMap.get(category) || 0) + 1);
               }
@@ -104,16 +110,16 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
         
         // Convert maps to arrays for charts
         const countriesArray: ChartData[] = Array.from(countriesMap.entries())
-          .map(([name, value]) => ({ name, value }))
+          .map(([name, value]) => ({ name: truncateText(name), value }))
           .sort((a, b) => b.value - a.value) // Sort by count descending
           .slice(0, 10); // Take top 10 countries
         
         const typesArray: ChartData[] = Array.from(typesMap.entries())
-          .map(([name, value]) => ({ name, value }))
+          .map(([name, value]) => ({ name: truncateText(name), value }))
           .sort((a, b) => b.value - a.value);
           
         const categoriesArray: ChartData[] = Array.from(categoriesMap.entries())
-          .map(([name, value]) => ({ name, value }))
+          .map(([name, value]) => ({ name: truncateText(name), value }))
           .sort((a, b) => b.value - a.value);
         
         setCountriesData(countriesArray);
@@ -170,17 +176,17 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
           <Typography variant="h6" gutterBottom sx={{ color: '#c13f27', fontWeight: 'bold' }}>
             Datasets by Country
           </Typography>
-          <ResponsiveContainer width="100%" height={600}>
+          <ResponsiveContainer width="100%" height={480}>
             <BarChart
               data={countriesData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 160 }}
+              margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis 
                 dataKey="name" 
                 angle={-45} 
                 textAnchor="end"
-                height={100}
+                height={60}
                 interval={0}
                 tick={{ fill: '#333' }}
               />
@@ -190,12 +196,14 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
                 wrapperStyle={{ 
                   color: '#333',
                   position: 'absolute',
-                  bottom: 0,
+                  bottom: '0px',
                   left: '50%',
                   transform: 'translateX(-50%)',
+                  margin: '0',
+                  padding: '0',
                 }}
                 verticalAlign="bottom"
-                height={36}
+                height={15}
               />
               <Bar 
                 dataKey="value" 
@@ -211,19 +219,19 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
       <Grid item xs={12} md={6}>
         <Paper elevation={3} sx={{ p: 2, height: '100%', backgroundColor: '#FFF3E0', borderRadius: '8px' }}>
           <Typography variant="h6" gutterBottom sx={{ color: '#c13f27', fontWeight: 'bold' }}>
-            Datasets by Category
+            Datasets by Domain
           </Typography>
-          <ResponsiveContainer width="100%" height={600}>
+          <ResponsiveContainer width="100%" height={480}>
             <BarChart
               data={categoriesData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 160 }}
+              margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
               <XAxis 
                 dataKey="name" 
                 angle={-45} 
                 textAnchor="end"
-                height={100}
+                height={60}
                 interval={0}
                 tick={{ fill: '#333' }}
               />
@@ -233,12 +241,14 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
                 wrapperStyle={{ 
                   color: '#333',
                   position: 'absolute',
-                  bottom: 0,
+                  bottom: '0px',
                   left: '50%',
                   transform: 'translateX(-50%)',
+                  margin: '0',
+                  padding: '0',
                 }}
                 verticalAlign="bottom"
-                height={36}
+                height={15}
               />
               <Bar 
                 dataKey="value" 

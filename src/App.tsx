@@ -29,9 +29,23 @@ export const App = () => {
         }
         document.body.style.zoom = "85%";
         fetchDataProvider();
+        // Clear all localStorage to ensure fresh column settings
         localStorage.clear();
+        
+        // Clear specific React Admin keys that might override defaultVisible
         localStorage.removeItem("RaStore.preferences.datasets.datagrid.availableColumns");
+        localStorage.removeItem("RaStore.preferences.datasets.datagrid.columns");
+        localStorage.removeItem("RaStore.preferences.datasets.datagrid.hiddenColumns");
+        localStorage.removeItem("RaStore.preferences.datasets.datagrid.columnVisibilityModel");
         localStorage.removeItem("RaStore.datasets.listParams");
+        localStorage.removeItem("RaStore.preferences.datasets");
+        
+        // Clear any cached datagrid preferences
+        Object.keys(localStorage).forEach(key => {
+            if (key.includes('datasets') && key.includes('datagrid')) {
+                localStorage.removeItem(key);
+            }
+        });
     }, []);
 
     return dataProvider
