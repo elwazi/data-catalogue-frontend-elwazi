@@ -112,48 +112,13 @@ const FilterSidebar = () => (
                 Filters
             </Typography>
             <FilterLiveSearch/>
-            <Box sx={{ marginTop: '12px' }}>
-                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
-                    Domain
-                </Typography>
-                <FieldValuesFilter column="d_domain"/>
-            </Box>
-            <Box sx={{ marginTop: '12px' }}>
-                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
-                    Countries
-                </Typography>
-                <FieldValuesFilter column="d_countries"/>
-            </Box>
-            <Box sx={{ marginTop: '12px' }}>
-                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
-                    Project
-                </Typography>
-                <FieldValuesFilter column="redcap_data_access_group"/>
-            </Box>
-            <Box sx={{ marginTop: '12px' }}>
-                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
-                    Provenance
-                </Typography>
-                <FieldValuesFilter column="d_provenance"/>
-            </Box>
-            <Box sx={{ marginTop: '12px' }}>
-                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
-                    Status
-                </Typography>
-                <FieldValuesFilter column="d_status"/>
-            </Box>
-            <Box sx={{ marginTop: '12px' }}>
-                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
-                    Permission
-                </Typography>
-                <FieldValuesFilter column="du_permission"/>
-            </Box>
-            <Box sx={{ marginTop: '12px' }}>
-                <Typography variant="subtitle2" sx={{ marginBottom: '8px', color: '#666' }}>
-                    Clinical
-                </Typography>
-                <FieldValuesFilter column="dh_clinical"/>
-            </Box>
+            <FieldValuesFilter column="d_domain"/>
+            <FieldValuesFilter column="d_countries"/>
+            <FieldValuesFilter column="redcap_data_access_group"/>
+            <FieldValuesFilter column="d_provenance"/>
+            <FieldValuesFilter column="d_status"/>
+            <FieldValuesFilter column="du_permission"/>
+            <FieldValuesFilter column="dh_clinical"/>
             {/* Spacer to push content to top and fill remaining space */}
             <Box sx={{ flex: 1, minHeight: '20px' }} />
         </CardContent>
