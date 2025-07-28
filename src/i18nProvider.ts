@@ -21,11 +21,11 @@ en.resources = {
             d_name: "Dataset Name",
             d_status: 'Status',
             d_countries: 'Countries',
-            dh_clinical: 'Clinical',
+            dh_disease_status: 'Disease Status',
             d_provenance: 'Provenance',
             du_permission: 'Data Use Conditions',
             d_subjects: 'Sample Size',
-            record_id: 'Project',
+            d_provider: 'Project',
             redcap_data_access_group: 'Project'
         }
     }

@@ -118,7 +118,7 @@ const FilterSidebar = () => (
             <FieldValuesFilter column="d_provenance"/>
             <FieldValuesFilter column="d_status"/>
             <FieldValuesFilter column="du_permission"/>
-            <FieldValuesFilter column="dh_clinical"/>
+            <FieldValuesFilter column="dh_disease_status"/>
             {/* Spacer to push content to top and fill remaining space */}
             <Box sx={{ flex: 1, minHeight: '20px' }} />
         </CardContent>
