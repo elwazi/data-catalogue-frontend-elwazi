@@ -35,10 +35,11 @@ interface DatasetRecord {
   [key: string]: any;
 }
 
-// Interface for chart data
+// Interface for chart data with full label support
 interface ChartData {
   name: string;
   value: number;
+  fullName?: string; // Store the full label for tooltips
 }
 
 // Interface for component props
@@ -108,18 +109,30 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
           }
         });
         
-        // Convert maps to arrays for charts
+        // Convert maps to arrays for charts with full label support
         const countriesArray: ChartData[] = Array.from(countriesMap.entries())
-          .map(([name, value]) => ({ name: truncateText(name), value }))
+          .map(([name, value]) => ({ 
+            name: truncateText(name), 
+            value,
+            fullName: name // Store the full name for tooltips
+          }))
           .sort((a, b) => b.value - a.value) // Sort by count descending
           .slice(0, 10); // Take top 10 countries
         
         const typesArray: ChartData[] = Array.from(typesMap.entries())
-          .map(([name, value]) => ({ name: truncateText(name), value }))
+          .map(([name, value]) => ({ 
+            name: truncateText(name), 
+            value,
+            fullName: name
+          }))
           .sort((a, b) => b.value - a.value);
           
         const categoriesArray: ChartData[] = Array.from(categoriesMap.entries())
-          .map(([name, value]) => ({ name: truncateText(name), value }))
+          .map(([name, value]) => ({ 
+            name: truncateText(name), 
+            value,
+            fullName: name
+          }))
           .sort((a, b) => b.value - a.value);
         
         setCountriesData(countriesArray);
@@ -152,13 +165,17 @@ export const DatasetCharts: React.FC<DatasetChartsProps> = ({ filter = {} }) => 
     );
   }
   
-  // Custom tooltip styles
+  // Custom tooltip styles with full label support
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
+      // Get the full name from the payload data if available
+      const fullName = payload[0]?.payload?.fullName || label;
+      const displayName = fullName && fullName !== label ? fullName : label;
+      
       return (
         <Paper elevation={3} sx={{ p: 1, backgroundColor: '#FFF3E0', border: '1px solid #c13f27' }}>
           <Typography variant="body2" sx={{ color: '#c13f27', fontWeight: 'bold' }}>
-            {label}
+            {displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: '#333' }}>
             {`${payload[0].name}: ${payload[0].value}`}

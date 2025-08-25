@@ -124,7 +124,7 @@ const About: React.FC = () => {
               <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}>
                 Training videos for navigating the REDCap database are available 
                 <a href="https://docs.google.com/document/d/1lWl-LE7gqtvy3xJc9iVazcpucSj0Ho_XC0YuIbAepUg/edit?tab=t.0#heading=h.iezi1hu3grgl" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>, and guiding documentation for data entry
-                <a href="https://docs.google.com/document/d/1aeN7MIblFMlRpmKQwGYEAq2SApVNIc4CMzYXGp-KN28/edit?tab=t.0#heading=h.bediety1f5te" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>. These should be reviewed in advance by the elected Metadata Steward/s.
+                <a href="https://docs.google.com/document/d/1vgta0wELV3hzo9AGn41O7xCNWmZHBO_3qkcdsXHvgcw/edit?tab=t.0#heading=h.bediety1f5te" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>. These should be reviewed in advance by the elected Metadata Steward/s.
               </Typography>
               
               <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}>

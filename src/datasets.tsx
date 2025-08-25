@@ -209,10 +209,11 @@ const DacEmailButton = () => {
     if (!record) return null;
 
     const getAccessRequestContent = () => {
-        if (record.dap_repo_url && record.dap_repo_url.trim() !== '') {
+        // Check dap_repo first
+        if (record.dap_repo && record.dap_repo.trim() !== '') {
             return (
                 <a 
-                    href={record.dap_repo_url} 
+                    href={record.dap_repo} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={{ color: '#3f51b5', textDecoration: 'underline' }}
@@ -220,9 +221,30 @@ const DacEmailButton = () => {
                     Access Request Portal
                 </a>
             );
-        } else if (record.dap_url_email && record.dap_url_email.trim() !== '') {
+        } 
+        // Check dap_url_email second
+        else if (record.dap_url_email && record.dap_url_email.trim() !== '') {
             return <span>{record.dap_url_email}</span>;
-        } else {
+        } 
+        // Check dap_primary_email third
+        else if (record.dap_primary_email && record.dap_primary_email.trim() !== '') {
+            return <span>{record.dap_primary_email}</span>;
+        } 
+        // Check dap_other_contact_link fourth
+        else if (record.dap_other_contact_link && record.dap_other_contact_link.trim() !== '') {
+            return (
+                <a 
+                    href={record.dap_other_contact_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ color: '#3f51b5', textDecoration: 'underline' }}
+                >
+                    Contact Link
+                </a>
+            );
+        } 
+        // Default to helpdesk if none of the above have values
+        else {
             return (
                 <a 
                     href="https://helpdesk.elwazi.org/" 

@@ -23,9 +23,51 @@ export const MyAppBar = () => (
         <Box display="flex" alignItems="center">
             <TitlePortal/>
             <Box ml={4} display="flex" alignItems="center">
-                <WhiteElwaziLogo/>
-                <DSIAfricaLogo/>
-                <WhiteAfrigenLogo/>
+                <Link 
+                    href="https://elwazi.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        textDecoration: 'none',
+                        '&:hover': {
+                            opacity: 0.8
+                        }
+                    }}
+                >
+                    <WhiteElwaziLogo/>
+                </Link>
+                <Link 
+                    href="https://dsi-africa.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        textDecoration: 'none',
+                        '&:hover': {
+                            opacity: 0.8
+                        }
+                    }}
+                >
+                    <DSIAfricaLogo/>
+                </Link>
+                <Link 
+                    href="https://afrigen-d.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        textDecoration: 'none',
+                        '&:hover': {
+                            opacity: 0.8
+                        }
+                    }}
+                >
+                    <WhiteAfrigenLogo/>
+                </Link>
             </Box>
         </Box>
         <Box component="span" flex={1}/>
