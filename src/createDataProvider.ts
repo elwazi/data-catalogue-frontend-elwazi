@@ -13,7 +13,7 @@ const groupBy = <T extends Record<string, any>>(array: T[], key: string): { [key
   }, {});
 
 // Fields that contain comma-separated values
-const commaSeparatedFields = ['d_domain', 'd_countries', 'du_permission'];
+const commaSeparatedFields = ['d_domain', 'd_countries', 'du_permission', 'dh_disease_status'];
 
 // Interface for record types
 interface DataRecord {

@@ -46,7 +46,7 @@ function isNamedValue(value: any): value is NamedValue {
 
 // Check if a field should be treated as comma-separated
 const isCommaSeparatedField = (column: string): boolean => {
-    return ['d_domain', 'd_countries', 'du_permission'].includes(column);
+    return ['d_domain', 'd_countries', 'du_permission', 'dh_disease_status'].includes(column);
 };
 
 export const FieldValuesFilter = (
