@@ -209,11 +209,11 @@ const DacEmailButton = () => {
     if (!record) return null;
 
     const getAccessRequestContent = () => {
-        // Check dap_repo first
-        if (record.dap_repo && record.dap_repo.trim() !== '') {
+        // Check dap_repo_url first
+        if (record.dap_repo_url && record.dap_repo_url.trim() !== '') {
             return (
                 <a 
-                    href={record.dap_repo} 
+                    href={record.dap_repo_url} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={{ color: '#3f51b5', textDecoration: 'underline' }}
