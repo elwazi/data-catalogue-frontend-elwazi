@@ -94,7 +94,7 @@ export const ProjectsList = () => {
         >
             <DatagridConfigurable>
                 <TextField source="p_title"/>
-                <TextField source="p_accronym"/>
+                <TextField source="p_acronym"/>
                 <ConditionalUrlField source="p_website"/>
                 <ReadMoreTextField source="p_description" />
                 <ArrayField source={"p_keywords"}>

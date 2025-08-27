@@ -7,7 +7,7 @@ const translations = {en, fr};
 en.resources = {
     projects: {
         fields: {
-            p_accronym: 'Acronym',
+            p_acronym: 'Acronym',
             p_description: 'Description',
             p_keywords: 'Keyword(s)',
             p_name: 'Name',

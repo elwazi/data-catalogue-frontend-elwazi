@@ -308,7 +308,7 @@ const ProjectAcronymWithTooltip = () => {
             }}
         >
             <span style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                {record.p_accronym}
+                {record.p_acronym}
             </span>
         </Tooltip>
     );
