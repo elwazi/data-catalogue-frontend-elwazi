@@ -25,7 +25,7 @@ const addCommaSeparatedFieldsHandling = (dataProvider: DataProvider): DataProvid
     const enhancedDataProvider: DataProvider = {
         ...dataProvider,
         getList: (resource: string, params: GetListParams): Promise<GetListResult> => {
-            const { filter, pagination } = params;
+            const { filter, pagination, sort } = params;
             
             // Extract comma-separated field filters
             const commaSeparatedFilters: DataRecord = {};
@@ -67,7 +67,22 @@ const addCommaSeparatedFieldsHandling = (dataProvider: DataProvider): DataProvid
                         });
                     }
                 });
-                
+                // Apply sorting client-side if requested
+                if (sort && sort.field) {
+                    const { field, order } = sort;
+                    filteredData = [...filteredData].sort((a: DataRecord, b: DataRecord) => {
+                        const aValue = a[field];
+                        const bValue = b[field];
+                        if (aValue === bValue) return 0;
+                        // Handle undefined/null safely to push them to the end
+                        if (aValue === undefined || aValue === null) return 1;
+                        if (bValue === undefined || bValue === null) return -1;
+                        if (aValue < bValue) return order === 'ASC' ? -1 : 1;
+                        if (aValue > bValue) return order === 'ASC' ? 1 : -1;
+                        return 0;
+                    });
+                }
+
                 // Calculate total count after filtering
                 const totalCount = filteredData.length;
                 
@@ -92,9 +107,23 @@ export const createDataProvider = async (): Promise<DataProvider> => {
     const url = `${apiUrl}`;
     const response = await httpClient(url, {method: 'GET'});
 
+    // Compute access priority so we can sort datasets by access request options
+    const computeAccessPriority = (record: DataRecord): number => {
+        const hasRepoUrl = typeof record.dap_repo_url === 'string' && record.dap_repo_url.trim() !== '';
+        const hasUrlEmail = typeof record.dap_url_email === 'string' && record.dap_url_email.trim() !== '';
+        const hasPrimaryEmail = typeof record.dap_primary_email === 'string' && record.dap_primary_email.trim() !== '';
+        const hasOtherContact = typeof record.dap_other_contact_link === 'string' && record.dap_other_contact_link.trim() !== '';
+        if (hasRepoUrl) return 0; // Access Request Portal first
+        if (hasUrlEmail) return 1;
+        if (hasPrimaryEmail) return 2;
+        if (hasOtherContact) return 3;
+        return 4; // Helpdesk fallback last
+    };
+
     let data = {
         datasets: response.json.datasets.map((record: DataRecord, i: number) => ({
             id: i,
+            access_priority: computeAccessPriority(record),
             ...record
         })),
         projects: response.json.projects.map((record: DataRecord, i: number) => ({

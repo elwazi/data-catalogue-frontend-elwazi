@@ -337,6 +337,7 @@ export const DatasetList = (props: DatasetListProps) => {
             component={CustomListLayout}
             perPage={100}
             pagination={false}
+            sort={{ field: 'access_priority', order: 'ASC' }}
         >
             {
                 isSmall ? (
