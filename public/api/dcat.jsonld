@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dct": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "schema": "http://schema.org/"
+  },
+  "@type": "dcat:Catalog",
+  "@id": "/catalogue/elwazi/",
+  "dct:title": "eLwazi Data Catalog",
+  "dct:description": "Machine-readable DCAT representation of the eLwazi catalogue.",
+  "dct:publisher": {
+    "@type": "foaf:Organization",
+    "foaf:name": "eLwazi"
+  },
+  "dcat:dataset": []
+}
+
+

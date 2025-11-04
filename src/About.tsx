@@ -52,6 +52,16 @@ const About: React.FC = () => {
             </Box>
             
             <Divider sx={{ my: 5, borderColor: '#c13f27', borderWidth: 1 }} />
+
+            <Box mt={3} mb={3}>
+              <Typography variant="h5" gutterBottom sx={{ color: '#c13f27', fontWeight: 'bold', mb: 1 }}>
+                DCAT (Machine-readable Catalog)
+              </Typography>
+              <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.6 }}>
+                A machine-readable DCAT description of this catalog is available
+                <a href="/catalogue/elwazi/api/dcat.jsonld" style={{ color: '#c13f27', fontWeight: 'bold', textDecoration: 'none' }}> here</a>.
+              </Typography>
+            </Box>
             
             <Typography variant="h4" component="h1" gutterBottom sx={{ 
               color: '#c13f27', 
