@@ -3,6 +3,7 @@ import {
     ChipField,
     DatagridConfigurable,
     List,
+    NumberField,
     SelectColumnsButton,
     SingleFieldList,
     TextField,
@@ -10,7 +11,7 @@ import {
     UrlField
 } from "react-admin";
 import {Card, CardContent} from '@mui/material';
-import {ExportButton, FilterLiveSearch, ReferenceManyCount} from "ra-ui-materialui";
+import {ExportButton, FilterLiveSearch} from "ra-ui-materialui";
 import ReadMoreTextField from './ReadMoreTextField';
 import ConditionalUrlField from './ConditionalUrlField';
 import jsonExport from 'jsonexport/dist';
@@ -102,11 +103,7 @@ export const ProjectsList = () => {
                         <ChipField source="name" size="small"/>
                     </SingleFieldList>
                 </ArrayField>
-                <ReferenceManyCount
-                    label="Datasets"
-                    reference="datasets"
-                    target="record_id"
-                />
+                <NumberField source="dataset_count" label="Datasets" />
 
             </DatagridConfigurable>
         </List>

@@ -120,14 +120,25 @@ export const createDataProvider = async (): Promise<DataProvider> => {
         return 4; // Helpdesk fallback last
     };
 
+    const datasets = response.json.datasets.map((record: DataRecord, i: number) => ({
+        id: i,
+        access_priority: computeAccessPriority(record),
+        ...record
+    }));
+
+    const datasetCounts = datasets.reduce((acc: Record<string, number>, record: DataRecord) => {
+        const key = record.record_id;
+        if (typeof key === 'string' && key.length > 0) {
+            acc[key] = (acc[key] || 0) + 1;
+        }
+        return acc;
+    }, {});
+
     let data = {
-        datasets: response.json.datasets.map((record: DataRecord, i: number) => ({
-            id: i,
-            access_priority: computeAccessPriority(record),
-            ...record
-        })),
+        datasets,
         projects: response.json.projects.map((record: DataRecord, i: number) => ({
             id: record.record_id,
+            dataset_count: datasetCounts[record.record_id] || 0,
             ...record,
             p_keywords: record.p_keywords
                 .split(/[,;]/)
