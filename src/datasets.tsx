@@ -20,6 +20,7 @@ import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery,
 import React, { useState } from "react";
 import CommaField from './CommaField'; // Adjust the path accordingly
 import DatasetCharts from './DatasetCharts';
+import PageHeader from './PageHeader';
 
 import {
     ArrayField,
@@ -136,7 +137,7 @@ const CustomListLayout = ({ children, ...props }: any) => {
     const listContext = useListContext();
     
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100%', flex: 1 }}>
             <ListContextProvider value={listContext}>
                 <DatasetAnalyticsTitle />
             </ListContextProvider>
@@ -264,21 +265,26 @@ const DacEmailButton = () => {
                 <Button 
                     variant="contained" 
                     size="small" 
-                    onClick={() => setShowDetails(true)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setShowDetails(true);
+                    }}
                     style={{ backgroundColor: '#c13f27', color: 'white' }}
                 >
                     Get
                 </Button>
             ) : (
-                getAccessRequestContent()
+                <div onClick={(e) => e.stopPropagation()}>
+                    {getAccessRequestContent()}
+                </div>
             )}
         </div>
     );
 };
 
 // Custom field component that wraps DacEmailButton with proper label
-const AccessRequestField = () => <DacEmailButton />;
-AccessRequestField.defaultProps = { label: 'Access Request' };
+export const AccessRequestField = () => <DacEmailButton />;
+AccessRequestField.defaultProps = { label: 'Access Pathway' };
 
 // Custom component for project acronym with tooltip showing full title
 const ProjectAcronymWithTooltip = () => {
@@ -326,13 +332,37 @@ interface DatasetListProps {
 
 export const DatasetList = (props: DatasetListProps) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
+    
+    // Read filter from URL query parameters if available
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+    let urlFilter = undefined;
+    
+    // Only apply URL filter if filter param exists and is not empty
+    if (filterParam) {
+        try {
+            const parsed = JSON.parse(decodeURIComponent(filterParam));
+            // Check if parsed filter is non-empty
+            if (parsed && Object.keys(parsed).length > 0) {
+                urlFilter = parsed;
+            }
+        } catch (e) {
+            console.error('Error parsing filter from URL:', e);
+        }
+    }
+    
+    // Use URL filter if available, otherwise use props.filter, otherwise show all (undefined)
+    const finalFilter = urlFilter || props.filter;
 
     return (
+        <Box sx={{ width: '100%' }}>
+            <PageHeader title="Datasets" />
         <List {...props}
+            sx={{ width: '100%' }}
             bulkActionButtons={<CustomBulkActionButtons />}
             actions={<ListActions/>}
             aside={<FilterSidebar/>}
-            filter={props.filter}
+                filter={finalFilter}
             exporter={exporter}
             component={CustomListLayout}
             perPage={100}
@@ -345,9 +375,10 @@ export const DatasetList = (props: DatasetListProps) => {
                         primaryText={(record) => record.d_name}
                         secondaryText={(record) => record.d_domain}
                         tertiaryText={(record) => record.d_status}
+                            linkType="show"
                     />
                 ) : (
-                    <DatagridConfigurable omit={['d_provenance']}>
+                        <DatagridConfigurable omit={['d_provenance']} rowClick="show">
                         <ProjectField />
                         <TextField source="d_name"/>
                         <CommaField source="d_domain"/>
@@ -360,6 +391,7 @@ export const DatasetList = (props: DatasetListProps) => {
                 )
             }
         </List>
+        </Box>
     );
 };
 

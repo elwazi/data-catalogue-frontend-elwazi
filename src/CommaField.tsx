@@ -21,12 +21,13 @@ const CountriesField = ({ source }: CountriesFieldProps) => {
                 <Chip
                     key={`${country}-${index}`}
                     label={country}
-                    size="small"
+                    size="medium"
                     sx={{
                         backgroundColor: '#E5E5E5',  // Light gray background
                         color: '#000000',           // black text
                         borderRadius: '16px',       // Rounded pill shape
                         border: 'none',             // Remove outline
+                        fontSize: '0.95rem',
                         '&:hover': {
                             backgroundColor: '#D1E9FF',  // Slightly darker on hover
                         }

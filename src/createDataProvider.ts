@@ -24,6 +24,22 @@ interface DataRecord {
 const addCommaSeparatedFieldsHandling = (dataProvider: DataProvider): DataProvider => {
     const enhancedDataProvider: DataProvider = {
         ...dataProvider,
+        getOne: async (resource: string, params: { id: string | number }) => {
+            console.log('=== getOne called ===');
+            console.log('Resource:', resource);
+            console.log('ID:', params.id);
+            console.log('ID type:', typeof params.id);
+            try {
+                const result = await dataProvider.getOne(resource, params);
+                console.log('getOne result:', result);
+                console.log('getOne result data:', result.data);
+                console.log('===================');
+                return result;
+            } catch (error) {
+                console.error('getOne error:', error);
+                throw error;
+            }
+        },
         getList: (resource: string, params: GetListParams): Promise<GetListResult> => {
             const { filter, pagination, sort } = params;
             

@@ -13,6 +13,10 @@ import {ProjectsList} from "./projects";
 import {CustomRoutes} from "ra-core";
 import { Route } from 'react-router-dom';
 import About from './About';
+import Home from './Home';
+import SearchResults from './SearchResults';
+import {DatasetShow} from "./DatasetShow";
+import {ProjectShow} from "./ProjectShow";
 
 function enableAnalytics() {
     ReactGA.initialize(DC_GA_MEASUREMENT_ID);
@@ -29,23 +33,6 @@ export const App = () => {
         }
         document.body.style.zoom = "85%";
         fetchDataProvider();
-        // Clear all localStorage to ensure fresh column settings
-        localStorage.clear();
-        
-        // Clear specific React Admin keys that might override defaultVisible
-        localStorage.removeItem("RaStore.preferences.datasets.datagrid.availableColumns");
-        localStorage.removeItem("RaStore.preferences.datasets.datagrid.columns");
-        localStorage.removeItem("RaStore.preferences.datasets.datagrid.hiddenColumns");
-        localStorage.removeItem("RaStore.preferences.datasets.datagrid.columnVisibilityModel");
-        localStorage.removeItem("RaStore.datasets.listParams");
-        localStorage.removeItem("RaStore.preferences.datasets");
-        
-        // Clear any cached datagrid preferences
-        Object.keys(localStorage).forEach(key => {
-            if (key.includes('datasets') && key.includes('datagrid')) {
-                localStorage.removeItem(key);
-            }
-        });
     }, []);
 
     return dataProvider
@@ -59,10 +46,12 @@ export const App = () => {
                            basename={DC_BASENAME}
                            disableTelemetry
                     >
-                        <Resource name="datasets" list={<DatasetList/>} />
-                        <Resource name="projects" list={ProjectsList}/>
+                        <Resource name="datasets" list={<DatasetList/>} show={<DatasetShow/>} />
+                        <Resource name="projects" list={ProjectsList} show={<ProjectShow/>} />
                         <CustomRoutes>
+                            <Route path="/" element={<Home />} />
                             <Route path="/about" element={<About />} />
+                            <Route path="/search" element={<SearchResults />} />
                         </CustomRoutes>
                     </Admin>
             </div>

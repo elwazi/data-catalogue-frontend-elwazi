@@ -1,20 +1,11 @@
-import {
-    ArrayField,
-    ChipField,
-    DatagridConfigurable,
-    List,
-    NumberField,
-    SelectColumnsButton,
-    SingleFieldList,
-    TextField,
-    TopToolbar,
-    UrlField
-} from "react-admin";
-import {Card, CardContent} from '@mui/material';
-import {ExportButton, FilterLiveSearch} from "ra-ui-materialui";
+import { List, useListContext, RecordContextProvider } from "react-admin";
+import {Card, CardContent, Box, Typography, Divider, Chip, Link as MuiLink} from '@mui/material';
+import { FilterLiveSearch } from "ra-ui-materialui";
 import ReadMoreTextField from './ReadMoreTextField';
 import ConditionalUrlField from './ConditionalUrlField';
-import jsonExport from 'jsonexport/dist';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import PageHeader from './PageHeader';
+import { useNavigate } from 'react-router-dom';
 
 // TODO this should come from a module becuase it would be shared by other catalogues
 // import {FieldValuesFilter} from './FieldValuesFilter';
@@ -43,69 +34,186 @@ interface ProjectRecord {
     [key: string]: any;
 }
 
-// Custom exporter function that only exports specific columns
-const customExporter = (data: ProjectRecord[]) => {
-    // Transform the data to only include the specified columns
-    const exportData = data.map((record: ProjectRecord) => {
-        // Extract keywords names if they exist
-        const keywordsNames = record.p_keywords 
-            ? record.p_keywords.map((keyword: Keyword) => keyword.name).join(', ') 
-            : '';
-            
-        return {
-            redcap_data_access_group: record.redcap_data_access_group || '',
-            p_title: record.p_title || '',
-            p_website: record.p_website || '',
-            p_description: record.p_description || '',
-            'p_keywords.name': keywordsNames
-        };
-    });
-
-    // Use the jsonExport function to convert to CSV
-    jsonExport(exportData, {
-        delimiter: ',',
-    }, (err: Error | null, csv: string) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        
-        // Create a download link for the CSV
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'projects_export.csv';
-        link.click();
-        URL.revokeObjectURL(url);
-    });
+// Projects list content component that uses ListContext
+const ProjectsListContent = () => {
+    const { data, isLoading } = useListContext();
+    
+    if (isLoading) {
+        return (
+            <Box sx={{ p: 3 }}>
+                <Typography variant="body1" color="text.secondary">
+                    Loading projects...
+                </Typography>
+            </Box>
+        );
+    }
+    
+    if (!data || data.length === 0) {
+        return (
+            <Box sx={{ p: 3 }}>
+                <Typography variant="body1" color="text.secondary">
+                    No projects found.
+                </Typography>
+            </Box>
+        );
+    }
+    
+    return (
+        <Box sx={{ p: 3 }}>
+            {data.map((record: ProjectRecord, index: number) => (
+                <Box key={record.id || index}>
+                    <ProjectCardWrapper record={record} />
+                    {index < data.length - 1 && (
+                        <Divider sx={{ backgroundColor: '#c13f27', height: '1px', my: 3 }} />
+                    )}
+                </Box>
+            ))}
+        </Box>
+    );
 };
 
-const ListActions = () => (
-    <TopToolbar>
-        <SelectColumnsButton/>
-        <ExportButton exporter={customExporter} />
-    </TopToolbar>
-);
+// Wrapper to provide record context
+const ProjectCardWrapper = ({ record }: { record: ProjectRecord }) => {
+    const navigate = useNavigate();
+    
+    const handleTitleClick = () => {
+        if (record.id) {
+            navigate(`/projects/${record.id}/show`);
+        }
+    };
+    
+    return (
+        <RecordContextProvider value={record}>
+            <Box>
+                {/* Project Title */}
+                <Typography 
+                    variant="h5" 
+                    sx={{ 
+                        color: '#c13f27', 
+                        fontWeight: 'bold',
+                        mb: 1.5,
+                        cursor: 'pointer',
+                        '&:hover': {
+                            textDecoration: 'underline',
+                        }
+                    }}
+                    onClick={handleTitleClick}
+                >
+                    {record.p_title || record.p_acronym || 'Untitled Project'}
+                </Typography>
+                
+                {/* Description */}
+                {record.p_description && (
+                    <Box sx={{ mb: 2 }}>
+                        <ReadMoreTextField source="p_description" length={200} />
+                    </Box>
+                )}
+            
+            {/* Website Link */}
+            {record.p_website && (() => {
+                try {
+                    new URL(record.p_website);
+                    return (
+                        <Box sx={{ mb: 2 }}>
+                            <Typography variant="body2" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}>
+                                <Typography component="span" sx={{ color: '#c13f27', fontWeight: 'bold' }}>
+                                    Website:
+                                </Typography>
+                                {' '}
+                                <MuiLink
+                                    href={record.p_website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    sx={{
+                                        color: '#1976d2',
+                                        textDecoration: 'none',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: 0.5,
+                                        '&:hover': {
+                                            textDecoration: 'underline'
+                                        }
+                                    }}
+                                >
+                                    {record.p_website}
+                                    <OpenInNewIcon sx={{ fontSize: 14 }} />
+                                </MuiLink>
+                            </Typography>
+                        </Box>
+                    );
+                } catch {
+                    return null;
+                }
+            })()}
+            
+            {/* Datasets Count and Tags */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+                {record.dataset_count !== undefined && record.dataset_count !== null && (
+                    <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                        <Typography component="span" sx={{ color: '#c13f27', fontWeight: 'bold' }}>
+                            Datasets:
+                        </Typography>
+                        {' '}
+                        <Typography component="span" sx={{ color: 'text.secondary' }}>
+                            {record.dataset_count}
+                        </Typography>
+                    </Typography>
+                )}
+                
+                {(() => {
+                    const keywords = record.p_keywords 
+                        ? (Array.isArray(record.p_keywords) 
+                            ? record.p_keywords.map((k: Keyword) => (typeof k === 'string' ? k : k.name))
+                            : (typeof record.p_keywords === 'string' 
+                                ? record.p_keywords.split(/[,;]/).map((k: string) => k.trim()).filter(Boolean)
+                                : []))
+                        : [];
+                    
+                    if (keywords.length === 0) return null;
+                    
+                    return (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                            <Typography variant="body2" component="span" sx={{ color: '#c13f27', fontWeight: 'bold', mr: 0.5 }}>
+                                Tags:
+                            </Typography>
+                            {keywords.map((keyword: string, idx: number) => (
+                                <Chip
+                                    key={idx}
+                                    label={keyword}
+                                    size="small"
+                                    sx={{
+                                        backgroundColor: '#4caf50',
+                                        color: '#ffffff',
+                                        borderRadius: '16px',
+                                        border: 'none',
+                                        fontSize: '0.75rem',
+                                        height: '24px',
+                                        fontWeight: 500,
+                                        '&:hover': {
+                                            backgroundColor: '#45a049',
+                                        }
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    );
+                })()}
+            </Box>
+        </Box>
+        </RecordContextProvider>
+    );
+};
+
 export const ProjectsList = () => {
     return (
+        <Box>
+            <PageHeader title="Projects" />
         <List
-            actions={<ListActions/>}
+            actions={false}
             // aside={<FilterSidebar/>}
         >
-            <DatagridConfigurable>
-                <TextField source="p_title"/>
-                <TextField source="p_acronym"/>
-                <ConditionalUrlField source="p_website"/>
-                <ReadMoreTextField source="p_description" />
-                <ArrayField source={"p_keywords"}>
-                    <SingleFieldList linkType={false}>
-                        <ChipField source="name" size="small"/>
-                    </SingleFieldList>
-                </ArrayField>
-                <NumberField source="dataset_count" label="Datasets" />
-
-            </DatagridConfigurable>
+                <ProjectsListContent />
         </List>
+        </Box>
     )
 };
