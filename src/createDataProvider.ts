@@ -136,7 +136,11 @@ export const createDataProvider = async (): Promise<DataProvider> => {
         return 4; // Helpdesk fallback last
     };
 
-    const datasets = response.json.datasets.map((record: DataRecord, i: number) => ({
+    const catalogueReadyDatasets = response.json.datasets.filter(
+        (record: DataRecord) => record.d_catalogue_ready === 'Yes'
+    );
+
+    const datasets = catalogueReadyDatasets.map((record: DataRecord, i: number) => ({
         id: i,
         access_priority: computeAccessPriority(record),
         ...record
