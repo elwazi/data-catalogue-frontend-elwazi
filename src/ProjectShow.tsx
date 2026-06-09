@@ -286,7 +286,7 @@ const AdditionalInformationSection = () => {
     
     return (
         <Box sx={{ mt: 3 }}>
-            <SectionHeading>Catalogue Contributions</SectionHeading>
+            <SectionHeading>Catalog Contributions</SectionHeading>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs 
                     value={tabValue} 

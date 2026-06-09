@@ -32,6 +32,7 @@ import CommaField from './CommaField';
 import ReadMoreTextField from './ReadMoreTextField';
 import PageHeader from './PageHeader';
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 // Red banner header component
 const DatasetHeaderBanner = () => {
@@ -114,6 +115,36 @@ const DescriptionSection = () => {
     );
 };
 
+const ProjectLink = () => {
+    const record = useRecordContext();
+
+    if (!record?.p_acronym) return null;
+
+    if (record.record_id) {
+        return (
+            <Link
+                component={RouterLink}
+                to={`/projects/${record.record_id}/show`}
+                sx={{
+                    fontSize: '1rem',
+                    color: '#c13f27',
+                    fontWeight: 'bold',
+                    textDecoration: 'none',
+                    '&:hover': { textDecoration: 'underline' },
+                }}
+            >
+                {record.p_acronym}
+            </Link>
+        );
+    }
+
+    return (
+        <Typography variant="body1" sx={{ fontSize: '1rem' }}>
+            {record.p_acronym}
+        </Typography>
+    );
+};
+
 // Additional Information Section component that uses record context
 const AdditionalInformationSection = () => {
     const record = useRecordContext();
@@ -127,7 +158,7 @@ const AdditionalInformationSection = () => {
             {record.p_acronym ? (
                 <InfoItem
                     label="Project"
-                    value={<Typography variant="body1" sx={{ fontSize: '1rem' }}>{record.p_acronym}</Typography>}
+                    value={<ProjectLink />}
                 />
             ) : null}
             {record.d_provider ? (

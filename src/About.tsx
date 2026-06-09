@@ -60,7 +60,7 @@ const About: React.FC = () => {
                 <ListItemText primary="Introduction" />
               </ListItemButton>
               <ListItemButton onClick={() => handleScrollTo('about-purposes')}>
-                <ListItemText primary="Catalogue purposes" />
+                <ListItemText primary="Catalog purposes" />
               </ListItemButton>
               <ListItemButton onClick={() => handleScrollTo('about-dcat')}>
                 <ListItemText primary="DCAT catalog" />
@@ -102,7 +102,7 @@ const About: React.FC = () => {
                       mb: 3,
                     }}
                   >
-                    Introduction to the eLwazi Catalogue
+                    Introduction to the eLwazi Catalog
                   </Typography>
 
                   <Typography
@@ -110,10 +110,10 @@ const About: React.FC = () => {
                     paragraph
                     sx={{ fontSize: '1.1rem', lineHeight: 1.6 }}
                   >
-                    The eLwazi Catalogue is an essential component of the platform, providing
+                    The eLwazi Catalog is an essential component of the platform, providing
                     searchable metadata for datasets generated and used by the DS-I Africa
                     consortium and external organisations/projects across the African
-                    continent. The catalogue FAIRifies the data science datasets in the
+                    continent. The catalog FAIRifies the data science datasets in the
                     following way:
                   </Typography>
 
@@ -148,7 +148,7 @@ const About: React.FC = () => {
                     gutterBottom
                     sx={{ color: '#c13f27', fontWeight: 'bold', mb: 2 }}
                   >
-                    The catalogue serves the following purposes:
+                    The catalog serves the following purposes:
                   </Typography>
                   <Box sx={{ ml: 2 }}>
                     <Typography
@@ -174,7 +174,7 @@ const About: React.FC = () => {
                       </li>
                       <li>
                         <strong>Interdisciplinary Collaboration:</strong> By listing various
-                        projects that involve different data types, the catalogue aims to
+                        projects that involve different data types, the catalog aims to
                         foster interdisciplinary research and applications in healthcare.
                       </li>
                       <li>
@@ -230,7 +230,7 @@ const About: React.FC = () => {
                     paragraph
                     sx={{ fontSize: '1.1rem', lineHeight: 1.6 }}
                   >
-                    The source code for this catalogue is available on{' '}
+                    The source code for this catalog is available on{' '}
                     <a
                       href="https://github.com/elwazi/data-catalogue-frontend-elwazi"
                       target="_blank"
@@ -258,7 +258,7 @@ const About: React.FC = () => {
                       mb: 3,
                     }}
                   >
-                    Submitting metadata to the eLwazi Catalogue
+                    Submitting metadata to the eLwazi Catalog
                   </Typography>
 
                   <Typography
@@ -268,11 +268,11 @@ const About: React.FC = () => {
                   >
                     Organisations and projects that would like to increase their dataset
                     exposure findability, usability and accessibility can submit a request to
-                    list information about their dataset/s on the eLwazi Catalogue. Dataset
+                    list information about their dataset/s on the eLwazi Catalog. Dataset
                     providers must commit to maintaining their dataset/s metadata on the
-                    catalogue and work towards making sustainable long-term data management
+                    catalog and work towards making sustainable long-term data management
                     plans, electing a Metadata Steward who will receive training and support
-                    from the eLwazi Catalogue development team.
+                    from the eLwazi Catalog development team.
                   </Typography>
                 </Box>
 
@@ -290,9 +290,9 @@ const About: React.FC = () => {
                     paragraph
                     sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}
                   >
-                    If you are new to the eLwazi Catalogue, you will need to identify a person
+                    If you are new to the eLwazi Catalog, you will need to identify a person
                     who will be your Project Metadata Steward responsible for managing your
-                    eLwazi metadata on the catalogue database, and you must complete an
+                    eLwazi metadata on the catalog database, and you must complete an
                     Expression of Interest form
                     <a
                       href="https://redcap.h3abionet.org/redcap/surveys/?s=MXRD9XXXPFNKMKYT"
@@ -344,7 +344,7 @@ const About: React.FC = () => {
                     }}
                   >
                     Note: If you already have an organisation/project registered on the eLwazi
-                    catalogue and an elected project Metadata Steward, please proceed directly
+                    catalog and an elected project Metadata Steward, please proceed directly
                     to Step 3.
                   </Typography>
                 </Box>
@@ -355,7 +355,7 @@ const About: React.FC = () => {
                     gutterBottom
                     sx={{ color: '#c13f27', fontWeight: 'bold', mb: 2 }}
                   >
-                    Step 2: Receive support and training from the eLwazi Catalogue development
+                    Step 2: Receive support and training from the eLwazi Catalog development
                     team
                   </Typography>
 
@@ -364,10 +364,10 @@ const About: React.FC = () => {
                     paragraph
                     sx={{ fontSize: '1.1rem', lineHeight: 1.6, ml: 2 }}
                   >
-                    The eLwazi Catalogue development team will make contact with the elected
+                    The eLwazi Catalog development team will make contact with the elected
                     Metadata Steward within 3-5 working days of receiving the Expression of
                     Interest form, establish a login profile to the REDCap instance hosting the
-                    catalogue backend database*.
+                    catalog backend database*.
                   </Typography>
 
                   <Typography
@@ -440,7 +440,7 @@ const About: React.FC = () => {
                     Metadata stewards can log in to the REDCap database and add project/s under
                     the organisation / network of their allocated Data Access Group, from
                     there, one or more datasets can be added or edited for listing in the
-                    catalogue. Metadata Stewards who may be working across multiple projects in
+                    catalog. Metadata Stewards who may be working across multiple projects in
                     different organisations may be allocated different data access groups which
                     can be switched between.
                   </Typography>
@@ -452,7 +452,7 @@ const About: React.FC = () => {
                   >
                     Metadata Stewards will be able to check their content on preliminary
                     reports and then, once satisfied with their content, mark it to go live on
-                    the catalogue by the following day.
+                    the catalog by the following day.
                   </Typography>
                 </Box>
               </CardContent>

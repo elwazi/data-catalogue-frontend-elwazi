@@ -33,7 +33,7 @@ export const Footer = () => {
                         fontSize: '1.05rem',
                     }}
                 >
-                    We’d appreciate your thoughts on the eLwazi Catalogue. Please submit your feedback via our{' '}
+                    We’d appreciate your thoughts on the eLwazi Catalog. Please submit your feedback via our{' '}
                     <MuiLink
                         href="https://redcap.h3abionet.org/redcap/surveys/?s=9T4EAYRTTNA99AEP"
                         target="_blank"

@@ -26,6 +26,7 @@ import {
 } from '@mui/icons-material';
 import { useDataProvider } from 'react-admin';
 import PageHeader from './PageHeader';
+import { truncateAtWord } from './truncateAtWord';
 
 interface DatasetRecord {
     id: number;
@@ -212,7 +213,7 @@ const SearchResultCard = ({ record }: { record: DatasetRecord }) => {
                         }}
                     >
                         {typeof record.d_description === 'string' && record.d_description.length > 300
-                            ? `${record.d_description.substring(0, 300)}...`
+                            ? truncateAtWord(record.d_description, 300)
                             : record.d_description}
                     </Typography>
                 )}
@@ -690,7 +691,7 @@ const SearchResultsContent = () => {
                                                 }}
                                             >
                                                 {typeof project.p_description === 'string' && project.p_description.length > 300
-                                                    ? `${project.p_description.substring(0, 300)}...`
+                                                    ? truncateAtWord(project.p_description, 300)
                                                     : project.p_description}
                                             </Typography>
                                         )}

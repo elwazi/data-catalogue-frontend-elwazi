@@ -7,7 +7,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import PageHeader from './PageHeader';
 import { useNavigate } from 'react-router-dom';
 
-// TODO this should come from a module becuase it would be shared by other catalogues
+// TODO this should come from a module becuase it would be shared by other catalogs
 // import {FieldValuesFilter} from './FieldValuesFilter';
 
 const FilterSidebar = () => (

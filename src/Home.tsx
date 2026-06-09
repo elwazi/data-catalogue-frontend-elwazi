@@ -68,7 +68,7 @@ const Home = () => {
                         mb: 2
                     }}
                 >
-                    eLwazi Data Catalogue
+                    eLwazi Data Catalog
                 </Typography>
                 <Typography 
                     variant="h4" 
@@ -91,7 +91,7 @@ const Home = () => {
                         fontSize: { xs: '1.5rem', md: '1.65rem' }
                     }}
                 >
-                    Search the Data Catalogue
+                    Search the Data Catalog
                 </Typography>
                 <Box 
                     sx={{ 
@@ -397,7 +397,7 @@ const Home = () => {
                 </Grid>
             </Box>
 
-            {/* About the Catalogue Banner */}
+            {/* About the Catalog Banner */}
             <Box
                 sx={{
                     mb: 4,
@@ -424,7 +424,7 @@ const Home = () => {
                             fontSize: '1.35rem',
                         }}
                     >
-                        About the Catalogue
+                        About the Catalog
                     </Typography>
                     <Typography
                         variant="body1"
@@ -434,7 +434,7 @@ const Home = () => {
                             fontSize: { xs: '1.15rem', md: '1.25rem' },
                         }}
                     >
-                        The eLwazi Catalogue powers discovery of health and genomics data from across Africa.
+                        The eLwazi Catalog powers discovery of health and genomics data from across Africa.
                         By bringing together searchable metadata from the DS-I Africa consortium and partner
                         organisations, it makes datasets findable, accessible, interoperable, and reusable—
                         accelerating research and innovation on the continent.

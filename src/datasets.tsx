@@ -14,7 +14,7 @@ import {
 } from "react-admin";
 import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the path as necessary
 
-// TODO this should come from a module because it would be shared by other catalogues
+// TODO this should come from a module because it would be shared by other catalogs
 import {FieldValuesFilter} from './FieldValuesFilter';
 import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery, Button, Tooltip} from '@mui/material';
 import React, { useState } from "react";
