@@ -2,12 +2,14 @@ import {Layout, LayoutProps} from 'react-admin';
 import {MyAppBar} from "./MyAppBar";
 import Footer from './Footer';
 import { Box } from '@mui/material';
+import { GaPageViewTracker } from './GaPageViewTracker';
 
 // Empty menu to hide the sidebar
 const NoMenu = () => null;
 
 export const MyLayout = (props: LayoutProps) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
+        <GaPageViewTracker />
         <Layout {...props}
                 appBar={MyAppBar}
                 menu={NoMenu}

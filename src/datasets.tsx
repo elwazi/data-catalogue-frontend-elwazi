@@ -21,6 +21,7 @@ import React, { useState } from "react";
 import CommaField from './CommaField'; // Adjust the path accordingly
 import DatasetCharts from './DatasetCharts';
 import PageHeader from './PageHeader';
+import { trackAccessPathwayGet } from './analytics';
 
 import {
     ArrayField,
@@ -267,6 +268,11 @@ const DacEmailButton = () => {
                     size="small" 
                     onClick={(e) => {
                         e.stopPropagation();
+                        trackAccessPathwayGet({
+                            dataset_id: String(record.id ?? ""),
+                            dataset_name: String(record.d_name ?? ""),
+                            project_acronym: String(record.p_acronym ?? ""),
+                        });
                         setShowDetails(true);
                     }}
                     style={{ backgroundColor: '#c13f27', color: 'white' }}

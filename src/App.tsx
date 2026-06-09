@@ -19,7 +19,11 @@ import {DatasetShow} from "./DatasetShow";
 import {ProjectShow} from "./ProjectShow";
 
 function enableAnalytics() {
-    ReactGA.initialize(DC_GA_MEASUREMENT_ID);
+    ReactGA.initialize(DC_GA_MEASUREMENT_ID, {
+        // Let GaPageViewTracker send every page_view (including first) so SPA
+        // navigations are tracked; otherwise gtag only records the initial URL.
+        gtagOptions: { send_page_view: false },
+    });
 }
 const DummyTitle = () => (<div>hellow title</div>);
 export const App = () => {
