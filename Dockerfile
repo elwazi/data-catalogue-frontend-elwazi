@@ -14,8 +14,6 @@ RUN npm run build
 # Step 2: Run image
 FROM nginx:1.25.4-alpine-slim
 
-RUN apk add --no-cache curl
-
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 81
