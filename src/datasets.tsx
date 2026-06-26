@@ -16,7 +16,7 @@ import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the p
 
 // TODO this should come from a module because it would be shared by other catalogs
 import {FieldValuesFilter} from './FieldValuesFilter';
-import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery, Button, Tooltip} from '@mui/material';
+import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery, Button, Tooltip, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
 import React, { useState } from "react";
 import CommaField from './CommaField'; // Adjust the path accordingly
 import DatasetCharts from './DatasetCharts';
@@ -203,87 +203,126 @@ const PaginationInWhitespace = () => {
     );
 };
 
+const HELPDESK_URL = 'https://helpdesk.elwazi.org/';
+
+const isExternalHttpUrl = (url: string): boolean => {
+    try {
+        const parsed = new URL(url);
+        return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch {
+        return false;
+    }
+};
+
+/** External access URL using the same priority as the access pathway, excluding email-only paths. */
+const getExternalAccessUrl = (record: DatasetRecord): string | null => {
+    if (record.dap_repo_url?.trim()) {
+        const url = record.dap_repo_url.trim();
+        if (isExternalHttpUrl(url)) return url;
+    }
+    if (record.dap_url_email?.trim() || record.dap_primary_email?.trim()) {
+        return null;
+    }
+    if (record.dap_other_contact_link?.trim()) {
+        const url = record.dap_other_contact_link.trim();
+        if (isExternalHttpUrl(url)) return url;
+    }
+    return HELPDESK_URL;
+};
+
 // Custom component for DAC Email with button
 const DacEmailButton = () => {
     const record = useRecordContext();
     const [showDetails, setShowDetails] = useState(false);
+    const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+    const [pendingExternalUrl, setPendingExternalUrl] = useState<string | null>(null);
 
     if (!record) return null;
 
-    const getAccessRequestContent = () => {
-        // Check dap_repo_url first
-        if (record.dap_repo_url && record.dap_repo_url.trim() !== '') {
-            return (
-                <a 
-                    href={record.dap_repo_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{ color: '#3f51b5', textDecoration: 'underline' }}
-                >
-                    Access Request Portal
-                </a>
-            );
-        } 
-        // Check dap_url_email second
-        else if (record.dap_url_email && record.dap_url_email.trim() !== '') {
-            return <span>{record.dap_url_email}</span>;
-        } 
-        // Check dap_primary_email third
-        else if (record.dap_primary_email && record.dap_primary_email.trim() !== '') {
-            return <span>{record.dap_primary_email}</span>;
-        } 
-        // Check dap_other_contact_link fourth
-        else if (record.dap_other_contact_link && record.dap_other_contact_link.trim() !== '') {
-            return (
-                <a 
-                    href={record.dap_other_contact_link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{ color: '#3f51b5', textDecoration: 'underline' }}
-                >
-                    Contact Link
-                </a>
-            );
-        } 
-        // Default to helpdesk if none of the above have values
-        else {
-            return (
-                <a 
-                    href="https://helpdesk.elwazi.org/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{ color: '#3f51b5', textDecoration: 'underline' }}
-                >
-                    Contact the Helpdesk
-                </a>
-            );
+    const trackGetClick = () => {
+        trackAccessPathwayGet({
+            dataset_id: String(record.id ?? ""),
+            dataset_name: String(record.d_name ?? ""),
+            project_acronym: String(record.p_acronym ?? ""),
+        });
+    };
+
+    const handleGetClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        trackGetClick();
+
+        const externalUrl = getExternalAccessUrl(record);
+        if (externalUrl) {
+            setPendingExternalUrl(externalUrl);
+            setLeaveDialogOpen(true);
+            return;
         }
+
+        setShowDetails(true);
+    };
+
+    const handleLeaveConfirm = () => {
+        if (pendingExternalUrl) {
+            window.open(pendingExternalUrl, '_blank', 'noopener,noreferrer');
+        }
+        setLeaveDialogOpen(false);
+        setPendingExternalUrl(null);
+    };
+
+    const handleLeaveCancel = () => {
+        setLeaveDialogOpen(false);
+        setPendingExternalUrl(null);
+    };
+
+    const getAccessRequestContent = () => {
+        // Check dap_url_email second (email-only paths; URLs handled via Get + dialog)
+        if (record.dap_url_email && record.dap_url_email.trim() !== '') {
+            return <span>{record.dap_url_email}</span>;
+        }
+        if (record.dap_primary_email && record.dap_primary_email.trim() !== '') {
+            return <span>{record.dap_primary_email}</span>;
+        }
+        return null;
     };
 
     return (
-        <div>
+        <div onClick={(e) => e.stopPropagation()}>
             {!showDetails ? (
-                <Button 
-                    variant="contained" 
-                    size="small" 
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        trackAccessPathwayGet({
-                            dataset_id: String(record.id ?? ""),
-                            dataset_name: String(record.d_name ?? ""),
-                            project_acronym: String(record.p_acronym ?? ""),
-                        });
-                        setShowDetails(true);
-                    }}
+                <Button
+                    variant="contained"
+                    size="small"
+                    onClick={handleGetClick}
                     style={{ backgroundColor: '#c13f27', color: 'white' }}
                 >
                     Get
                 </Button>
             ) : (
-                <div onClick={(e) => e.stopPropagation()}>
-                    {getAccessRequestContent()}
-                </div>
+                getAccessRequestContent()
             )}
+
+            <Dialog open={leaveDialogOpen} onClose={handleLeaveCancel}>
+                <DialogTitle sx={{ color: '#c13f27', fontWeight: 'bold' }}>
+                    Leaving the eLwazi catalog
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        You are now leaving the eLwazi catalog. You will be redirected to the
+                        host to request your data access.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions sx={{ px: 3, pb: 2 }}>
+                    <Button onClick={handleLeaveCancel} color="inherit">
+                        Stay in catalog
+                    </Button>
+                    <Button
+                        onClick={handleLeaveConfirm}
+                        variant="contained"
+                        sx={{ backgroundColor: '#c13f27', '&:hover': { backgroundColor: '#a0351f' } }}
+                    >
+                        Continue
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
