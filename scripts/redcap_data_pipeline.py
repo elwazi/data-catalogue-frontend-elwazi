@@ -4,23 +4,11 @@ import config
 import sys
 import argparse
 import json
-import logging
 import requests
 from collections import defaultdict, Counter
 from itertools import chain
 
 load_dotenv()
-
-LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "redcap_pipeline.log")
-
-
-def setup_logging():
-    logging.basicConfig(
-        filename=LOG_FILE,
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s %(message)s",
-    )
-
 
 def print_header(title):
     print("=" * 60)
@@ -228,16 +216,6 @@ def main():
     parser.add_argument('--max_records', type=int, default=1000, help='Maximum number of records to fetch (default: 1000)')
     
     args = parser.parse_args()
-
-    setup_logging()
-    logging.info("Pipeline started")
-    logging.info(
-        "Config: output_file=%s report_id=%s debug=%s max_records=%s",
-        args.output_file,
-        args.report_id,
-        args.debug,
-        args.max_records,
-    )
     
     print_header("REDCAP DATA PIPELINE")
     token_id = os.getenv('TOKEN_ID')
@@ -246,14 +224,8 @@ def main():
     
     try:
         # Fetch data from REDCap
-        logging.info("Fetching REDCap data")
         print("Fetching REDCap data...")
         redcap_schema, records = fetch_redcap_data(token_id, args.report_id)
-        logging.info(
-            "REDCap fetch complete: schema_fields=%s records=%s",
-            len(redcap_schema),
-            len(records),
-        )
         print(f"Schema fields: {len(redcap_schema)}, Records: {len(records)}")
         
         if not records:
@@ -261,11 +233,6 @@ def main():
         
         # Limit records efficiently
         if len(records) > args.max_records:
-            logging.info(
-                "Limiting records from %s to %s",
-                len(records),
-                args.max_records,
-            )
             print(f"Limiting records from {len(records)} to {args.max_records}")
             records = records[:args.max_records]
         
@@ -275,13 +242,6 @@ def main():
         # Process records efficiently
         print_section("PROCESSING RECORDS")
         projects, datasets, stats = process_records(records, redcap_schema, args.debug)
-        logging.info(
-            "Processing complete: projects=%s datasets=%s project_records=%s dataset_records=%s",
-            len(projects),
-            len(datasets),
-            stats["project_records_processed"],
-            stats["dataset_records_processed"],
-        )
         
         print(f"Projects: {len(projects)}, Datasets: {len(datasets)}")
         print(f"Project records processed: {stats['project_records_processed']}")
@@ -299,27 +259,18 @@ def main():
         with open(args.output_file, 'w') as f:
             json.dump(output_data, f, indent=4, separators=(',', ': '))
         
-        logging.info("Data written to %s", args.output_file)
-        logging.info(
-            "Pipeline completed successfully: projects=%s datasets=%s",
-            len(projects),
-            len(datasets),
-        )
         print(f"\nData successfully written to {args.output_file}")
         print(f"Final structure: projects({len(projects)}), datasets({len(datasets)})")
         
     except Exception as e:
-        logging.error("Pipeline failed: %s", e)
+        print(f"Error: {e}", file=sys.stderr)
         if os.path.isfile(args.output_file):
-            logging.error("Existing output file was NOT modified: %s", args.output_file)
             print(
                 f"Existing output file was NOT modified: {args.output_file}",
                 file=sys.stderr,
             )
         else:
-            logging.error("No output file written: %s", args.output_file)
             print(f"No output file written: {args.output_file}", file=sys.stderr)
-        print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
     
     print_header("PIPELINE COMPLETED")
