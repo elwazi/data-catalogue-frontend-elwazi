@@ -167,7 +167,7 @@ const FilterSidebar = () => (
 );
 
 const selectColumnsButtonSx = {
-    backgroundColor: '#e85a4c',
+    backgroundColor: '#c13f27',
     color: '#ffffff',
     fontWeight: 600,
     fontSize: '0.95rem',
@@ -177,7 +177,7 @@ const selectColumnsButtonSx = {
     py: 1,
     boxShadow: 'none',
     '&:hover': {
-        backgroundColor: '#d44c3f',
+        backgroundColor: '#a0351f',
         boxShadow: 'none',
     },
     '& .MuiButton-startIcon': {
