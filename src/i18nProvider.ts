@@ -4,6 +4,13 @@ import fr from 'ra-language-french';
 import {resolveBrowserLocale} from "ra-core";
 
 const translations = {en, fr};
+en.ra = {
+    ...en.ra,
+    action: {
+        ...en.ra.action,
+        select_columns: 'Select Columns',
+    },
+};
 en.resources = {
     projects: {
         fields: {

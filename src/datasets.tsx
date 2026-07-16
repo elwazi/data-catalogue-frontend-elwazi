@@ -17,6 +17,8 @@ import CustomBulkActionButtons from './CustomBulkActionButtons'; // Adjust the p
 // TODO this should come from a module because it would be shared by other catalogs
 import {FieldValuesFilter} from './FieldValuesFilter';
 import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery, Button, Tooltip, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
+import TuneIcon from '@mui/icons-material/Tune';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import React, { useState } from "react";
 import CommaField from './CommaField'; // Adjust the path accordingly
 import DatasetCharts from './DatasetCharts';
@@ -90,6 +92,43 @@ const exporter = (data: any[]) => {
     downloadCSV(csvContent, 'datasets');
 };
 
+const KNOWN_DOMAINS = ['Omics', 'Demographic & Health', 'Geospatial', 'Image/Video'];
+
+// Banner shown when a single domain is selected (e.g. via Home page cards)
+const DatasetDomainBanner = () => {
+    const { filterValues, total, isLoading } = useListContext();
+    const domain = typeof filterValues?.d_domain === 'string' ? filterValues.d_domain : undefined;
+
+    if (!domain || !KNOWN_DOMAINS.includes(domain)) return null;
+
+    return (
+        <Box
+            sx={{
+                backgroundColor: '#FFF3E0',
+                borderBottom: '1px solid rgba(0,0,0,0.05)',
+                marginLeft: '16px',
+                marginRight: '16px',
+                marginTop: '16px',
+                marginBottom: '8px',
+                padding: '16px',
+                borderRadius: '4px',
+            }}
+        >
+            <Typography
+                variant="h5"
+                sx={{ color: '#c13f27', fontWeight: 'bold', mb: 0.5 }}
+            >
+                {domain} Datasets
+            </Typography>
+            {!isLoading && typeof total === 'number' && (
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {total} {total === 1 ? 'dataset' : 'datasets'} available.
+                </Typography>
+            )}
+        </Box>
+    );
+};
+
 const FilterSidebar = () => (
     <Card sx={{
         order: -1,
@@ -127,10 +166,45 @@ const FilterSidebar = () => (
     </Card>
 );
 
+const selectColumnsButtonSx = {
+    backgroundColor: '#e85a4c',
+    color: '#ffffff',
+    fontWeight: 600,
+    fontSize: '0.95rem',
+    textTransform: 'none' as const,
+    borderRadius: '8px',
+    px: 2.25,
+    py: 1,
+    boxShadow: 'none',
+    '&:hover': {
+        backgroundColor: '#d44c3f',
+        boxShadow: 'none',
+    },
+    '& .MuiButton-startIcon': {
+        marginRight: 1,
+        '& > svg': { fontSize: '1.35rem' },
+    },
+    '& .MuiButton-endIcon': {
+        marginLeft: 1,
+        '& > svg': { fontSize: '1.35rem' },
+    },
+};
+
 const ListActions = () => (
-    <TopToolbar>
-        <SelectColumnsButton/>
-    </TopToolbar>
+    <>
+        <DatasetDomainBanner />
+        <TopToolbar>
+            <SelectColumnsButton
+                {...({
+                    variant: 'contained',
+                    size: 'medium',
+                    startIcon: <TuneIcon />,
+                    endIcon: <KeyboardArrowDownIcon />,
+                    sx: selectColumnsButtonSx,
+                } as object)}
+            />
+        </TopToolbar>
+    </>
 );
 
 // Custom layout component that wraps the List and Charts
@@ -399,9 +473,13 @@ export const DatasetList = (props: DatasetListProps) => {
     // Use URL filter if available, otherwise use props.filter, otherwise show all (undefined)
     const finalFilter = urlFilter || props.filter;
 
+    // Show a domain-specific title (e.g. "Omics Datasets") when a single domain filter is active
+    const activeDomain = typeof finalFilter?.d_domain === 'string' ? finalFilter.d_domain : undefined;
+    const pageTitle = activeDomain ? `${activeDomain} Datasets` : 'Datasets';
+
     return (
         <Box sx={{ width: '100%' }}>
-            <PageHeader title="Datasets" />
+            <PageHeader title={pageTitle} />
         <List {...props}
             sx={{ width: '100%' }}
             bulkActionButtons={<CustomBulkActionButtons />}
