@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import DatasetIcon from '@mui/icons-material/Storage';
 import ProjectIcon from '@mui/icons-material/Folder';
 import SearchIcon from '@mui/icons-material/Search';
+import ElwaziLogo from './elwaziLogo';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -394,6 +395,62 @@ const Home = () => {
                             </CardContent>
                         </Card>
                     </Grid>
+
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Card 
+                            sx={{ 
+                                height: '100%',
+                                cursor: 'pointer',
+                                transition: 'transform 0.2s, box-shadow 0.2s',
+                                borderBottom: '4px solid #fcc300',
+                                '&:hover': {
+                                    transform: 'translateY(-4px)',
+                                    boxShadow: 4
+                                }
+                            }}
+                            onClick={() => navigate('/datasets?filter=' + encodeURIComponent(JSON.stringify({ d_domain: 'Pathogen' })))}
+                        >
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    height: '180px',
+                                    backgroundColor: '#ffffff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderTopLeftRadius: '4px',
+                                    borderTopRightRadius: '4px',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                <img
+                                    src="/pathogen.png"
+                                    alt="Pathogen datasets"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            </Box>
+                            <CardContent sx={{ p: 3 }}>
+                                <Typography 
+                                    variant="h5" 
+                                    sx={{ 
+                                        color: '#c13f27', 
+                                        fontWeight: 'bold',
+                                        mb: 2,
+                                        fontSize: '1.4rem'
+                                    }}
+                                >
+                                    Pathogen
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 2, fontSize: '1.3rem' }}>
+                                    Data on pathogens, their hosts, taxonomic lineage, detection methods, and phenotypes relevant to infectious disease research.
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
                 </Grid>
             </Box>
 
@@ -620,18 +677,10 @@ const Home = () => {
                                     borderTopLeftRadius: '4px',
                                     borderTopRightRadius: '4px',
                                     p: 3,
-                                    overflow: 'hidden',
                                 }}
                             >
-                                <img 
-                                    src={`${import.meta.env.BASE_URL}elwazi-continent-only.svg`}
-                                    alt="eLwazi Logo" 
-                                    style={{ 
-                                        width: '100%', 
-                                        height: '100%', 
-                                        objectFit: 'contain',
-                                        maxHeight: '180px'
-                                    }} 
+                                <ElwaziLogo
+                                    style={{ height: '140px', width: 'auto', color: '#c13f27' }}
                                 />
                             </Box>
                             <CardContent sx={{ p: 3 }}>

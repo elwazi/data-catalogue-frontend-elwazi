@@ -20,6 +20,7 @@ import {Box, Card, CardContent, Divider, Grid, Theme, Typography, useMediaQuery,
 import TuneIcon from '@mui/icons-material/Tune';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import CommaField from './CommaField'; // Adjust the path accordingly
 import DatasetCharts from './DatasetCharts';
 import PageHeader from './PageHeader';
@@ -92,14 +93,52 @@ const exporter = (data: any[]) => {
     downloadCSV(csvContent, 'datasets');
 };
 
-const KNOWN_DOMAINS = ['Omics', 'Demographic & Health', 'Geospatial', 'Image/Video'];
+const KNOWN_DOMAINS = ['Omics', 'Demographic & Health', 'Geospatial', 'Image/Video', 'Pathogen'];
+
+/** Extract a single domain name from a filter value that may be a string or string[]. */
+const getActiveDomain = (domainFilter: unknown): string | undefined => {
+    if (typeof domainFilter === 'string' && KNOWN_DOMAINS.includes(domainFilter)) {
+        return domainFilter;
+    }
+    if (Array.isArray(domainFilter) && domainFilter.length === 1
+        && typeof domainFilter[0] === 'string'
+        && KNOWN_DOMAINS.includes(domainFilter[0])) {
+        return domainFilter[0];
+    }
+    return undefined;
+};
+
+/**
+ * Read the list filter from the current location.
+ * React Admin uses a hash router, so the query lives in the hash
+ * (e.g. #/datasets?filter=...), not in window.location.search.
+ */
+const readFilterFromLocation = (): Record<string, any> | undefined => {
+    const hash = window.location.hash || '';
+    const hashQuery = hash.includes('?') ? hash.slice(hash.indexOf('?') + 1) : '';
+    const query = hashQuery || (window.location.search || '').replace(/^\?/, '');
+    if (!query) return undefined;
+
+    const filterParam = new URLSearchParams(query).get('filter');
+    if (!filterParam) return undefined;
+
+    try {
+        const parsed = JSON.parse(decodeURIComponent(filterParam));
+        if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
+            return parsed;
+        }
+    } catch (e) {
+        console.error('Error parsing filter from URL:', e);
+    }
+    return undefined;
+};
 
 // Banner shown when a single domain is selected (e.g. via Home page cards)
 const DatasetDomainBanner = () => {
     const { filterValues, total, isLoading } = useListContext();
-    const domain = typeof filterValues?.d_domain === 'string' ? filterValues.d_domain : undefined;
+    const domain = getActiveDomain(filterValues?.d_domain);
 
-    if (!domain || !KNOWN_DOMAINS.includes(domain)) return null;
+    if (!domain) return null;
 
     return (
         <Box
@@ -129,7 +168,117 @@ const DatasetDomainBanner = () => {
     );
 };
 
-const FilterSidebar = () => (
+// A single sidebar filter: the record column and its display label
+type SidebarFilter = { column: string; label: string };
+
+// Per-domain sidebar filter sets. Keys must match the d_domain values exactly.
+// When a domain page is active, its unique columns replace the default sidebar.
+const DOMAIN_SIDEBAR_FILTERS: Record<string, SidebarFilter[]> = {
+    'Omics': [
+        { column: 'd_countries', label: 'Countries' },
+        { column: 'd_provenance', label: 'Provenance' },
+        { column: 'du_permission', label: 'Data Use Permission' },
+        { column: 'p_consort_network', label: 'Consortium / Network' },
+        { column: 'p_acronym', label: 'Project' },
+        { column: 'd_status', label: 'Status' },
+        { column: 'du_licensing', label: 'License' },
+        { column: 'du_modifier', label: 'Data User Modifier' },
+        { column: 'd_subjects', label: 'Sample Size' },
+        { column: 'o_subject', label: 'Organism' },
+        { column: 'o_type', label: 'Omics Type' },
+        { column: 'o_epigenomics_approach', label: 'Epigenomics Approach' },
+        { column: 'o_genomic_approach', label: 'Genomics Approach' },
+        { column: 'o_metabolomics_approach', label: 'Metabolomics Approach' },
+        { column: 'o_metagenomics_approach', label: 'Metagenomics Approach' },
+    ],
+    'Demographic & Health': [
+        { column: 'd_countries', label: 'Countries' },
+        { column: 'd_provenance', label: 'Provenance' },
+        { column: 'du_permission', label: 'Data Use Permission' },
+        { column: 'p_consort_network', label: 'Consortium / Network' },
+        { column: 'p_acronym', label: 'Project' },
+        { column: 'd_status', label: 'Status' },
+        { column: 'du_licensing', label: 'License' },
+        { column: 'du_modifier', label: 'Data User Modifier' },
+        { column: 'd_subjects', label: 'Sample Size' },
+        { column: 'dh_demographics', label: 'Demographics' },
+        { column: 'dh_anthropometrics', label: 'Anthropometrics' },
+        { column: 'dh_vitals', label: 'Vitals' },
+        { column: 'dh_disease_status', label: 'Disease Status' },
+        { column: 'dh_general_medical', label: 'General Medical History' },
+        { column: 'dh_labs', label: 'Laboratory Tests' },
+    ],
+    'Geospatial': [
+        { column: 'd_countries', label: 'Countries' },
+        { column: 'd_provenance', label: 'Provenance' },
+        { column: 'du_permission', label: 'Data Use Permission' },
+        { column: 'p_consort_network', label: 'Consortium / Network' },
+        { column: 'p_acronym', label: 'Project' },
+        { column: 'd_status', label: 'Status' },
+        { column: 'du_licensing', label: 'License' },
+        { column: 'du_modifier', label: 'Data User Modifier' },
+        { column: 'g_var_domain', label: 'Variable Domain' },
+        { column: 'g_var_of_interest', label: 'Variable/s of Interest' },
+        { column: 'g_spatial_domain', label: 'Spatial Domain' },
+        { column: 'g_time_domain', label: 'Time Domain' },
+        { column: 'g_temp_resolution', label: 'Temporal Resolution' },
+        { column: 'g_product_type', label: 'Product Type' },
+        { column: 'g_model_type', label: 'Model Type' },
+        { column: 'g_spatial_resolution', label: 'Spatial Type' },
+        { column: 'g_monitor_station', label: 'Monitoring Station Type' },
+        { column: 'g_collection_type', label: 'Collection Type' },
+        { column: 'g_collect_method', label: 'Collection Method' },
+    ],
+    'Image/Video': [
+        { column: 'd_countries', label: 'Countries' },
+        { column: 'd_provenance', label: 'Provenance' },
+        { column: 'du_permission', label: 'Data Use Permission' },
+        { column: 'p_consort_network', label: 'Consortium / Network' },
+        { column: 'p_acronym', label: 'Project' },
+        { column: 'd_status', label: 'Status' },
+        { column: 'du_licensing', label: 'License' },
+        { column: 'du_modifier', label: 'Data User Modifier' },
+        { column: 'i_organism', label: 'Organism' },
+        { column: 'i_method', label: 'Imaging Method' },
+        { column: 'i_method_medical', label: 'Medical Imaging Method' },
+        { column: 'i_type', label: 'Image Type' },
+        { column: 'i_organ_system', label: 'Organ System' },
+        { column: 'd_subjects', label: 'Sample Size' },
+    ],
+    'Pathogen': [
+        { column: 'd_countries', label: 'Countries' },
+        { column: 'd_provenance', label: 'Provenance' },
+        { column: 'du_permission', label: 'Data Use Permission' },
+        { column: 'p_consort_network', label: 'Consortium / Network' },
+        { column: 'p_acronym', label: 'Project' },
+        { column: 'd_status', label: 'Status' },
+        { column: 'du_licensing', label: 'License' },
+        { column: 'du_modifier', label: 'Data User Modifier' },
+        { column: 'p_target_host', label: 'Target Host' },
+        { column: 'p_microorganism', label: 'Microorganism Type' },
+        { column: 'p_taxa', label: 'Taxonomic Lineage' },
+        { column: 'p_detect_method', label: 'Detection Methods' },
+        { column: 'p_phenotype', label: 'Pathogen Phenotypes' },
+    ],
+};
+
+interface FilterSidebarProps {
+    // Optional override; when omitted the sidebar auto-detects from the active d_domain filter
+    filters?: SidebarFilter[];
+    // Optional override; when omitted scoped from the active d_domain filter
+    baseFilter?: Record<string, any>;
+}
+
+const FilterSidebar = ({ filters, baseFilter }: FilterSidebarProps) => {
+    // Prefer live filterValues from React Admin (synced from the hash URL).
+    // Falls back to explicit props when provided (e.g. GenomicList).
+    const { filterValues } = useListContext();
+    const activeDomain = getActiveDomain(filterValues?.d_domain);
+    const resolvedFilters = filters ?? (activeDomain ? DOMAIN_SIDEBAR_FILTERS[activeDomain] : undefined);
+    const resolvedBaseFilter = baseFilter
+        ?? (resolvedFilters && activeDomain ? { d_domain: activeDomain } : undefined);
+
+    return (
     <Card sx={{
         order: -1,
         position: 'sticky',
@@ -153,18 +302,32 @@ const FilterSidebar = () => (
                 Filters
             </Typography>
             <FilterLiveSearch/>
-            <FieldValuesFilter column="d_domain"/>
-            <FieldValuesFilter column="d_countries"/>
-            <FieldValuesFilter column="redcap_data_access_group"/>
-            <FieldValuesFilter column="d_provenance"/>
-            <FieldValuesFilter column="d_status"/>
-            <FieldValuesFilter column="du_permission"/>
-            <FieldValuesFilter column="dh_disease_status"/>
+            {resolvedFilters ? (
+                resolvedFilters.map((f) => (
+                    <FieldValuesFilter
+                        key={f.column}
+                        column={f.column}
+                        label={f.label}
+                        baseFilter={resolvedBaseFilter}
+                    />
+                ))
+            ) : (
+                <>
+                    <FieldValuesFilter column="d_domain"/>
+                    <FieldValuesFilter column="d_countries"/>
+                    <FieldValuesFilter column="redcap_data_access_group"/>
+                    <FieldValuesFilter column="d_provenance"/>
+                    <FieldValuesFilter column="d_status"/>
+                    <FieldValuesFilter column="du_permission"/>
+                    <FieldValuesFilter column="dh_disease_status"/>
+                </>
+            )}
             {/* Spacer to push content to top and fill remaining space */}
             <Box sx={{ flex: 1, minHeight: '20px' }} />
         </CardContent>
     </Card>
-);
+    );
+};
 
 const selectColumnsButtonSx = {
     backgroundColor: '#c13f27',
@@ -451,40 +614,25 @@ interface DatasetListProps {
 
 export const DatasetList = (props: DatasetListProps) => {
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
-    
-    // Read filter from URL query parameters if available
-    const urlParams = new URLSearchParams(window.location.search);
-    const filterParam = urlParams.get('filter');
-    let urlFilter = undefined;
-    
-    // Only apply URL filter if filter param exists and is not empty
-    if (filterParam) {
-        try {
-            const parsed = JSON.parse(decodeURIComponent(filterParam));
-            // Check if parsed filter is non-empty
-            if (parsed && Object.keys(parsed).length > 0) {
-                urlFilter = parsed;
-            }
-        } catch (e) {
-            console.error('Error parsing filter from URL:', e);
-        }
-    }
-    
-    // Use URL filter if available, otherwise use props.filter, otherwise show all (undefined)
+    // Subscribe to location so the page title/sidebar recompute when the hash filter changes
+    const location = useLocation();
+
+    // Read filter from the hash URL (React Admin hash router) or from props
+    const urlFilter = readFilterFromLocation();
     const finalFilter = urlFilter || props.filter;
 
     // Show a domain-specific title (e.g. "Omics Datasets") when a single domain filter is active
-    const activeDomain = typeof finalFilter?.d_domain === 'string' ? finalFilter.d_domain : undefined;
+    const activeDomain = getActiveDomain(finalFilter?.d_domain);
     const pageTitle = activeDomain ? `${activeDomain} Datasets` : 'Datasets';
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%' }} key={location.key}>
             <PageHeader title={pageTitle} />
         <List {...props}
             sx={{ width: '100%' }}
             bulkActionButtons={<CustomBulkActionButtons />}
             actions={<ListActions/>}
-            aside={<FilterSidebar/>}
+            aside={<FilterSidebar />}
                 filter={finalFilter}
             exporter={exporter}
             component={CustomListLayout}

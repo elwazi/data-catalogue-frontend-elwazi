@@ -36,6 +36,7 @@ export const MyAppBar = () => {
         { name: 'Demographic & Health', value: 'Demographic & Health' },
         { name: 'Geospatial', value: 'Geospatial' },
         { name: 'Image/Video', value: 'Image/Video' },
+        { name: 'Pathogen', value: 'Pathogen' },
     ];
     
     return (

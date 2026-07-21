@@ -7,6 +7,10 @@ import {ExpandLess, ExpandMore} from '@mui/icons-material';
 interface Props {
     column: string;
     valueGetter?: Function;
+    // Optional explicit label; when omitted the i18n field label is used
+    label?: string;
+    // Optional filter scoping the facet values and counts (e.g. { d_domain: 'Omics' })
+    baseFilter?: Record<string, any>;
 }
 
 // Interface for values that might be objects with a name property
@@ -44,15 +48,31 @@ function isNamedValue(value: any): value is NamedValue {
     return typeof value === 'object' && value !== null && 'name' in value;
 }
 
-// Check if a field should be treated as comma-separated
+// Check if a field should be treated as comma-separated (multi-value)
 const isCommaSeparatedField = (column: string): boolean => {
-    return ['d_domain', 'd_countries', 'du_permission', 'dh_disease_status'].includes(column);
+    return [
+        'd_domain',
+        'd_countries',
+        'du_permission',
+        'dh_disease_status',
+        'du_modifier',
+        'dh_demographics',
+        'dh_anthropometrics',
+        'dh_vitals',
+        'dh_general_medical',
+        'dh_labs',
+        'g_var_of_interest',
+        'p_detect_method',
+        'p_phenotype',
+    ].includes(column);
 };
 
 export const FieldValuesFilter = (
     {
         column,
-        valueGetter
+        valueGetter,
+        label,
+        baseFilter
     }: Props) => {
     const [columnValues, setColumnValues] = useState<(string | NamedValue)[]>([]);
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -61,7 +81,10 @@ export const FieldValuesFilter = (
     const dataProvider = useDataProvider();
     const resource = useResourceContext();
     const translate = useTranslate();
-    const buttonLabel = toTitleCase(translate(`resources.${resource}.fields.${column}`))
+    // Use the explicit label when provided, otherwise fall back to the i18n field label
+    const buttonLabel = label ?? toTitleCase(translate(`resources.${resource}.fields.${column}`))
+    // Stable dependency key so changing baseFilter re-fetches, without re-running on every render
+    const baseFilterKey = JSON.stringify(baseFilter ?? {});
 
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
@@ -138,6 +161,7 @@ export const FieldValuesFilter = (
                 const { data } = await dataProvider.getList(resource, {
                     pagination: { page: 1, perPage: 1000 },
                     sort: { field: 'id', order: 'ASC' },
+                    filter: baseFilter ?? {},
                 } as GetListParams);
 
                 const cleanValues = data.map((item: any) => (valueGetter?.(item) ?? item[column]))
@@ -191,11 +215,13 @@ export const FieldValuesFilter = (
         };
 
         fetchColumnValues();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         dataProvider,
         column,
         resource,
-        valueGetter
+        valueGetter,
+        baseFilterKey
     ]);
 
     // Custom Count component that uses our pre-calculated counts for all fields

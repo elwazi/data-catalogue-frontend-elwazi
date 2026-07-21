@@ -6,7 +6,7 @@ const ElwaziLogo = (props: SVGProps<SVGSVGElement>) => {
     return (
         <svg
             style={{ height: '2.2rem' }}
-            viewBox="0 0 130 100"
+            viewBox="-5 0 150 155"
             fill="currentColor"
             aria-label="eLwazi Logo"
             {...props}

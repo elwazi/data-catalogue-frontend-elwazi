@@ -61,6 +61,7 @@ const getDomainColor = (domain: string): string => {
     if (domainLower.includes('demographic') || domainLower.includes('health')) return '#ffb3ba'; // Light red/pink
     if (domainLower.includes('geospatial')) return '#bae1ff'; // Light blue
     if (domainLower.includes('image') || domainLower.includes('video')) return '#c9c9ff'; // Light purple
+    if (domainLower.includes('pathogen')) return '#baffc9'; // Light green
     return '#e0e0e0'; // Default grey
 };
 

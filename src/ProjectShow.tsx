@@ -187,6 +187,7 @@ const DatasetsTable = () => {
             'Geospatial': '#4caf50',
             'Demographic & Health': '#4caf50',
             'Image/Video': '#4caf50',
+            'Pathogen': '#4caf50',
         };
         return domainColors[domain] || '#4caf50';
     };
